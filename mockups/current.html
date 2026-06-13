@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>현재 구현 — 레퍼런스형 배치</title>
+    <link rel="stylesheet" href="mockup-base.css" />
+    <style>
+      .cur-hero { min-height: 140px; margin: 0; border: none; position: relative; }
+      .cur-hero span { position: absolute; right: 20px; bottom: 20px; color: #fff; font-weight: 700; }
+      .cur-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: -24px; padding: 0 16px; position: relative; z-index: 1; }
+      .cur-strip .m-block { min-height: 80px; border: none; }
+      .cur-main { display: grid; grid-template-columns: 1.15fr 0.85fr 1fr; gap: 12px; padding: 24px 16px 16px; }
+      .cur-main .m-block { min-height: 100px; }
+      .cur-quick { display: flex; flex-direction: column; gap: 8px; }
+      .cur-side { display: flex; flex-direction: column; gap: 8px; }
+    </style>
+  </head>
+  <body>
+    <div class="mockup-banner">
+      현재 구현 배치 (참고) · <a href="index.html">시안 목록</a> · <a href="../index.html">실제 메인</a>
+    </div>
+    <div class="mockup-page">
+      <div style="padding: 12px 16px 0"><span class="mockup-label">현재 구현</span></div>
+      <header class="m-header">
+        <div class="m-logo">LOGO</div>
+        <nav class="m-nav">
+          <span>회사소개</span><span>사업부문</span><span>실적현황</span><span>공지사항</span><span>문의하기</span>
+        </nav>
+      </header>
+      <div class="m-block photo cur-hero">
+        풀폭 비주얼 배너 + 우측 슬로건
+        <span>주식회사 글로벌세아</span>
+      </div>
+      <section class="cur-strip">
+        <div class="m-block dark">시설</div>
+        <div class="m-block dark">미화</div>
+        <div class="m-block dark">보안</div>
+        <div class="m-block dark">방역</div>
+        <div class="m-block dark">인재</div>
+      </section>
+      <section class="cur-main">
+        <div class="m-block">실적현황 (이미지+캡션)</div>
+        <div class="cur-quick">
+          <div class="m-block dark" style="min-height:88px">사업부문 안내</div>
+          <div class="m-block dark" style="min-height:88px">온라인 문의</div>
+        </div>
+        <div class="cur-side">
+          <div class="m-block" style="min-height:120px">공지사항</div>
+          <div class="m-block green" style="min-height:80px">고객지원 TEL</div>
+        </div>
+      </section>
+      <footer class="m-footer">푸터 — 회사정보 · 약관 링크</footer>
+    </div>
+    <p style="text-align:center;font-size:13px;color:#666;padding:16px">
+      sjasset 레퍼런스와 구조가 가장 유사합니다 (5박스 + 3단 그리드).
+    </p>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>시안 C — 비대칭 사이드형</title>
+    <link rel="stylesheet" href="mockup-base.css" />
+    <style>
+      .c-banner { min-height: 88px; margin: 0; border: none; border-bottom: 1px solid #ccc; }
+      .c-split { display: grid; grid-template-columns: 28% 1fr; gap: 0; min-height: 280px; }
+      .c-side { display: flex; flex-direction: column; gap: 0; border-right: 1px solid #ccc; padding: 12px; background: #f0f6f2; }
+      .c-side .m-block { min-height: 72px; margin-bottom: 8px; }
+      .c-main { padding: 12px; display: flex; flex-direction: column; gap: 12px; }
+      .c-list .m-block { min-height: 36px; margin-bottom: 6px; text-align: left; padding-left: 16px; justify-content: start; }
+      .c-scroll { min-height: 64px; }
+      .c-notice { margin: 0 16px 16px; min-height: 80px; }
+    </style>
+  </head>
+  <body>
+    <div class="mockup-banner">
+      시안 C — 비대칭 사이드형 · <a href="index.html">목록</a> · <a href="../index.html">현재 구현</a>
+    </div>
+    <div class="mockup-page">
+      <div style="padding: 12px 16px 0"><span class="mockup-label">시안 C</span></div>
+      <header class="m-header">
+        <div class="m-logo">LOGO</div>
+        <nav class="m-nav">
+          <span>회사소개</span><span>사업부문</span><span>실적현황</span><span>공지사항</span><span>문의하기</span>
+        </nav>
+      </header>
+      <div class="m-block photo c-banner">중간 높이 비주얼 배너</div>
+      <section class="c-split">
+        <aside class="c-side">
+          <div class="m-block green">회사 한줄 소개</div>
+          <div class="m-block dark">TEL. 02-0000-0000</div>
+          <div class="m-block dark">온라인 문의</div>
+        </aside>
+        <div class="c-main">
+          <div class="c-list">
+            <div class="m-block green">① 시설관리 — 설비·유지보수 통합 운영</div>
+            <div class="m-block green">② 미화관리 — 청결 기준·품질 점검</div>
+            <div class="m-block green">③ 보안·주차관리</div>
+            <div class="m-block green">④ 방역관리</div>
+            <div class="m-block green">⑤ 인재파견</div>
+          </div>
+          <div class="m-block c-scroll">실적 카드 가로 나열 (스크롤)</div>
+        </div>
+      </section>
+      <div class="m-block c-notice">공지사항 — 전폭 목록</div>
+      <footer class="m-footer">푸터 — 회사정보 · 약관 링크</footer>
+    </div>
+  </body>
+</html>

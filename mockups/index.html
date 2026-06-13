@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>글로벌세아 — 메인 배치 시안 목록</title>
+    <link rel="stylesheet" href="mockup-base.css" />
+    <style>
+      .hub-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+      .hub-table th, .hub-table td { border: 1px solid #ccc; padding: 10px 12px; text-align: left; }
+      .hub-table th { background: #e3f0e7; }
+      .hub-cards { display: grid; gap: 12px; margin: 20px 0; }
+      .hub-card { display: block; padding: 16px; border: 2px solid #1a4d2e; background: #fff; color: #222; text-decoration: none; }
+      .hub-card:hover { background: #f0f6f2; }
+      .hub-card strong { display: block; font-size: 1.05rem; margin-bottom: 6px; color: #1a4d2e; }
+      .hub-card span { font-size: 0.9rem; color: #555; }
+      .hub-card.current { border-color: #888; }
+      @media (min-width: 720px) { .hub-cards { grid-template-columns: 1fr 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div class="mockup-banner">
+      배치 시안 목업 · 본 사이트 <code>../index.html</code> 은 아직 수정하지 않았습니다
+    </div>
+    <div class="mockup-hub">
+      <h1>글로벌세아 메인 — 배치 변경 시안</h1>
+      <p>
+        전체 톤(공식·초록)은 유지하고, <strong>레퍼런스(sjasset)와 비슷한 구조만</strong> 바꾼
+        3가지안입니다. 아래에서 한눈에 비교한 뒤, 각 시안을 클릭해 상세 배치를 확인하세요.
+      </p>
+
+      <p>
+        <img
+          src="layout-overview.png"
+          alt="시안 A B C 배치 비교 요약"
+          style="max-width: 100%; border: 1px solid #ccc"
+        />
+      </p>
+
+      <table class="hub-table">
+        <thead>
+          <tr>
+            <th>시안</th>
+            <th>배치 특징</th>
+            <th>추천 상황</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="option-a.html"><strong>A · 좌우 분할</strong></a></td>
+            <td>슬로건 좌 / 사진 우 · 사업 2×3 그리드 · 실적+공지 좌 / 문의+전화 우</td>
+            <td>레퍼런스 겹침 최소 + 공식感</td>
+          </tr>
+          <tr>
+            <td><a href="option-b.html"><strong>B · 상하 흐름</strong></a></td>
+            <td>짧은 배너 · 텍스트 탭 사업 · 실적 전폭 · 하단 3열</td>
+            <td>위→아래 읽기 쉬운 구조</td>
+          </tr>
+          <tr>
+            <td><a href="option-c.html"><strong>C · 사이드형</strong></a></td>
+            <td>좌측 연락 패널 고정 · 우측 사업 세로 리스트 · 실적 가로 카드</td>
+            <td>문의·전화 강조 B2B형</td>
+          </tr>
+          <tr>
+            <td><a href="current.html"><strong>현재 구현</strong></a></td>
+            <td>풀폭 비주얼 · 5칸 사업박스 · 3단(실적|바로가기|공지+TEL)</td>
+            <td>sjasset과 구조 유사 (비교용)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="hub-cards">
+        <a href="option-a.html" class="hub-card">
+          <strong>시안 A — 좌우 분할형</strong>
+          <span>히어로를 반반으로 나누고 사업부문을 별도 구역으로 분리</span>
+        </a>
+        <a href="option-b.html" class="hub-card">
+          <strong>시안 B — 상하 흐름형</strong>
+          <span>컬러 박스 최소화, 실적을 가로 전폭으로 강조</span>
+        </a>
+        <a href="option-c.html" class="hub-card">
+          <strong>시안 C — 비대칭 사이드형</strong>
+          <span>연락처 항상 노출, 사업부문을 리스트로 정리</span>
+        </a>
+        <a href="current.html" class="hub-card current">
+          <strong>현재 구현 (참고)</strong>
+          <span>지금 index.html 에 적용된 레이아웃</span>
+        </a>
+      </div>
+
+      <p><a href="../index.html">실제 메인 페이지로 이동</a></p>
+    </div>
+  </body>
+</html>
