@@ -68,6 +68,9 @@
       </div>
     </header>`;
 
+  const contactNav = site.nav.find((item) => item.href === "contact/index.html");
+  const contactLabel = contactNav ? contactNav.label : "견적 및 상담문의";
+
   const footerHtml = `
     <footer class="site-footer">
       <div class="footer-nav-bar">
@@ -78,7 +81,7 @@
           <span aria-hidden="true">|</span>
           <a href="${link("notice/index.html")}">공지사항</a>
           <span aria-hidden="true">|</span>
-          <a href="${link("contact/index.html")}">문의하기</a>
+          <a href="${link("contact/index.html")}">${contactLabel}</a>
           <span aria-hidden="true">|</span>
           <a href="${link("company/location.html")}">찾아오시는길</a>
         </div>
@@ -113,5 +116,24 @@
       drawer.hidden = open;
       document.body.classList.toggle("nav-open", !open);
     });
+  }
+
+  const pageHero = document.querySelector(".page-hero");
+  if (pageHero) {
+    const path = window.location.pathname.replace(/\\/g, "/").toLowerCase();
+    const heroBySection = {
+      company: "hero-sub1.jpg",
+      business: "hero-sub2.jpg",
+      portfolio: "hero-sub3.jpg",
+      notice: "hero-sub4.png",
+      contact: "hero-sub5.jpg",
+    };
+    let heroFile = heroBySection.company;
+    if (path.includes("/business/")) heroFile = heroBySection.business;
+    else if (path.includes("/portfolio/")) heroFile = heroBySection.portfolio;
+    else if (path.includes("/notice/")) heroFile = heroBySection.notice;
+    else if (path.includes("/contact/")) heroFile = heroBySection.contact;
+
+    pageHero.style.setProperty("--page-hero-bg", `url("${base}assets/images/${heroFile}")`);
   }
 })();

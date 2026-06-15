@@ -49,7 +49,7 @@ window.SEAH_SITE = {
       href: "notice/index.html",
     },
     {
-      label: "문의하기",
+      label: "견적 및 상담문의",
       href: "contact/index.html",
     },
   ],
