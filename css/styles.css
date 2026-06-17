@@ -1940,12 +1940,131 @@ a {
 
 /* Contact form */
 .contact-page {
-  max-width: 720px;
+  max-width: 900px;
   margin-inline: auto;
 }
 
 .contact-form-card {
   width: 100%;
+  padding: 22px 26px 26px;
+}
+
+.contact-form-title {
+  margin: 0 0 4px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.contact-form--rows {
+  margin-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.contact-form-row {
+  display: grid;
+  grid-template-columns: 136px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-height: 44px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.contact-form-row label {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.contact-form-row input,
+.contact-form-row textarea {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid #d8dde3;
+  border-radius: 2px;
+  font: inherit;
+  font-size: 0.92rem;
+  color: var(--text);
+  background: #fff;
+  transition: border-color 0.15s ease;
+}
+
+.contact-form-row input::placeholder,
+.contact-form-row textarea::placeholder {
+  color: #9aa3ad;
+}
+
+.contact-form-row input:focus,
+.contact-form-row textarea:focus {
+  outline: none;
+  border-color: var(--green-700);
+}
+
+.contact-form-row--textarea {
+  align-items: start;
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+.contact-form-row--textarea label {
+  padding-top: 7px;
+}
+
+.contact-form-row textarea {
+  min-height: 130px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.contact-form-row--file {
+  align-items: center;
+}
+
+.contact-form-file {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.contact-form-file-btn {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border: 1px solid #c5ccd3;
+  border-radius: 2px;
+  background: #f5f6f8;
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.contact-form-file-btn:hover {
+  background: #eceff3;
+}
+
+.contact-form-file-name {
+  font-size: 0.9rem;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-form-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-top: 18px;
+}
+
+.contact-form-actions .btn-primary {
+  min-width: 180px;
 }
 
 .form-group {
@@ -1979,6 +2098,11 @@ a {
   margin-top: 12px;
   font-size: 0.88rem;
   color: var(--muted);
+  text-align: center;
+}
+
+.form-note--error {
+  color: #b42318;
 }
 
 /* Footer — 공식 기업형 */

@@ -2,7 +2,12 @@
   "name": "seah-site",
   "private": true,
   "scripts": {
-    "capture": "node scripts/capture-share.mjs"
+    "capture": "node scripts/capture-share.mjs",
+    "dev:api": "vercel dev"
+  },
+  "dependencies": {
+    "formidable": "^2.1.5",
+    "resend": "^4.5.1"
   },
   "devDependencies": {
     "playwright": "^1.51.0"

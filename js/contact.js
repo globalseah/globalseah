@@ -2,37 +2,98 @@
   const form = document.getElementById("contact-form");
   if (!form) return;
 
-  form.addEventListener("submit", function (e) {
+  const fileInput = document.getElementById("attachment");
+  const fileTrigger = document.getElementById("attachment-trigger");
+  const fileNameEl = document.getElementById("attachment-name");
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const status = document.getElementById("form-status");
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+  function showStatus(message, isError) {
+    if (!status) return;
+    status.hidden = false;
+    status.textContent = message;
+    status.classList.toggle("form-note--error", Boolean(isError));
+  }
+
+  function resolveApiUrl() {
+    if (window.SEAH_SITE?.contactApiUrl) {
+      return window.SEAH_SITE.contactApiUrl;
+    }
+    return "/api/contact";
+  }
+
+  if (fileInput && fileTrigger) {
+    fileTrigger.addEventListener("click", function () {
+      fileInput.click();
+    });
+  }
+
+  if (fileInput && fileNameEl) {
+    fileInput.addEventListener("change", function () {
+      const file = fileInput.files && fileInput.files[0];
+
+      if (file && file.size > MAX_FILE_SIZE) {
+        fileInput.value = "";
+        fileNameEl.textContent = "선택된 파일 없음";
+        showStatus("첨부파일은 5MB 이하만 업로드할 수 있습니다.", true);
+        return;
+      }
+
+      fileNameEl.textContent = file ? file.name : "선택된 파일 없음";
+      if (status) status.hidden = true;
+    });
+  }
+
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const data = new FormData(form);
-    const name = data.get("name");
-    const email = data.get("email");
-    const subject = data.get("subject");
-    const message = data.get("message");
-
-    // MVP: 이메일 API 연동 전 안내. 운영 시 Resend / SMTP / Formspree 등으로 교체.
-    const body = [
-      `이름: ${name}`,
-      `이메일: ${email}`,
-      `문의유형: ${data.get("type")}`,
-      "",
-      message,
-    ].join("\n");
-
-    const mailto = `mailto:${window.SEAH_SITE?.email || ""}?subject=${encodeURIComponent(
-      `[홈페이지 문의] ${subject}`
-    )}&body=${encodeURIComponent(body)}`;
-
-    if (window.SEAH_SITE?.email) {
-      window.location.href = mailto;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "전송 중...";
     }
+    if (status) status.hidden = true;
 
-    const status = document.getElementById("form-status");
-    if (status) {
-      status.hidden = false;
-      status.textContent =
-        "문의 내용이 준비되었습니다. 이메일 발송 API 연동 후 서버에서 자동 발송됩니다. (현재 MVP: 메일 앱 연동 또는 담당자 확인)";
+    try {
+      const formData = new FormData(form);
+      const response = await fetch(resolveApiUrl(), {
+        method: "POST",
+        body: formData,
+      });
+
+      let result = {};
+      try {
+        result = await response.json();
+      } catch (parseError) {
+        result = {};
+      }
+
+      if (!response.ok) {
+        throw new Error(result.error || "문의 전송에 실패했습니다.");
+      }
+
+      form.reset();
+      if (fileNameEl) fileNameEl.textContent = "선택된 파일 없음";
+      showStatus("문의가 접수되었습니다. 담당자 확인 후 연락드리겠습니다.", false);
+    } catch (err) {
+      const isLocalFile =
+        window.location.protocol === "file:" ||
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1";
+
+      if (isLocalFile && err.message.includes("Failed to fetch")) {
+        showStatus(
+          "로컬 미리보기에서는 이메일 API가 동작하지 않습니다. Vercel 배포 주소 또는 `npx vercel dev`로 테스트해 주세요.",
+          true
+        );
+      } else {
+        showStatus(err.message || "문의 전송 중 오류가 발생했습니다.", true);
+      }
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "문의 보내기";
+      }
     }
   });
 })();
