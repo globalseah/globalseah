@@ -2319,7 +2319,7 @@ a {
 
 /* 하단 — 공지 · 문의 2열 */
 .home-bottom {
-  padding: 0 16px 48px;
+  padding: 48px 16px 24px;
   background: #f4f6f5;
 }
 

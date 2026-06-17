@@ -45,8 +45,12 @@ window.SEAH_SITE = {
       href: "portfolio/index.html",
     },
     {
-      label: "공지사항",
+      label: "공지 및 채용현황",
       href: "notice/index.html",
+      children: [
+        { label: "공지사항", href: "notice/index.html" },
+        { label: "채용현황", href: "notice/recruit.html" },
+      ],
     },
     {
       label: "견적 및 상담문의",
