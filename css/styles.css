@@ -40,6 +40,7 @@ html.desktop-only {
 }
 
 html.desktop-only body.site-shell {
+  position: relative;
   min-width: var(--site-min-width);
 }
 
@@ -905,7 +906,7 @@ a {
 }
 
 .breadcrumb li + li::before {
-  content: "/";
+  content: ">";
   margin-right: 8px;
   opacity: 0.6;
 }
@@ -2317,7 +2318,7 @@ a {
   }
 }
 
-/* 하단 — 공지 · 문의 2열 */
+/* 하단 — 공지 · 채용 · 문의 3열 */
 .home-bottom {
   padding: 48px 16px 24px;
   background: #f4f6f5;
@@ -2331,12 +2332,20 @@ a {
 }
 
 .home-info-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   border: 1px solid var(--corp-border);
+  border-radius: 12px;
   background: #fff;
   overflow: hidden;
 }
 
-.home-info-card--notice .home-info-body {
+.home-info-card--notice .home-info-body,
+.home-info-card--recruit .home-info-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   min-height: 100%;
 }
 
@@ -2377,12 +2386,16 @@ a {
 }
 
 .home-info-list {
+  flex: 1;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .home-info-list li {
+  display: flex;
+  align-items: center;
+  flex: 1;
   padding: 8px 0;
   border-top: 1px solid #eee;
   font-size: 0.875rem;
@@ -2406,10 +2419,14 @@ a {
 .home-inquiry-col {
   min-width: 0;
   display: flex;
-  justify-content: center;
+  align-self: stretch;
+  justify-content: flex-end;
 }
 
 .home-inquiry-widget {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   border: 0.5px solid #c0dd97;
   border-radius: 12px;
   overflow: hidden;
@@ -2463,6 +2480,9 @@ a {
 }
 
 .home-inquiry-widget-bottom {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   background: #fff;
   padding: 1.25rem 1.5rem;
 }
@@ -2481,6 +2501,7 @@ a {
   justify-content: center;
   gap: 6px;
   width: 100%;
+  margin-top: auto;
   padding: 12px 11px;
   border-radius: 8px;
   background: #1a4d2e;
@@ -2521,13 +2542,9 @@ a {
 
 @media (min-width: 900px) {
   .home-bottom-inner {
-    grid-template-columns: minmax(0, 1fr) 380px;
-    align-items: start;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 380px;
+    align-items: stretch;
     gap: 20px;
-  }
-
-  .home-inquiry-col {
-    justify-content: flex-end;
   }
 }
 
@@ -2623,13 +2640,9 @@ html.desktop-only .biz-banner-card {
   min-height: 196px;
 }
 
-/* 메인 하단 공지·문의 2열 (원본: @media min-width 900px) */
+/* 메인 하단 공지·채용·문의 3열 (원본: @media min-width 900px) */
 html.desktop-only .home-bottom-inner {
-  grid-template-columns: minmax(0, 1fr) 380px;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 380px;
+  align-items: stretch;
   gap: 20px;
-}
-
-html.desktop-only .home-inquiry-col {
-  justify-content: flex-end;
 }
