@@ -15,6 +15,8 @@
       "--desktop-preview-width",
       `${desktopWidth}px`
     );
+    document.documentElement.style.setProperty("--site-min-width", "1024px");
+    document.documentElement.style.setProperty("--site-max-width", `${desktopWidth}px`);
   } else {
     meta.setAttribute("content", "width=device-width, initial-scale=1");
     document.documentElement.classList.remove("desktop-only");

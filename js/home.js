@@ -3,10 +3,11 @@
   const homeGrid = document.getElementById("home-portfolio-grid");
 
   if (portfolio && homeGrid) {
-    homeGrid.innerHTML = portfolio.items
-      .slice(0, 4)
+    const cards = portfolio.items
       .map((item) => portfolio.cardHtml(item, "", "portfolio/index.html"))
       .join("");
+    // 무한 루프를 위해 동일한 세트를 한 번 복제한다 (translateX(-50%)로 이음매 없이 순환)
+    homeGrid.innerHTML = cards + cards;
   }
 
   const heroSlides = document.querySelectorAll(".home-hero-b-slide");
@@ -17,7 +18,7 @@
       heroSlides[activeIndex].classList.remove("is-active");
       activeIndex = (activeIndex + 1) % heroSlides.length;
       heroSlides[activeIndex].classList.add("is-active");
-    }, 5000);
+    }, 7000);
   }
 
   const kakaoBtn = document.getElementById("kakao-inquiry");

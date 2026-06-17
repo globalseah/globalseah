@@ -15,7 +15,7 @@ window.SEAH_SITE = {
 
   /** false: PC 레이아웃 고정(클라이언트 미리보기) | true: 모바일 반응형 */
   responsive: false,
-  desktopViewportWidth: 1200,
+  desktopViewportWidth: 1280,
 
   nav: [
     {

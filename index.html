@@ -28,6 +28,12 @@
     />
     <meta name="twitter:image" content="https://globalseah.vercel.app/assets/images/logo.png" />
     <link rel="icon" href="assets/images/logo.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body data-depth="0" class="page-home">
@@ -44,8 +50,8 @@
           <div class="home-hero-b-shade"></div>
         </div>
         <div class="home-hero-b-copy">
-          <p class="home-hero-b-sub">사람과 공간을 연결하는 종합관리 전문기업</p>
-          <h1>글로벌세아</h1>
+          <p class="home-hero-b-sub" lang="en">Better Environment, Better Tomorrow</p>
+          <h1>사람과 공간을 연결하는<br />종합관리 전문기업</h1>
           <p class="home-hero-b-lead">더 쾌적한 환경, 더 나은 내일</p>
         </div>
       </section>
@@ -133,7 +139,9 @@
             <h2 class="home-section-title">실적현황</h2>
             <a href="portfolio/index.html" class="home-section-more">자세히보기 &gt;</a>
           </div>
-          <div id="home-portfolio-grid" class="portfolio-grid portfolio-grid--home" aria-live="polite"></div>
+          <div class="home-portfolio-marquee">
+            <div id="home-portfolio-grid" class="home-portfolio-track"></div>
+          </div>
         </div>
       </section>
 
@@ -155,54 +163,31 @@
           </article>
 
           <aside class="home-inquiry-col" aria-label="견적 및 상담문의">
-            <div class="home-inquiry-card">
-              <div class="home-inquiry-head">
-                <h2 class="home-inquiry-title">견적 및 상담문의</h2>
-                <p class="home-inquiry-lead">편하신 방법으로 견적·상담을 요청해 주세요.</p>
-                <p class="home-inquiry-hint">아래 아이콘을 선택하시면 해당 문의 채널로 연결됩니다.</p>
+            <!-- 글로벌세아 고객지원 위젯 B안 -->
+            <div class="home-inquiry-widget">
+              <div class="home-inquiry-widget-top">
+                <p class="home-inquiry-widget-label">고객지원센터</p>
+                <div class="home-inquiry-widget-tel-row">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4D2E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.08 3.4 2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/>
+                  </svg>
+                  <p class="home-inquiry-widget-tel">070-8671-2108</p>
+                </div>
+                <p class="home-inquiry-widget-hours">평일 09:00 ~ 18:00 &nbsp;·&nbsp; (토·일·공휴일 휴무)</p>
               </div>
 
-              <div class="home-inquiry-support">
-                <p class="home-inquiry-support-label">고객지원센터</p>
-                <p class="home-inquiry-support-tel">
-                  <span class="home-inquiry-support-tel-prefix">TEL.</span>
-                  070-8671-2108
+              <div class="home-inquiry-widget-bottom">
+                <p class="home-inquiry-widget-desc">
+                  온라인 양식으로 견적·상담 문의를 남겨주시면<br />
+                  담당자 확인 후 친절히 안내드리겠습니다.
                 </p>
-                <p class="home-inquiry-support-hours">
-                  평일 09:00~18:00
-                  <span class="home-inquiry-support-hours-note">(토·일·공휴일 휴무)</span>
-                </p>
-                <p class="home-inquiry-support-note">카카오톡 채널 24시간 365일 상담 가능</p>
-              </div>
-
-              <div class="home-inquiry-circles" aria-label="문의 채널 바로가기">
-              <a
-                href="#"
-                class="home-inquiry-circle home-inquiry-kakao"
-                id="kakao-inquiry"
-                data-kakao-url=""
-                aria-label="카카오톡 채널로 견적 문의하기"
-                aria-disabled="true"
-                title="카카오톡 채널 연결 준비 중"
-              >
-                <span class="home-inquiry-circle-icon" aria-hidden="true">
-                  <img src="assets/images/Kakao_logo.jpg" alt="" width="36" height="36" />
-                </span>
-              </a>
-              <a
-                href="contact/index.html"
-                class="home-inquiry-circle home-inquiry-email"
-                aria-label="온라인으로 견적 문의하기"
-              >
-                <span class="home-inquiry-circle-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-                </span>
-              </a>
-              <div class="home-inquiry-circle home-inquiry-phone" aria-label="전화(유선)문의">
-                <span class="home-inquiry-circle-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4h4l2 5-2.5 1.5a11 11 0 005 5L16 13l5 2v4a2 2 0 01-2 2A16 16 0 014 6a2 2 0 012-2z"/></svg>
-                </span>
-              </div>
+                <a href="contact/index.html" class="home-inquiry-widget-btn" aria-label="온라인 문의하기">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                  </svg>
+                  온라인 문의하기
+                </a>
               </div>
             </div>
           </aside>
