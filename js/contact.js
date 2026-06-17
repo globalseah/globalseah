@@ -45,8 +45,41 @@
     });
   }
 
+  const privacyToggle = document.getElementById("privacy-toggle");
+  const privacyDetail = document.getElementById("privacy-detail");
+  const privacyConsent = document.getElementById("privacy-consent");
+  const privacyError = document.getElementById("privacy-error");
+
+  function showPrivacyError(show) {
+    if (privacyError) privacyError.hidden = !show;
+  }
+
+  if (privacyConsent) {
+    privacyConsent.addEventListener("change", function () {
+      if (privacyConsent.checked) showPrivacyError(false);
+    });
+  }
+
+  if (privacyToggle && privacyDetail) {
+    privacyToggle.addEventListener("click", function () {
+      const willOpen = privacyDetail.hidden;
+      privacyDetail.hidden = !willOpen;
+      privacyToggle.textContent = willOpen ? "내용닫기" : "내용보기";
+      privacyToggle.setAttribute("aria-expanded", String(willOpen));
+    });
+  }
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
+
+    const privacyConsentEl = document.getElementById("privacy-consent");
+    if (privacyConsentEl && !privacyConsentEl.checked) {
+      showPrivacyError(true);
+      privacyConsentEl.focus();
+      return;
+    }
+
+    showPrivacyError(false);
 
     if (submitBtn) {
       submitBtn.disabled = true;

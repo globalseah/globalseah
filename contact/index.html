@@ -90,6 +90,39 @@
                   <span class="contact-form-file-name" id="attachment-name">선택된 파일 없음</span>
                 </div>
               </div>
+              <div class="contact-privacy">
+                <div class="contact-privacy-line">
+                  <label class="contact-privacy-check">
+                    <input type="checkbox" id="privacy-consent" name="privacyConsent" required />
+                    <span><em>(필수)</em> 개인정보 수집·이용에 동의합니다.</span>
+                  </label>
+                  <button
+                    type="button"
+                    class="contact-privacy-toggle"
+                    id="privacy-toggle"
+                    aria-expanded="false"
+                    aria-controls="privacy-detail"
+                  >
+                    내용보기
+                  </button>
+                </div>
+                <p id="privacy-error" class="contact-privacy-error" hidden>
+                  개인정보 수집·이용에 동의해 주세요.
+                </p>
+                <div class="contact-privacy-box" id="privacy-detail" hidden>
+                  <p><strong>1. 수집 항목</strong></p>
+                  <p>이름/회사명, 연락처, 이메일, 문의사항, 첨부파일(선택)</p>
+                  <p><strong>2. 수집·이용 목적</strong></p>
+                  <p>문의 접수, 견적·상담 안내 및 고객 응대</p>
+                  <p><strong>3. 보유·이용 기간</strong></p>
+                  <p>문의 처리 완료 후 3년 (관련 법령에 따라 보존이 필요한 경우 해당 기간)</p>
+                  <p><strong>4. 동의 거부 권리</strong></p>
+                  <p>
+                    개인정보 수집·이용에 동의하지 않을 수 있으나, 동의하지 않을 경우 온라인 문의
+                    접수가 제한될 수 있습니다.
+                  </p>
+                </div>
+              </div>
               <div class="contact-form-actions">
                 <button type="submit" class="btn btn-primary">문의 보내기</button>
                 <p id="form-status" class="form-note" hidden></p>

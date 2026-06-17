@@ -2060,7 +2060,101 @@ a {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding-top: 18px;
+  padding-top: 14px;
+}
+
+.contact-privacy {
+  margin-top: 4px;
+  padding: 10px 0 0;
+  border-top: 1px solid var(--border);
+}
+
+.contact-privacy-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+.contact-privacy-box {
+  max-height: 72px;
+  overflow-y: auto;
+  padding: 8px 12px;
+  margin-top: 10px;
+  border: 1px solid #d8dde3;
+  border-radius: 2px;
+  background: #f9fafb;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: #555;
+}
+
+.contact-privacy-box[hidden] {
+  display: none;
+}
+
+.contact-privacy-box p {
+  margin: 0 0 6px;
+}
+
+.contact-privacy-box p:last-child {
+  margin-bottom: 0;
+}
+
+.contact-privacy-box strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.contact-privacy-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.contact-privacy-check input {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: var(--green-700);
+  cursor: pointer;
+}
+
+.contact-privacy-check em {
+  font-style: normal;
+  color: var(--green-700);
+  font-weight: 600;
+}
+
+.contact-privacy-toggle {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 0.88rem;
+  color: var(--green-700);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.contact-privacy-toggle:hover {
+  color: var(--green-900);
+}
+
+.content-card p.contact-privacy-error {
+  margin: 6px 0 0 24px;
+  font-size: 0.85rem;
+  color: #b42318;
+  line-height: 1.4;
+}
+
+.contact-privacy-error[hidden] {
+  display: none;
 }
 
 .contact-form-actions .btn-primary {
