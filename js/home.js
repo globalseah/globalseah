@@ -12,6 +12,44 @@
     homeGrid.innerHTML = cards + cards;
   }
 
+  const HOME_INFO_LIMIT = 5;
+
+  const notice = window.SEAH_NOTICE;
+  const homeNoticeList = document.getElementById("home-notice-list");
+  if (notice && homeNoticeList) {
+    homeNoticeList.innerHTML = notice
+      .displayItems()
+      .slice(0, HOME_INFO_LIMIT)
+      .map(function (item) {
+        return (
+          '<li><a href="notice/view.html?id=' +
+          item.id +
+          '">' +
+          item.title +
+          "</a></li>"
+        );
+      })
+      .join("");
+  }
+
+  const recruit = window.SEAH_RECRUIT;
+  const homeRecruitList = document.getElementById("home-recruit-list");
+  if (recruit && homeRecruitList) {
+    homeRecruitList.innerHTML = recruit
+      .displayItems()
+      .slice(0, HOME_INFO_LIMIT)
+      .map(function (item) {
+        return (
+          '<li><a href="notice/' +
+          item.href +
+          '">' +
+          item.title +
+          "</a></li>"
+        );
+      })
+      .join("");
+  }
+
   const heroSlides = document.querySelectorAll(".home-hero-b-slide");
   if (heroSlides.length > 1) {
     let activeIndex = 0;

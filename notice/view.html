@@ -17,7 +17,8 @@
           <ul class="breadcrumb">
             <li><a href="../index.html">홈</a></li>
             <li>공지 및 채용현황</li>
-            <li>공지사항</li>
+            <li><a href="index.html">공지사항</a></li>
+            <li id="notice-breadcrumb-current">상세</li>
           </ul>
           <h1>공지사항</h1>
         </div>
@@ -29,17 +30,19 @@
             <a href="recruit.html">채용현황</a>
           </nav>
           <div class="page-main">
-            <article class="content-card">
-              <table class="board-table">
-                <thead>
-                  <tr>
-                    <th class="num">번호</th>
-                    <th>제목</th>
-                    <th>등록일</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
+            <article class="content-card notice-view">
+              <header class="notice-view-head">
+                <h2 id="notice-title" class="notice-view-title">로딩 중…</h2>
+                <p class="notice-view-date">
+                  <span class="notice-view-date-label">등록일</span>
+                  <time id="notice-date"></time>
+                </p>
+              </header>
+              <div id="notice-body" class="notice-view-body"></div>
+              <nav id="notice-nav" class="notice-nav" aria-label="이전·다음 공지"></nav>
+              <div class="notice-view-actions">
+                <a href="index.html" class="btn btn-outline">목록으로</a>
+              </div>
             </article>
           </div>
         </div>
@@ -47,6 +50,6 @@
     </main>
     <script src="../js/layout.js"></script>
     <script src="../js/notice-data.js"></script>
-    <script src="../js/notice.js"></script>
+    <script src="../js/notice-detail.js"></script>
   </body>
 </html>
