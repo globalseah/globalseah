@@ -34,7 +34,7 @@
     {
       title: "선경테크",
       usage: "제조업",
-      location: "인천광역시 남동구",
+      location: "인천시 남동구",
       image: "06.png",
     },
     {
@@ -58,7 +58,7 @@
     {
       title: "쟈마트",
       usage: "제조업",
-      location: "인천광역시 서구",
+      location: "인천시 서구",
       image: "10.png",
     },
     {
@@ -258,12 +258,6 @@
       usage: "호텔",
       location: "제주도 서귀포시",
       image: "43.png",
-    },
-    {
-      title: "쿠레타케소호텔",
-      usage: "호텔",
-      location: "서울시 종로구",
-      image: "44.png",
     },
     {
       title: "파크호텔",
