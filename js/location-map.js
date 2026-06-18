@@ -7,10 +7,9 @@ window.navermap_authFailure = function () {
   }
   console.error("[SeahMap] 네이버 지도 인증 실패 — ncpKeyId 또는 도메인 불일치");
   console.error("[SeahMap] 현재 도메인:", location.hostname);
-  console.error("[SeahMap] Referer:", document.referrer);
 };
 
-window.initSeahLocationMap = function () {
+function initSeahLocationMap() {
   if (typeof naver === "undefined" || !naver.maps) {
     console.error("[SeahMap] naver 객체 미생성 — 인증 실패 가능성");
     window.navermap_authFailure();
@@ -32,4 +31,22 @@ window.initSeahLocationMap = function () {
     map: map,
     title: site.name,
   });
-};
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  var site = window.SEAH_SITE;
+  if (!site || !site.naverMapKeyId) return;
+
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src =
+    "https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=" +
+    site.naverMapKeyId;
+  script.onload = function () {
+    initSeahLocationMap();
+  };
+  script.onerror = function () {
+    window.navermap_authFailure();
+  };
+  document.head.appendChild(script);
+});
