@@ -2525,7 +2525,7 @@ html.desktop-only .portfolio-grid {
 .home-portfolio-track {
   display: flex;
   width: max-content;
-  animation: portfolio-marquee 36s linear infinite;
+  animation: portfolio-marquee 90s linear infinite;
   will-change: transform;
 }
 
