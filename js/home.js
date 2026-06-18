@@ -3,7 +3,9 @@
   const homeGrid = document.getElementById("home-portfolio-grid");
 
   if (portfolio && homeGrid) {
-    const cards = portfolio.items
+    const HOME_LIMIT = 15;
+    const recentItems = portfolio.displayItems().slice(0, HOME_LIMIT);
+    const cards = recentItems
       .map((item) => portfolio.cardHtml(item, "", "portfolio/index.html"))
       .join("");
     // 무한 루프를 위해 동일한 세트를 한 번 복제한다 (translateX(-50%)로 이음매 없이 순환)
