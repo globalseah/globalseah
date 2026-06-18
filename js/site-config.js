@@ -7,6 +7,10 @@ window.SEAH_SITE = {
   phone: "070-8671-2108",
   fax: "070-8224-2108",
   address: "경기도 부천시 상동 547-1, (코오롱파크뷰 306호)",
+  /** 네이버 지도 API (Web Dynamic Map) — NCP Client ID = ncpKeyId */
+  naverMapKeyId: "fhhsg8469q",
+  mapCenter: { lat: 37.504385, lng: 126.74887 },
+  mapZoom: 16,
   ceo: "임수현",
   bizRegNo: "866-88-03083",
   businessHours: "09:00 ~ 18:00",
