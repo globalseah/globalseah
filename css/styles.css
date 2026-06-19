@@ -3937,7 +3937,7 @@ html:not(.desktop-only) .home-portfolio {
     width: 60%;
     height: 100%;
     margin-left: auto;
-    padding: 12px 16px 24px;
+    padding: 8px 12px 16px;
     max-height: calc(100vh - var(--header-main-h));
     max-height: calc(100dvh - var(--header-main-h));
     overflow-y: auto;
@@ -3953,8 +3953,28 @@ html:not(.desktop-only) .home-portfolio {
   }
 
   html:not(.desktop-only) .mobile-drawer a {
-    padding: 14px 4px;
-    font-size: 0.95rem;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  html:not(.desktop-only) .mobile-drawer .mobile-nav-top {
+    background: #eaf3de;
+    color: var(--green-700);
+    font-weight: 700;
+    border-bottom-color: rgba(20, 90, 46, 0.12);
+  }
+
+  html:not(.desktop-only) .mobile-group .mobile-nav-top {
+    padding: 10px 12px 6px;
+  }
+
+  html:not(.desktop-only) .mobile-drawer a.sub {
+    padding: 8px 12px 8px 18px;
+    background: #fff;
+    color: #666;
+    font-weight: 500;
+    font-size: 0.85rem;
   }
 
   @media (prefers-reduced-motion: reduce) {

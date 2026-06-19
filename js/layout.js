@@ -54,12 +54,12 @@
   const mobileNavHtml = site.nav
     .map((item) => {
       if (!item.children) {
-        return `<a href="${link(item.href)}">${item.label}</a>`;
+        return `<a href="${link(item.href)}" class="mobile-nav-top">${item.label}</a>`;
       }
       const subs = item.children
         .map((c) => `<a href="${link(c.href)}" class="sub">${c.label}</a>`)
         .join("");
-      return `<div class="mobile-group"><strong>${item.label}</strong>${subs}</div>`;
+      return `<div class="mobile-group"><strong class="mobile-nav-top">${item.label}</strong>${subs}</div>`;
     })
     .join("");
 
