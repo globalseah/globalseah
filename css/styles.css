@@ -1823,8 +1823,14 @@ html.desktop-only .portfolio-grid {
   display: flex;
   gap: 6px;
   margin: 0 0 6px;
-  font-size: 0.875rem;
+  font-size: calc(0.875rem - 2pt);
   line-height: 1.5;
+}
+
+.portfolio-meta-row--service {
+  margin-top: 4px;
+  margin-bottom: 0;
+  align-items: flex-start;
 }
 
 .portfolio-meta-row:last-child {
