@@ -85,13 +85,20 @@ module.exports = async function handler(req, res) {
     const name = getField(fields, "name").trim();
     const phone = getField(fields, "phone").trim();
     const email = getField(fields, "email").trim();
+    const business = getField(fields, "business").trim();
     const message = getField(fields, "message").trim();
 
-    if (!subject || !name || !email || !message) {
+    if (!subject || !name || !business || !message) {
       return res.status(400).json({ ok: false, error: "필수 항목을 모두 입력해 주세요." });
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!email && !phone) {
+      return res
+        .status(400)
+        .json({ ok: false, error: "연락처와 이메일 중 한 가지는 입력해주세요." });
+    }
+
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return res.status(400).json({ ok: false, error: "이메일 형식을 확인해 주세요." });
     }
 
@@ -119,7 +126,8 @@ module.exports = async function handler(req, res) {
       <p><strong>제목</strong><br>${escapeHtml(subject)}</p>
       <p><strong>이름/회사명</strong><br>${escapeHtml(name)}</p>
       <p><strong>연락처</strong><br>${escapeHtml(phone || "-")}</p>
-      <p><strong>이메일</strong><br>${escapeHtml(email)}</p>
+      <p><strong>이메일</strong><br>${escapeHtml(email || "-")}</p>
+      <p><strong>사업부문</strong><br>${escapeHtml(business || "-")}</p>
       <p><strong>문의사항</strong><br>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
     `;
 
@@ -129,7 +137,8 @@ module.exports = async function handler(req, res) {
       `제목: ${subject}`,
       `이름/회사명: ${name}`,
       `연락처: ${phone || "-"}`,
-      `이메일: ${email}`,
+      `이메일: ${email || "-"}`,
+      `사업부문: ${business || "-"}`,
       "",
       message,
     ].join("\n");
@@ -137,7 +146,7 @@ module.exports = async function handler(req, res) {
     const { error } = await resend.emails.send({
       from: fromEmail,
       to: [toEmail],
-      replyTo: email,
+      replyTo: email || undefined,
       subject: `[홈페이지 문의] ${subject}`,
       html,
       text,

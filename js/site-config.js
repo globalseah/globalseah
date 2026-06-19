@@ -38,7 +38,7 @@ window.SEAH_SITE = {
       href: "business/facility.html",
       children: [
         { label: "시설관리", href: "business/facility.html" },
-        { label: "미화관리", href: "business/cleaning.html" },
+        { label: "미화·방역 관리", href: "business/cleaning.html" },
         { label: "보안·주차관리", href: "business/security.html" },
         { label: "호텔관리", href: "business/hotel.html" },
         { label: "인재파견", href: "business/staffing.html" },

@@ -81,6 +81,21 @@
 
     showPrivacyError(false);
 
+    const phoneVal = (form.phone && form.phone.value.trim()) || "";
+    const emailVal = (form.email && form.email.value.trim()) || "";
+    if (!phoneVal && !emailVal) {
+      showStatus("연락처와 이메일 중 한 가지는 입력해주세요.", true);
+      if (form.phone) form.phone.focus();
+      return;
+    }
+
+    const businessVal = (form.business && form.business.value.trim()) || "";
+    if (!businessVal) {
+      showStatus("사업부문을 선택해 주세요.", true);
+      if (form.business) form.business.focus();
+      return;
+    }
+
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.textContent = "전송 중...";

@@ -59,7 +59,7 @@
                   type="tel"
                   id="phone"
                   name="phone"
-                  placeholder="연락처를 입력해 주세요"
+                  placeholder="연락처와 이메일 중 한 가지는 입력해주세요."
                 />
               </div>
               <div class="contact-form-row">
@@ -68,9 +68,19 @@
                   type="email"
                   id="email"
                   name="email"
-                  placeholder="이메일을 입력해 주세요"
-                  required
+                  placeholder="연락처와 이메일 중 한 가지는 입력해주세요."
                 />
+              </div>
+              <div class="contact-form-row">
+                <label for="business">사업부문</label>
+                <select id="business" name="business" required>
+                  <option value="">문의하실 사업을 선택해주세요.</option>
+                  <option value="시설관리">시설관리</option>
+                  <option value="미화·방역 관리">미화·방역 관리</option>
+                  <option value="보안·주차관리">보안·주차관리</option>
+                  <option value="호텔관리">호텔관리</option>
+                  <option value="인재파견">인재파견</option>
+                </select>
               </div>
               <div class="contact-form-row contact-form-row--textarea">
                 <label for="message">문의사항</label>
@@ -119,7 +129,7 @@
                 </p>
                 <div class="contact-privacy-box" id="privacy-detail" hidden>
                   <p><strong>1. 수집 항목</strong></p>
-                  <p>이름/회사명, 연락처, 이메일, 문의사항, 첨부파일(선택)</p>
+                  <p>이름/회사명, 연락처, 이메일, 사업부문, 문의사항, 첨부파일(선택)</p>
                   <p><strong>2. 수집·이용 목적</strong></p>
                   <p>문의 접수, 견적·상담 안내 및 고객 응대</p>
                   <p><strong>3. 보유·이용 기간</strong></p>

@@ -2123,6 +2123,7 @@ html.desktop-only .portfolio-grid {
 }
 
 .contact-form-row input,
+.contact-form-row select,
 .contact-form-row textarea {
   width: 100%;
   padding: 7px 10px;
@@ -2141,6 +2142,7 @@ html.desktop-only .portfolio-grid {
 }
 
 .contact-form-row input:focus,
+.contact-form-row select:focus,
 .contact-form-row textarea:focus {
   outline: none;
   border-color: var(--green-700);
