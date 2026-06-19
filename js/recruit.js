@@ -1,14 +1,14 @@
 (function () {
-  const notice = window.SEAH_NOTICE;
+  const recruit = window.SEAH_RECRUIT;
   const pagination = window.SEAH_BOARD_PAGINATION;
-  if (!notice || !pagination) return;
+  if (!recruit || !pagination) return;
 
   const tbody = document.querySelector(".board-table tbody");
-  const paginationEl = document.getElementById("notice-pagination");
+  const paginationEl = document.getElementById("recruit-pagination");
   if (!tbody) return;
 
   const PAGE_SIZE = pagination.PAGE_SIZE;
-  const items = notice.displayItems();
+  const items = recruit.displayItems();
   const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
   let currentPage = Math.min(pagination.getInitialPage(), totalPages);
 
@@ -23,10 +23,10 @@
           '<td class="num">' +
           num +
           "</td>" +
-          '<td><a href="view.html?id=' +
+          '<td><a href="recruit/view.html?id=' +
           item.id +
           '">' +
-          item.title +
+          recruit.listTitle(item) +
           "</a></td>" +
           "<td>" +
           item.date +

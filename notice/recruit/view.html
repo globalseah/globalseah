@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="../../js/site-config.js"></script>
+    <script src="../../js/viewport.js"></script>
+    <title>채용현황 — 글로벌세아종합관리</title>
+    <meta name="description" content="글로벌세아종합관리 채용현황 — 시설·미화·보안 등 인력 채용 정보를 안내합니다." />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="글로벌세아종합관리" />
+    <meta property="og:title" content="채용현황 — 글로벌세아종합관리" />
+    <meta property="og:description" content="글로벌세아종합관리 채용현황 — 인력 채용 정보를 안내합니다." />
+    <meta property="og:image" content="https://globalseah.com/assets/images/logo.png" />
+    <link rel="icon" href="../../assets/images/logo.png" type="image/png" />
+    <link rel="stylesheet" href="../../css/styles.css" />
+  </head>
+  <body data-depth="2">
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <ul class="breadcrumb">
+            <li><a href="../../index.html">홈</a></li>
+            <li>공지 및 채용현황</li>
+            <li><a href="../recruit.html">채용현황</a></li>
+            <li id="recruit-breadcrumb-current">상세</li>
+          </ul>
+          <h1>채용현황</h1>
+        </div>
+      </section>
+      <section class="page-content">
+        <div class="container page-layout page-layout--company">
+          <nav class="sub-nav-sidebar" aria-label="공지 및 채용현황 하위 메뉴">
+            <a href="../index.html">공지사항</a>
+            <a href="../recruit.html" class="active">채용현황</a>
+          </nav>
+          <div class="page-main">
+            <article class="content-card notice-view">
+              <header class="notice-view-head">
+                <p id="recruit-status" class="recruit-view-status"></p>
+                <h2 id="recruit-title" class="notice-view-title">로딩 중…</h2>
+                <p class="notice-view-date">
+                  <span class="notice-view-date-label">등록일</span>
+                  <time id="recruit-date"></time>
+                </p>
+              </header>
+              <div class="notice-view-body">
+                <div id="recruit-body" class="recruit-view-body--plain"></div>
+                <aside id="recruit-contact" class="recruit-view-contact"></aside>
+              </div>
+              <nav id="recruit-nav" class="notice-nav" aria-label="이전·다음 채용"></nav>
+              <div class="notice-view-actions">
+                <a href="../recruit.html" class="btn btn-outline">목록으로</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="../../js/layout.js"></script>
+    <script src="../../js/recruit-data.js"></script>
+    <script src="../../js/recruit-detail.js"></script>
+  </body>
+</html>

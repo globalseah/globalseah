@@ -40,10 +40,10 @@
       .slice(0, HOME_INFO_LIMIT)
       .map(function (item) {
         return (
-          '<li><a href="notice/' +
-          item.href +
+          '<li><a href="notice/recruit/view.html?id=' +
+          item.id +
           '">' +
-          item.title +
+          recruit.listTitle(item) +
           "</a></li>"
         );
       })

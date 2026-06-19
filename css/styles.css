@@ -2071,9 +2071,86 @@ html.desktop-only .portfolio-grid {
 
 .notice-view-actions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   margin-top: 28px;
   padding-top: 8px;
+}
+
+.notice-view-actions .btn-outline {
+  background: #fff;
+  color: var(--green-900);
+  border: 1.5px solid var(--green-700);
+  box-shadow: none;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.notice-view-actions .btn-outline:hover {
+  background: var(--green-50);
+  border-color: var(--green-900);
+  color: var(--green-900);
+}
+
+.board-list-pagination {
+  margin-top: 28px;
+}
+
+/* Recruit — 상세 (A안 원문 텍스트) */
+.recruit-view-status {
+  margin: 0 0 10px;
+}
+
+.badge--recruit-open {
+  background: var(--green-100);
+  color: var(--green-700);
+}
+
+.badge--recruit-closed {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.recruit-view-body--plain {
+  margin: 0;
+  padding: 24px 0 8px;
+  border-top: 1px solid var(--border);
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--text);
+  white-space: pre-line;
+}
+
+.recruit-view-contact {
+  margin-top: 28px;
+  padding: 18px 20px;
+  background: var(--green-50);
+  border-radius: 8px;
+  border: 1px solid #d4e8db;
+}
+
+.recruit-view-contact-title {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--green-900);
+}
+
+.recruit-view-contact-line {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.recruit-view-contact-line a {
+  color: var(--green-700);
+  text-decoration: none;
+}
+
+.recruit-view-contact-line a:hover {
+  text-decoration: underline;
 }
 
 .badge {

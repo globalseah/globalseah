@@ -1,0 +1,111 @@
+/* 채용 상세 목업 전용 — 클라이언트 검토 후 본 반영 시 styles.css로 이전 */
+
+.mockup-banner {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.mockup-banner--a {
+  background: #e8f4ec;
+  border: 1px solid #b8d9c4;
+  color: var(--green-900);
+}
+
+.mockup-banner--b {
+  background: #eef3fa;
+  border: 1px solid #c5d4ea;
+  color: #1a3a5c;
+}
+
+.recruit-view-status {
+  margin: 0 0 10px;
+}
+
+.badge--recruit-open {
+  background: var(--green-100);
+  color: var(--green-700);
+}
+
+.badge--recruit-closed {
+  background: #f0f0f0;
+  color: #666;
+}
+
+/* A안 — 원문 텍스트 */
+.recruit-view-body--plain {
+  margin: 0;
+  padding: 24px 0 8px;
+  border-top: 1px solid var(--border);
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--text);
+  white-space: pre-line;
+}
+
+/* B안 — 항목별 구조화 */
+.recruit-detail-list {
+  margin: 0;
+  padding: 20px 0 8px;
+  border-top: 1px solid var(--border);
+  list-style: none;
+}
+
+.recruit-detail-item {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr);
+  gap: 12px 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eef1f4;
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.recruit-detail-item:last-child {
+  border-bottom: none;
+}
+
+.recruit-detail-label {
+  margin: 0;
+  font-weight: 700;
+  color: var(--green-900);
+}
+
+.recruit-detail-value {
+  margin: 0;
+  color: var(--text);
+}
+
+.recruit-view-contact {
+  margin-top: 28px;
+  padding: 18px 20px;
+  background: var(--green-50);
+  border-radius: 8px;
+  border: 1px solid #d4e8db;
+}
+
+.recruit-view-contact-title {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--green-900);
+}
+
+.recruit-view-contact-line {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.recruit-view-contact-line a {
+  color: var(--green-700);
+  text-decoration: none;
+}
+
+.recruit-view-contact-line a:hover {
+  text-decoration: underline;
+}
