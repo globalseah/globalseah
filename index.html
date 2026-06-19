@@ -73,7 +73,11 @@
         </div>
         <div class="home-hero-b-copy">
           <p class="home-hero-b-sub" lang="en">Better Environment, Better Tomorrow</p>
-          <h1>사람과 공간을 연결하는<br />종합관리 전문기업</h1>
+          <h1>
+            <span class="hero-line">사람과 공간을 연결하는</span>
+            <br class="hero-br" aria-hidden="true" />
+            <span class="hero-line">종합관리 전문기업</span>
+          </h1>
           <p class="home-hero-b-lead">더 쾌적한 환경, 더 나은 내일</p>
         </div>
       </section>
@@ -154,7 +158,7 @@
         </div>
       </section>
 
-      <!-- 공지 · 채용 · 문의 3열 -->
+      <!-- 공지 · 채용 · 문의 (PC 3열) -->
       <section class="home-bottom" aria-label="공지, 채용 및 문의">
         <div class="home-bottom-inner">
           <article class="home-info-card home-info-card--notice">
@@ -177,8 +181,7 @@
             </div>
           </article>
 
-          <aside class="home-inquiry-col" aria-label="견적 및 상담문의">
-            <!-- 글로벌세아 고객지원 위젯 B안 -->
+          <aside class="home-inquiry-col home-inquiry-col--desktop" aria-label="견적 및 상담문의">
             <div class="home-inquiry-widget">
               <div class="home-inquiry-widget-top">
                 <p class="home-inquiry-widget-label">고객지원센터</p>
@@ -219,6 +222,40 @@
           <div class="home-portfolio-marquee">
             <div id="home-portfolio-grid" class="home-portfolio-track"></div>
           </div>
+        </div>
+      </section>
+
+      <!-- 견적 및 상담문의 (모바일 — 실적현황 아래) -->
+      <section class="home-inquiry-section home-inquiry-section--mobile" aria-label="견적 및 상담문의">
+        <div class="home-inquiry-section-inner">
+          <aside class="home-inquiry-col" aria-label="고객지원센터">
+            <div class="home-inquiry-widget">
+              <div class="home-inquiry-widget-top">
+                <p class="home-inquiry-widget-label">고객지원센터</p>
+                <div class="home-inquiry-widget-tel-row">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4D2E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.08 3.4 2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/>
+                  </svg>
+                  <p class="home-inquiry-widget-tel">070-8671-2108</p>
+                </div>
+                <p class="home-inquiry-widget-hours">평일 09:00 ~ 18:00 &nbsp;·&nbsp; (토·일·공휴일 휴무)</p>
+              </div>
+
+              <div class="home-inquiry-widget-bottom">
+                <p class="home-inquiry-widget-desc">
+                  온라인 양식으로 견적·상담 문의를 남겨주시면<br />
+                  담당자 확인 후 친절히 안내드리겠습니다.
+                </p>
+                <a href="contact/index.html" class="home-inquiry-widget-btn" aria-label="온라인 문의하기">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                  </svg>
+                  온라인 문의하기
+                </a>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
     </main>

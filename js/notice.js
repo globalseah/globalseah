@@ -28,9 +28,7 @@
           '">' +
           item.title +
           "</a></td>" +
-          "<td>" +
-          item.date +
-          "</td>" +
+          pagination.boardDateCell(item.date) +
           "</tr>"
         );
       })

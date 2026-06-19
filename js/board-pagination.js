@@ -17,6 +17,24 @@
     window.history.replaceState(null, "", url);
   }
 
+  function formatBoardDateShort(isoDate) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(isoDate);
+    return m ? m[2] + "-" + m[3] : isoDate;
+  }
+
+  function boardDateCell(isoDate) {
+    return (
+      '<td class="board-date">' +
+      '<span class="board-date--full">' +
+      isoDate +
+      "</span>" +
+      '<span class="board-date--short">' +
+      formatBoardDateShort(isoDate) +
+      "</span>" +
+      "</td>"
+    );
+  }
+
   function render(container, totalPages, currentPage, onChange) {
     if (!container) return;
 
@@ -59,6 +77,7 @@
     PAGE_SIZE: PAGE_SIZE,
     getInitialPage: getInitialPage,
     setPageInUrl: setPageInUrl,
+    boardDateCell: boardDateCell,
     render: render,
   };
 })();

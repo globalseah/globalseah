@@ -69,6 +69,144 @@
     });
   }
 
+  function initCustomSelect(select) {
+    if (!select || select.dataset.customized === "true") return;
+
+    select.dataset.customized = "true";
+    select.classList.add("contact-form-select-native");
+    select.tabIndex = -1;
+    select.setAttribute("aria-hidden", "true");
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "contact-form-select";
+
+    const trigger = document.createElement("button");
+    trigger.type = "button";
+    trigger.className = "contact-form-select-trigger";
+    trigger.id = select.id + "-trigger";
+    trigger.setAttribute("aria-haspopup", "listbox");
+    trigger.setAttribute("aria-expanded", "false");
+
+    const label = document.querySelector('label[for="' + select.id + '"]');
+    if (label) label.setAttribute("for", trigger.id);
+
+    const valueLabel = document.createElement("span");
+    valueLabel.className = "contact-form-select-label";
+
+    const chevron = document.createElement("span");
+    chevron.className = "contact-form-select-chevron";
+    chevron.setAttribute("aria-hidden", "true");
+    chevron.textContent = "▾";
+
+    const list = document.createElement("ul");
+    list.className = "contact-form-select-list";
+    list.setAttribute("role", "listbox");
+    list.hidden = true;
+
+    trigger.appendChild(valueLabel);
+    trigger.appendChild(chevron);
+
+    select.parentNode.insertBefore(wrapper, select);
+    wrapper.appendChild(select);
+    wrapper.appendChild(trigger);
+    wrapper.appendChild(list);
+
+    function getPlaceholderText() {
+      const emptyOption = select.querySelector('option[value=""]');
+      return emptyOption ? emptyOption.textContent.trim() : "";
+    }
+
+    function updateValueLabel() {
+      const currentValue = select.value;
+      if (!currentValue) {
+        valueLabel.textContent = getPlaceholderText();
+        valueLabel.classList.add("is-placeholder");
+        return;
+      }
+
+      const selectedOption = Array.from(select.options).find(function (opt) {
+        return opt.value === currentValue;
+      });
+      valueLabel.textContent = selectedOption ? selectedOption.textContent.trim() : currentValue;
+      valueLabel.classList.remove("is-placeholder");
+    }
+
+    function syncSelectedState() {
+      list.querySelectorAll(".contact-form-select-option").forEach(function (item) {
+        const isSelected = item.dataset.value === select.value;
+        item.classList.toggle("is-selected", isSelected);
+        item.setAttribute("aria-selected", isSelected ? "true" : "false");
+      });
+    }
+
+    function setOpen(open) {
+      wrapper.classList.toggle("is-open", open);
+      trigger.setAttribute("aria-expanded", String(open));
+      list.hidden = !open;
+    }
+
+    function close() {
+      setOpen(false);
+    }
+
+    Array.from(select.options).forEach(function (option) {
+      if (!option.value) return;
+
+      const item = document.createElement("li");
+      item.className = "contact-form-select-option";
+      item.setAttribute("role", "option");
+      item.dataset.value = option.value;
+      item.textContent = option.textContent.trim();
+
+      item.addEventListener("click", function () {
+        select.value = option.value;
+        select.dispatchEvent(new Event("change", { bubbles: true }));
+        updateValueLabel();
+        syncSelectedState();
+        close();
+        trigger.focus();
+      });
+
+      list.appendChild(item);
+    });
+
+    trigger.addEventListener("click", function () {
+      setOpen(!wrapper.classList.contains("is-open"));
+    });
+
+    trigger.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        setOpen(true);
+      }
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!wrapper.contains(e.target)) close();
+    });
+
+    select.addEventListener("change", function () {
+      updateValueLabel();
+      syncSelectedState();
+    });
+
+    form.addEventListener("reset", function () {
+      window.setTimeout(function () {
+        updateValueLabel();
+        syncSelectedState();
+        close();
+      }, 0);
+    });
+
+    updateValueLabel();
+    syncSelectedState();
+    select.customSelectTrigger = trigger;
+  }
+
+  const businessSelect = document.getElementById("business");
+  if (businessSelect) initCustomSelect(businessSelect);
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -92,7 +230,9 @@
     const businessVal = (form.business && form.business.value.trim()) || "";
     if (!businessVal) {
       showStatus("사업부문을 선택해 주세요.", true);
-      if (form.business) form.business.focus();
+      const businessTrigger = form.business && form.business.customSelectTrigger;
+      if (businessTrigger) businessTrigger.focus();
+      else if (form.business) form.business.focus();
       return;
     }
 

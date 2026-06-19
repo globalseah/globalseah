@@ -74,6 +74,7 @@
           <nav class="main-nav" aria-label="주 메뉴">
             <ul>${navHtml}</ul>
           </nav>
+          <a href="${link("contact/index.html")}" class="header-inquiry-btn">문의하기</a>
           <button type="button" class="menu-toggle" aria-label="메뉴 열기" aria-expanded="false">
             <span></span><span></span><span></span>
           </button>
@@ -108,7 +109,8 @@
       <div class="footer-body">
         <div class="footer-body-inner">
           <p class="footer-company-line">
-            <strong>${site.name}</strong> (${site.nameEn}) · ${site.address}
+            <strong>${site.name}</strong> (${site.nameEn})<br />
+            ${site.address}
           </p>
           <p class="footer-company-line">
             대표이사 ${site.ceo} · 사업자등록번호 ${site.bizRegNo || ""}
@@ -129,14 +131,19 @@
   const header = document.querySelector(".site-header");
   const toggle = document.querySelector(".menu-toggle");
   const drawer = document.querySelector(".mobile-drawer");
+  let refreshMobileHeader = function () {};
 
   function setDrawerOpen(open) {
     if (!toggle || !drawer) return;
     toggle.setAttribute("aria-expanded", String(open));
     drawer.hidden = !open;
     document.body.classList.toggle("nav-open", open);
-    if (header) header.classList.toggle("menu-open", open);
+    if (header) {
+      header.classList.toggle("menu-open", open);
+      if (open) header.classList.remove("is-scroll-hidden");
+    }
     toggle.setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기");
+    refreshMobileHeader();
   }
 
   function isDesktopNav() {
@@ -271,4 +278,276 @@
 
     pageHero.style.setProperty("--page-hero-bg", `url("${base}assets/images/${heroFile}")`);
   }
+
+  initMobileSubNav();
+
+  window.addEventListener("seah:viewport", initMobileSubNav);
+  window.addEventListener("resize", debounce(initMobileSubNav, 150));
+
+  function debounce(fn, ms) {
+    let t;
+    return function () {
+      clearTimeout(t);
+      t = setTimeout(fn, ms);
+    };
+  }
+
+  function initMobileSubNav() {
+    const isMobile = !document.documentElement.classList.contains("desktop-only");
+    document.querySelectorAll(".sub-nav-sidebar, .sub-nav-tabs--equal").forEach(function (nav) {
+      if (isMobile) {
+        buildMobileSubNavDropdown(nav);
+      } else {
+        destroyMobileSubNavDropdown(nav);
+      }
+    });
+  }
+
+  function buildMobileSubNavDropdown(nav) {
+    if (nav.querySelector(".sub-nav-dropdown")) return;
+
+    const links = Array.from(nav.querySelectorAll(":scope > a"));
+    if (!links.length) return;
+
+    const active = links.find(function (a) {
+      return a.classList.contains("active");
+    }) || links[0];
+
+    const dropdown = document.createElement("div");
+    dropdown.className = "sub-nav-dropdown";
+
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "sub-nav-dropdown-toggle";
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-haspopup", "listbox");
+    toggle.setAttribute("aria-label", "서브메뉴 열기");
+
+    const label = document.createElement("span");
+    label.className = "sub-nav-dropdown-label";
+    label.textContent = active.textContent.trim();
+
+    const chevron = document.createElement("span");
+    chevron.className = "sub-nav-dropdown-chevron";
+    chevron.setAttribute("aria-hidden", "true");
+    chevron.textContent = "▾";
+
+    toggle.appendChild(label);
+    toggle.appendChild(chevron);
+
+    const panel = document.createElement("div");
+    panel.className = "sub-nav-dropdown-panel";
+    panel.hidden = true;
+
+    const list = document.createElement("div");
+    list.className = "sub-nav-dropdown-list";
+    list.setAttribute("role", "listbox");
+
+    links.forEach(function (a) {
+      list.appendChild(a);
+    });
+
+    panel.appendChild(list);
+    dropdown.appendChild(toggle);
+    dropdown.appendChild(panel);
+    nav.appendChild(dropdown);
+    nav.classList.add("sub-nav--has-dropdown");
+
+    function setOpen(open) {
+      toggle.setAttribute("aria-expanded", String(open));
+      panel.hidden = !open;
+      dropdown.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-label", open ? "서브메뉴 닫기" : "서브메뉴 열기");
+    }
+
+    toggle.addEventListener("click", function () {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    list.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        setOpen(false);
+      });
+    });
+
+    function onDocClick(e) {
+      if (!dropdown.contains(e.target)) setOpen(false);
+    }
+
+    document.addEventListener("click", onDocClick);
+    dropdown._outsideClick = onDocClick;
+  }
+
+  function destroyMobileSubNavDropdown(nav) {
+    const dropdown = nav.querySelector(".sub-nav-dropdown");
+    if (!dropdown) return;
+
+    if (dropdown._outsideClick) {
+      document.removeEventListener("click", dropdown._outsideClick);
+    }
+
+    const links = dropdown.querySelectorAll(".sub-nav-dropdown-list a");
+    links.forEach(function (a) {
+      nav.insertBefore(a, dropdown);
+    });
+
+    dropdown.remove();
+    nav.classList.remove("sub-nav--has-dropdown");
+  }
+
+  function initMobileHeaderScroll() {
+    const SCROLL_THRESHOLD = 10;
+    const TOP_ALWAYS_VISIBLE = 80;
+    const heroSection = document.querySelector(".home-hero-b");
+    let lastScrollY = window.scrollY;
+    let accumulatedDelta = 0;
+    let scrollTicking = false;
+    let scrollListenerActive = false;
+    let resizeTimer;
+
+    function isMobileScrollHeader() {
+      return !document.documentElement.classList.contains("desktop-only");
+    }
+
+    function isHeroHeader() {
+      return Boolean(header && header.classList.contains("site-header--hero"));
+    }
+
+    function getHeroHeight() {
+      if (!heroSection) return 0;
+      return heroSection.offsetHeight;
+    }
+
+    function setScrollHidden(hidden) {
+      if (!header) return;
+      header.classList.toggle("is-scroll-hidden", hidden);
+    }
+
+    function clearHeroHeaderState() {
+      if (!header) return;
+      header.classList.remove("is-hero-in-view", "is-hero-passed");
+    }
+
+    function updateHeroHeaderState(scrollY) {
+      if (!header || !isHeroHeader()) {
+        clearHeroHeaderState();
+        return;
+      }
+
+      if (document.body.classList.contains("nav-open")) {
+        header.classList.remove("is-hero-in-view");
+        header.classList.add("is-hero-passed");
+        return;
+      }
+
+      const inHero = scrollY < getHeroHeight();
+      header.classList.toggle("is-hero-in-view", inHero);
+      header.classList.toggle("is-hero-passed", !inHero);
+    }
+
+    function resetScrollState() {
+      lastScrollY = window.scrollY;
+      accumulatedDelta = 0;
+    }
+
+    function updateMobileHeader() {
+      scrollTicking = false;
+
+      if (!header || !isMobileScrollHeader()) {
+        setScrollHidden(false);
+        clearHeroHeaderState();
+        resetScrollState();
+        return;
+      }
+
+      const scrollY = window.scrollY;
+      updateHeroHeaderState(scrollY);
+
+      if (document.body.classList.contains("nav-open")) {
+        setScrollHidden(false);
+        resetScrollState();
+        return;
+      }
+
+      if (scrollY <= TOP_ALWAYS_VISIBLE) {
+        setScrollHidden(false);
+        resetScrollState();
+        return;
+      }
+
+      const delta = scrollY - lastScrollY;
+      lastScrollY = scrollY;
+
+      if (delta === 0) return;
+
+      if ((delta > 0 && accumulatedDelta < 0) || (delta < 0 && accumulatedDelta > 0)) {
+        accumulatedDelta = 0;
+      }
+
+      accumulatedDelta += delta;
+
+      if (accumulatedDelta >= SCROLL_THRESHOLD) {
+        setScrollHidden(true);
+        accumulatedDelta = 0;
+      } else if (accumulatedDelta <= -SCROLL_THRESHOLD) {
+        setScrollHidden(false);
+        accumulatedDelta = 0;
+      }
+    }
+
+    function onScroll() {
+      if (!scrollTicking) {
+        scrollTicking = true;
+        requestAnimationFrame(updateMobileHeader);
+      }
+    }
+
+    function enableScrollHeader() {
+      if (scrollListenerActive) return;
+      scrollListenerActive = true;
+      resetScrollState();
+      setScrollHidden(false);
+      window.addEventListener("scroll", onScroll, { passive: true });
+      updateMobileHeader();
+    }
+
+    function disableScrollHeader() {
+      if (!scrollListenerActive) return;
+      scrollListenerActive = false;
+      window.removeEventListener("scroll", onScroll);
+      setScrollHidden(false);
+      clearHeroHeaderState();
+      resetScrollState();
+    }
+
+    function syncScrollHeader() {
+      if (isMobileScrollHeader()) {
+        enableScrollHeader();
+      } else {
+        disableScrollHeader();
+      }
+    }
+
+    refreshMobileHeader = function () {
+      if (!scrollTicking) {
+        scrollTicking = true;
+        requestAnimationFrame(updateMobileHeader);
+      }
+    };
+
+    syncScrollHeader();
+    window.addEventListener("seah:viewport", syncScrollHeader);
+    window.addEventListener("pageshow", syncScrollHeader);
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(refreshMobileHeader, 150);
+    });
+  }
+
+  initMobileHeaderScroll();
+
+  const revealScript = document.createElement("script");
+  revealScript.src = link("js/reveal-on-scroll.js");
+  revealScript.defer = true;
+  document.body.appendChild(revealScript);
 })();

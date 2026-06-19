@@ -21,7 +21,7 @@ window.SEAH_SITE = {
    *  - 터치 + 너비 < mobileBreakpoint → 모바일(햄버거 GNB)
    *  - 그 외(마우스 PC·iPad 가로 등) → PC 1280 고정
    *  모바일 작업·검수 시 로컬 true, 배포 전 false 로 되돌림 */
-  responsive: false,
+  responsive: true,
   desktopViewportWidth: 1280,
   /** 모바일 레이아웃 전환 기준(px). iPad 가로(1024~)는 PC로 처리 */
   mobileBreakpoint: 1024,
