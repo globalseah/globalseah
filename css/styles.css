@@ -1510,12 +1510,23 @@ html:not(.desktop-only) .philosophy-diagram-img--mobile {
   html:not(.desktop-only) .sub-nav-sidebar.sub-nav--has-dropdown,
   html:not(.desktop-only) .sub-nav-tabs--equal.sub-nav--has-dropdown {
     display: block;
+    position: relative;
     margin-bottom: 20px;
     overflow: visible;
   }
 
+  html:not(.desktop-only) .sub-nav-sidebar.sub-nav--has-dropdown:has(.sub-nav-dropdown.is-open),
+  html:not(.desktop-only) .sub-nav-tabs--equal.sub-nav--has-dropdown:has(.sub-nav-dropdown.is-open) {
+    z-index: 80;
+  }
+
   html:not(.desktop-only) .sub-nav-dropdown {
     position: relative;
+    z-index: 1;
+  }
+
+  html:not(.desktop-only) .sub-nav-dropdown.is-open {
+    z-index: 2;
   }
 
   html:not(.desktop-only) .sub-nav-dropdown-toggle {
@@ -1564,6 +1575,7 @@ html:not(.desktop-only) .philosophy-diagram-img--mobile {
     z-index: 50;
     left: 0;
     right: 0;
+    top: 100%;
     border: 1px solid var(--green-700);
     border-top: none;
     border-radius: 0 0 var(--radius) var(--radius);
@@ -3902,17 +3914,54 @@ html:not(.desktop-only) .home-portfolio {
 
   html:not(.desktop-only) .mobile-drawer {
     z-index: 199;
+    top: var(--header-main-h);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: flex-end;
+    background: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    transition: background 0.3s ease;
+  }
+
+  html:not(.desktop-only) .mobile-drawer:not([hidden]) {
+    pointer-events: auto;
+  }
+
+  html:not(.desktop-only) .mobile-drawer.is-open {
+    background: rgba(0, 0, 0, 0.35);
   }
 
   html:not(.desktop-only) .mobile-drawer-inner {
+    width: 60%;
+    height: 100%;
+    margin-left: auto;
     padding: 12px 16px 24px;
     max-height: calc(100vh - var(--header-main-h));
     max-height: calc(100dvh - var(--header-main-h));
+    overflow-y: auto;
+    border-top: none;
+    border-left: 1px solid var(--corp-border);
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+  }
+
+  html:not(.desktop-only) .mobile-drawer.is-open .mobile-drawer-inner {
+    transform: translateX(0);
   }
 
   html:not(.desktop-only) .mobile-drawer a {
     padding: 14px 4px;
     font-size: 0.95rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html:not(.desktop-only) .mobile-drawer,
+    html:not(.desktop-only) .mobile-drawer-inner {
+      transition: none;
+    }
   }
 
   html:not(.desktop-only) .site-header--hero.menu-open .header-main {

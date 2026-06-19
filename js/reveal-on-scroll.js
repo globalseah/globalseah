@@ -16,8 +16,6 @@
     "main .page-content .portfolio-grid .portfolio-item",
     "main .page-content .cert-grid > *",
     "main .page-content .philosophy-section",
-    "main .page-content .sub-nav-sidebar",
-    "main .page-content .sub-nav-tabs--equal",
     "main .contact-form-card",
     "main .page-content .board-table",
     "main .page-content .notice-view-head",

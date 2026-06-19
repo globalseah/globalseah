@@ -83,10 +83,10 @@
       <div class="gnb-sub-bar" hidden>
         <div class="gnb-sub-bar-inner">${subBarHtml}</div>
       </div>
-      <div class="mobile-drawer" hidden>
-        <div class="mobile-drawer-inner">${mobileNavHtml}</div>
-      </div>
-    </header>`;
+    </header>
+    <div class="mobile-drawer" hidden>
+      <div class="mobile-drawer-inner">${mobileNavHtml}</div>
+    </div>`;
 
   const contactNav = site.nav.find((item) => item.href === "contact/index.html");
   const contactLabel = contactNav ? contactNav.label : "견적 및 상담문의";
@@ -131,19 +131,58 @@
   const header = document.querySelector(".site-header");
   const toggle = document.querySelector(".menu-toggle");
   const drawer = document.querySelector(".mobile-drawer");
+  const drawerInner = drawer ? drawer.querySelector(".mobile-drawer-inner") : null;
   let refreshMobileHeader = function () {};
+  let drawerCloseTimer = null;
+
+  function isMobileDrawer() {
+    return !document.documentElement.classList.contains("desktop-only");
+  }
 
   function setDrawerOpen(open) {
     if (!toggle || !drawer) return;
+
+    clearTimeout(drawerCloseTimer);
     toggle.setAttribute("aria-expanded", String(open));
-    drawer.hidden = !open;
+    toggle.setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기");
     document.body.classList.toggle("nav-open", open);
+
     if (header) {
       header.classList.toggle("menu-open", open);
       if (open) header.classList.remove("is-scroll-hidden");
     }
-    toggle.setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기");
+
+    if (isMobileDrawer()) {
+      if (open) {
+        drawer.hidden = false;
+        window.requestAnimationFrame(function () {
+          window.requestAnimationFrame(function () {
+            drawer.classList.add("is-open");
+          });
+        });
+      } else {
+        drawer.classList.remove("is-open");
+        drawerCloseTimer = window.setTimeout(function () {
+          if (!drawer.classList.contains("is-open")) {
+            drawer.hidden = true;
+          }
+        }, 320);
+      }
+    } else {
+      drawer.hidden = !open;
+      drawer.classList.toggle("is-open", open);
+    }
+
     refreshMobileHeader();
+  }
+
+  if (drawerInner) {
+    drawerInner.addEventListener("transitionend", function (e) {
+      if (e.target !== drawerInner || e.propertyName !== "transform") return;
+      if (!drawer.classList.contains("is-open") && !drawer.hidden) {
+        drawer.hidden = true;
+      }
+    });
   }
 
   function isDesktopNav() {
