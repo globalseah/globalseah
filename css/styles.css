@@ -378,6 +378,7 @@ a {
 
 .site-header--hero:not(.is-open) .nav-link {
   color: #fff;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
   transition: color 0.3s ease, background 0.3s ease;
 }
 
@@ -2430,6 +2431,18 @@ html.desktop-only .portfolio-grid {
   object-position: center;
 }
 
+.home-hero-b-slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(10, 50, 28, 0.35) 0%, rgba(10, 50, 28, 0.55) 100%);
+  pointer-events: none;
+}
+
+.home-hero-b-slide--light::after {
+  background: linear-gradient(90deg, rgba(10, 50, 28, 0.1) 0%, rgba(10, 50, 28, 0.28) 100%);
+}
+
 .home-hero-b-shade {
   position: absolute;
   inset: 0;
@@ -2447,7 +2460,7 @@ html.desktop-only .portfolio-grid {
   padding: 48px 20px;
   text-align: right;
   color: #fff;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
 }
 
 .home-hero-b-sub {
