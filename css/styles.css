@@ -3014,6 +3014,104 @@ html.desktop-only .portfolio-grid {
 }
 
 /* =========================================================================
+   모바일 반응형 — 1단계: GNB·공통 (responsive: true → desktop-only 해제 시 적용)
+   PC 확정본은 responsive: false 유지 — 아래 규칙은 html:not(.desktop-only) 에만 적용
+   ========================================================================= */
+
+@media (max-width: 1023px) {
+  html:not(.desktop-only) .site-header:not(.site-header--hero) {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+
+  html:not(.desktop-only) .header-main-inner {
+    padding: 0 16px;
+    gap: 12px;
+    width: 100%;
+    max-width: none;
+  }
+
+  html:not(.desktop-only) .brand-logo {
+    height: 34px;
+  }
+
+  html:not(.desktop-only) .menu-toggle {
+    width: 40px;
+    height: 40px;
+  }
+
+  html:not(.desktop-only) .mobile-drawer {
+    z-index: 199;
+  }
+
+  html:not(.desktop-only) .mobile-drawer-inner {
+    padding: 12px 16px 24px;
+    max-height: calc(100vh - var(--header-main-h));
+    max-height: calc(100dvh - var(--header-main-h));
+  }
+
+  html:not(.desktop-only) .mobile-drawer a {
+    padding: 14px 4px;
+    font-size: 0.95rem;
+  }
+
+  html:not(.desktop-only) .site-header--hero.menu-open .header-main {
+    background: #fff;
+    border-bottom-color: var(--corp-border);
+  }
+
+  html:not(.desktop-only) .site-header--hero.menu-open .header-main::before {
+    opacity: 1;
+  }
+
+  html:not(.desktop-only) .site-header--hero.menu-open .brand-logo--default {
+    opacity: 1;
+  }
+
+  html:not(.desktop-only) .site-header--hero.menu-open .brand-logo--inverse {
+    opacity: 0;
+  }
+
+  html:not(.desktop-only) .site-header--hero.menu-open .menu-toggle {
+    border-color: var(--corp-border);
+    background: #fff;
+  }
+
+  html:not(.desktop-only) .site-header--hero.menu-open .menu-toggle span {
+    background: #333;
+  }
+
+  html:not(.desktop-only) .page-hero {
+    padding: 28px 0 24px;
+  }
+
+  html:not(.desktop-only) .page-hero h1 {
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+  }
+
+  html:not(.desktop-only) .page-content {
+    padding: 32px 0 56px;
+  }
+}
+
+@media (max-width: 767px) {
+  html:not(.desktop-only) .container {
+    width: min(100% - 32px, var(--max));
+  }
+
+  html:not(.desktop-only) .breadcrumb {
+    font-size: 0.8rem;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  html:not(.desktop-only) .content-card {
+    padding: 20px 16px;
+  }
+}
+
+/* =========================================================================
    PC 고정 레이아웃 (1단계 — 브레이크포인트 고정)
    desktop-only 모드에서는 브라우저 창 너비와 무관하게 PC 배치를 강제한다.
    → min-width 쿼리(PC 레이아웃)를 여기서 복제해 항상 적용

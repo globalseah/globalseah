@@ -17,9 +17,14 @@ window.SEAH_SITE = {
   kakaoHours: "24시간 문의 가능",
   kakaoUrl: "", // 카카오톡 채널 URL 확정 후 입력
 
-  /** false: PC 레이아웃 고정(클라이언트 미리보기) | true: 모바일 반응형 */
+  /** false: 항상 PC 1280 고정 | true: 디바이스 분기
+   *  - 터치 + 너비 < mobileBreakpoint → 모바일(햄버거 GNB)
+   *  - 그 외(마우스 PC·iPad 가로 등) → PC 1280 고정
+   *  모바일 작업·검수 시 로컬 true, 배포 전 false 로 되돌림 */
   responsive: false,
   desktopViewportWidth: 1280,
+  /** 모바일 레이아웃 전환 기준(px). iPad 가로(1024~)는 PC로 처리 */
+  mobileBreakpoint: 1024,
 
   nav: [
     {

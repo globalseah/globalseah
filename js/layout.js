@@ -129,12 +129,41 @@
   const header = document.querySelector(".site-header");
   const toggle = document.querySelector(".menu-toggle");
   const drawer = document.querySelector(".mobile-drawer");
+
+  function setDrawerOpen(open) {
+    if (!toggle || !drawer) return;
+    toggle.setAttribute("aria-expanded", String(open));
+    drawer.hidden = !open;
+    document.body.classList.toggle("nav-open", open);
+    if (header) header.classList.toggle("menu-open", open);
+    toggle.setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기");
+  }
+
+  function isDesktopNav() {
+    return (
+      document.documentElement.classList.contains("desktop-only") ||
+      window.matchMedia("(min-width: 1024px)").matches
+    );
+  }
+
   if (toggle && drawer) {
-    toggle.addEventListener("click", () => {
+    toggle.addEventListener("click", function () {
       const open = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", String(!open));
-      drawer.hidden = open;
-      document.body.classList.toggle("nav-open", !open);
+      setDrawerOpen(!open);
+    });
+
+    drawer.addEventListener("click", function (e) {
+      if (e.target === drawer) setDrawerOpen(false);
+    });
+
+    drawer.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        setDrawerOpen(false);
+      });
+    });
+
+    window.addEventListener("seah:viewport", function (e) {
+      if (!e.detail.mobile) setDrawerOpen(false);
     });
   }
 
@@ -190,7 +219,7 @@
   if (header) {
     navItemsWithSub.forEach((item) => {
       item.addEventListener("mouseenter", () => {
-        if (!window.matchMedia("(min-width: 1024px)").matches) return;
+        if (!isDesktopNav()) return;
         clearTimeout(closeTimer);
         clearTimeout(openTimer);
         const index = item.dataset.submenu;
@@ -200,7 +229,7 @@
 
     navItemsNoSub.forEach((item) => {
       item.addEventListener("mouseenter", () => {
-        if (!window.matchMedia("(min-width: 1024px)").matches) return;
+        if (!isDesktopNav()) return;
         clearTimeout(closeTimer);
         clearTimeout(openTimer);
         openTimer = setTimeout(showHeaderOnly, 150);
@@ -216,8 +245,8 @@
     });
   }
 
-  window.matchMedia("(min-width: 1024px)").addEventListener("change", (e) => {
-    if (!e.matches) {
+  window.matchMedia("(min-width: 1024px)").addEventListener("change", () => {
+    if (!isDesktopNav()) {
       clearTimeout(openTimer);
       clearTimeout(closeTimer);
       hideHeader();
