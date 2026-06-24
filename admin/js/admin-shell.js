@@ -1,10 +1,10 @@
 (function () {
   var NAV_ITEMS = [
-    { href: "index.html", label: "대시보드", page: "dashboard" },
-    { href: "notices.html", label: "공지사항", page: "notices" },
-    { href: "portfolio.html", label: "실적현황", page: "portfolio" },
-    { href: "recruit.html", label: "채용현황", page: "recruit" },
-    { href: "stats.html", label: "방문 통계", page: "stats" },
+    { href: "/admin/index.html", label: "대시보드", page: "dashboard" },
+    { href: "/admin/notices.html", label: "공지사항", page: "notices" },
+    { href: "/admin/portfolio.html", label: "실적현황", page: "portfolio" },
+    { href: "/admin/recruit.html", label: "채용현황", page: "recruit" },
+    { href: "/admin/stats.html", label: "방문 통계", page: "stats" },
   ];
 
   var page = document.body.dataset.adminPage || "";
