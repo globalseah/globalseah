@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>채용 등록 — 글로벌세아종합관리</title>
+    <link rel="icon" href="/assets/images/logo.png" type="image/png" />
+    <link rel="stylesheet" href="/admin/admin.css?v=4" />
+  </head>
+  <body data-admin-page="recruit">
+    <div class="admin-root">
+      <div class="admin-frame">
+        <aside class="admin-sidebar">
+          <div class="admin-brand">
+            <strong>글로벌세아 관리자</strong>
+            <span>콘텐츠 · 통계 관리</span>
+          </div>
+          <nav class="admin-nav" id="admin-nav" aria-label="관리자 메뉴"></nav>
+          <div class="admin-sidebar-foot">
+            <a href="/" target="_blank" rel="noopener">공개 사이트 보기</a>
+          </div>
+        </aside>
+        <div class="admin-main">
+          <header class="admin-topbar">
+            <h1 id="admin-page-title">채용 등록</h1>
+            <p class="admin-topbar-meta" id="admin-page-meta">8개 항목 구조화 형식으로 등록합니다</p>
+          </header>
+          <main class="admin-content">
+            <p class="admin-status" id="recruit-form-status"></p>
+            <span class="admin-badge" id="recruit-format-badge">구조화 (신규)</span>
+            <form id="recruit-form" class="admin-form admin-card">
+              <div class="admin-form-row">
+                <label class="admin-label" for="recruit-title">제목 <span class="admin-required">*</span></label>
+                <input
+                  class="admin-input"
+                  type="text"
+                  id="recruit-title"
+                  name="title"
+                  required
+                  placeholder="예: [인선서구] 청라병원 미화원 채용건"
+                />
+              </div>
+              <div class="admin-form-row">
+                <label class="admin-label" for="recruit-date">등록일 <span class="admin-required">*</span></label>
+                <input
+                  class="admin-input admin-input--date"
+                  type="date"
+                  id="recruit-date"
+                  name="published_at"
+                  required
+                />
+              </div>
+              <div class="admin-form-row admin-form-row--contact">
+                <span class="admin-label">문의 연락처 <span class="admin-required">*</span></span>
+                <div class="admin-contact-grid">
+                  <div>
+                    <label class="admin-sublabel" for="recruit-contact-role">담당자</label>
+                    <input
+                      class="admin-input"
+                      type="text"
+                      id="recruit-contact-role"
+                      placeholder="예: 담당팀장"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label class="admin-sublabel" for="recruit-contact-phone">전화번호</label>
+                    <input
+                      class="admin-input"
+                      type="text"
+                      id="recruit-contact-phone"
+                      placeholder="예: 010-1234-5678"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div id="recruit-structured-panel">
+                <p class="admin-form-hint">
+                  아래 8개 항목은 모두 선택입니다. 입력하지 않은 항목은 공개 상세에서 자동으로 숨겨집니다.
+                </p>
+                <div class="admin-recruit-fields">
+                  <div class="admin-form-row">
+                    <label class="admin-label" for="recruit-field-workplace">근무지</label>
+                    <textarea class="admin-textarea admin-textarea--compact" id="recruit-field-workplace" rows="2"></textarea>
+                  </div>
+                  <div class="admin-form-row">
+                    <label class="admin-label" for="recruit-field-duties">업무내용</label>
+                    <textarea class="admin-textarea admin-textarea--compact" id="recruit-field-duties" rows="3"></textarea>
+                  </div>
+                  <div class="admin-form-row">
+                    <label class="admin-label" for="recruit-field-work_hours">근무시간</label>
+                    <textarea class="admin-textarea admin-textarea--compact" id="recruit-field-work_hours" rows="2"></textarea>
+                  </div>
+                  <div class="admin-form-row">
+                    <label class="admin-label" for="recruit-field-work_conditions">근무조건</label>
+                    <textarea class="admin-textarea admin-textarea--compact" id="recruit-field-work_conditions" rows="2"></textarea>
+                  </div>
+                  <div class="admin-form-row">
+                    <label class="admin-label" for="recruit-field-salary">급여조건</label>
+                    <textarea class="admin-textarea admin-textarea--compact" id="recruit-field-salary" rows="2"></textarea>
+                  </div>
+                  <div class="admin-form-row">
+                    <label class="admin-label" for="recruit-field-other_conditions">기타조건</label>
+                    <textarea class="admin-textarea admin-textarea--compact" id="recruit-field-other_conditions" rows="2"></textarea>
+                  </div>
+                  <div class="admin-form-row">
+                    <label class="admin-label" for="recruit-field-benefits">복리후생</label>
+                    <textarea class="admin-textarea admin-textarea--compact" id="recruit-field-benefits" rows="2"></textarea>
+                  </div>
+                  <div class="admin-form-row">
+                    <label class="admin-label" for="recruit-field-special_notes">특이사항</label>
+                    <textarea class="admin-textarea admin-textarea--compact" id="recruit-field-special_notes" rows="2"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div id="recruit-legacy-panel" hidden>
+                <p class="admin-form-hint">
+                  기존 텍스트형 채용 공고입니다. 본문을 자유 형식으로 수정할 수 있습니다.
+                </p>
+                <div class="admin-form-row">
+                  <label class="admin-label" for="recruit-body">본문 <span class="admin-required">*</span></label>
+                  <textarea
+                    class="admin-textarea"
+                    id="recruit-body"
+                    rows="14"
+                    placeholder="채용 상세 내용"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="admin-form-actions">
+                <button type="submit" class="admin-btn" id="recruit-submit-btn">등록</button>
+                <a class="admin-btn admin-btn--ghost" id="recruit-cancel-btn" href="/admin/recruit.html">목록</a>
+              </div>
+            </form>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script src="/admin/js/admin-shell.js"></script>
+    <script src="/admin/js/admin-api.js"></script>
+    <script src="/admin/js/recruit-form.js"></script>
+  </body>
+</html>

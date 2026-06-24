@@ -505,4 +505,35 @@ a {
   text-align: center;
 }
 
+.admin-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.admin-sublabel {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.admin-form-row--contact {
+  margin-top: 8px;
+}
+
+.admin-recruit-fields .admin-form-row + .admin-form-row {
+  margin-top: 16px;
+}
+
+.admin-textarea--compact {
+  min-height: 72px;
+}
+
+#recruit-format-badge {
+  margin-bottom: 12px;
+}
+
+
 
