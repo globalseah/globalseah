@@ -13,6 +13,14 @@
   "redirects": [
     { "source": "/admin", "destination": "/admin/", "permanent": false }
   ],
+  "headers": [
+    {
+      "source": "/admin/admin.css",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    }
+  ],
   "rewrites": [
     { "source": "/admin/notices", "destination": "/admin/notices.html" },
     { "source": "/admin/portfolio", "destination": "/admin/portfolio.html" },
