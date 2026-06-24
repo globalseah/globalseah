@@ -9,5 +9,12 @@
     "api/admin/upload.js": {
       "maxDuration": 10
     }
-  }
+  },
+  "rewrites": [
+    { "source": "/admin", "destination": "/admin/index.html" },
+    { "source": "/admin/notices", "destination": "/admin/notices.html" },
+    { "source": "/admin/portfolio", "destination": "/admin/portfolio.html" },
+    { "source": "/admin/recruit", "destination": "/admin/recruit.html" },
+    { "source": "/admin/stats", "destination": "/admin/stats.html" }
+  ]
 }
