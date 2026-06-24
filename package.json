@@ -6,6 +6,7 @@
     "dev:api": "vercel dev"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.8",
     "formidable": "^2.1.5",
     "resend": "^4.5.1"
   },
