@@ -265,7 +265,56 @@ Vercel Environment Variables — `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_
 | **5** | 관리자 CRUD — 채용 | 신규 구조화 + 레거시 수정 폼 | 마감 토글 없음 |
 | **6** | 공개 사이트 연동 | `notice`·`portfolio`·`recruit`·`home` fetch 전환, 시드 스크립트, `*-data.js` 정리 | 최신순 정렬 |
 | **7** | GA4 | gtag 삽입, Data API, `admin/stats.html` | GA4 속성·서비스 계정 후 |
-| **8** | 테스트 · 운영 반영 | Preview 검증 → prod 시드 → main 배포 → 계정 전달 | |
+| **8** | 테스트 · 운영 반영 | Preview 검증 → prod 시드 → main 배포 → 계정 전달 | 아래 **Phase 8 상세** 참고 |
+
+### Phase 8 상세 (운영 반영 체크리스트)
+
+> **Phase 7(GA4)과 분리 가능:** 콘텐츠 관리만 먼저 운영에 올리고, 통계는 GA4 준비 후 추가해도 됨.
+
+| # | 항목 | 내용 | 주체 | 선행 | 상태 |
+|---|------|------|------|------|------|
+| **8-1** | Preview 최종 검증 | 공지·실적·채용 CRUD → 공개 페이지 반영, 문의 API 정상 | JD | Phase 6 | ✅ 완료 |
+| **8-2** | 브랜치·배포 동기화 | `feature/admin-page` 변경분 push, Preview 최신 배포 확인 | JD | 8-1 | 🔄 진행 중 |
+| **8-3** | prod DB 스키마 | Supabase **prod** → SQL Editor에 `supabase/schema.sql` 1회 실행(미실행 시) | JD | Phase 0 | ⏳ 확인 필요 |
+| **8-4** | prod 초기 시드 | prod `SUPABASE_SERVICE_ROLE_KEY`로 `npm run seed:posts -- --fresh` (67건) | JD | 8-3 | ⏳ 대기 |
+| **8-5** | Vercel Production env | `SUPABASE_*` 3개 = **prod** 값, `RESEND_*`·`CONTACT_*` 운영값, `ADMIN_USER`/`ADMIN_PASS` **최종** | JD | — | ⏳ 배포 전 확정 |
+| **8-6** | Basic Auth 운영 계정 | Preview용 비밀번호 → 대표자용 **최종 ID/PW**로 변경(Production env) | JD | 8-5 | ⏳ 배포 직전 |
+| **8-7** | main 머지 · Production 배포 | `feature/admin-page` → `main` merge, globalseah.com 자동 배포 | JD | 8-4, 8-5, 8-6 | ⏳ 대기 |
+| **8-8** | 운영 사이트 검증 | globalseah.com — 메인·게시판·문의·`/admin` 로그인·CRUD→공개 반영 | JD | 8-7 | ⏳ 대기 |
+| **8-9** | 대표자 인수인계 | `/admin` URL, Basic Auth 계정, 공지·실적·채용 사용법(간단 안내) | JD → 클라이언트 | 8-8 | ⏳ 대기 |
+| **8-10** | dev DB 정리 (선택) | Preview 테스트 글 삭제·재시드 — **운영에 영향 없음** | JD | 8-7 | ⏳ 선택 |
+| **8-11** | GA4 연동 (Phase 7) | gtag + `admin/stats.html` — 구글 기기 확인 후 | JD | GA4 속성 | ⏳ 보류 |
+| **8-12** | 대시보드 UI 정리 (선택) | 요약 카드·이미지·문구 일괄 — 기능 안정 후 | JD | 8-8 또는 8-11 | ⏳ 나중 |
+
+#### 8-4 prod 시드 — 실행 예시
+
+```powershell
+cd c:\Users\choyo\Desktop\seah
+$env:SUPABASE_URL="https://<prod-project>.supabase.co"
+$env:SUPABASE_SERVICE_ROLE_KEY="eyJ..."
+npm run seed:posts -- --fresh
+```
+
+- **dev가 아닌 prod** 키인지 URL로 반드시 확인
+- 이미 운영에 수동 등록한 글이 있으면 `--fresh` 대신 백업 후 결정
+
+#### 8-7 머지 전 최소 조건
+
+- [ ] prod `posts` 테이블 존재 + RLS
+- [ ] prod 시드 또는 운영 데이터 확정
+- [ ] Production env = prod Supabase
+- [ ] `ADMIN_PASS` 최종값 설정
+- [ ] Preview에서 8-1 재확인
+
+#### 지금(외부 환경) 할 수 있는 것 vs 나중
+
+| 지금 가능 | 나중(본인 기기·사무실) |
+|-----------|------------------------|
+| 8-2 push·Preview 재확인 | 8-3~4 prod 스키마·시드 |
+| 대시보드 임시 문구 정리 | 8-6 Basic Auth 최종 비밀번호 |
+| 8-5 env 목록 점검(값 메모) | 8-7 main 머지 |
+| 인수인계 문서 초안 작성 | 8-11 GA4 |
+| | 8-12 대시보드 디자인 |
 
 ### Phase 의존 관계
 
