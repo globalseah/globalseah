@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>공지 작성 — 글로벌세아종합관리</title>
+    <link rel="icon" href="/assets/images/logo.png" type="image/png" />
+    <link rel="stylesheet" href="/admin/admin.css?v=3" />
+  </head>
+  <body data-admin-page="notices">
+    <div class="admin-root">
+      <div class="admin-frame">
+        <aside class="admin-sidebar">
+          <div class="admin-brand">
+            <strong>글로벌세아 관리자</strong>
+            <span>콘텐츠 · 통계 관리</span>
+          </div>
+          <nav class="admin-nav" id="admin-nav" aria-label="관리자 메뉴"></nav>
+          <div class="admin-sidebar-foot">
+            <a href="/" target="_blank" rel="noopener">공개 사이트 보기</a>
+          </div>
+        </aside>
+        <div class="admin-main">
+          <header class="admin-topbar">
+            <h1 id="admin-page-title">공지 작성</h1>
+            <p class="admin-topbar-meta" id="admin-page-meta">새 공지를 등록합니다</p>
+          </header>
+          <main class="admin-content">
+            <p class="admin-status" id="notice-form-status"></p>
+            <form id="notice-form" class="admin-form admin-card">
+              <div class="admin-form-row">
+                <label class="admin-label" for="notice-title">제목 <span class="admin-required">*</span></label>
+                <input
+                  class="admin-input"
+                  type="text"
+                  id="notice-title"
+                  name="title"
+                  required
+                  placeholder="공지 제목"
+                />
+              </div>
+              <div class="admin-form-row">
+                <label class="admin-label" for="notice-date">등록일 <span class="admin-required">*</span></label>
+                <input class="admin-input admin-input--date" type="date" id="notice-date" name="published_at" required />
+              </div>
+              <div class="admin-form-row">
+                <label class="admin-label" for="notice-body">본문 (텍스트)</label>
+                <textarea
+                  class="admin-textarea"
+                  id="notice-body"
+                  name="body"
+                  rows="12"
+                  placeholder="텍스트 본문이 필요하면 입력하세요. 이미지만 등록할 경우 비워 두어도 됩니다."
+                ></textarea>
+              </div>
+              <div class="admin-form-row">
+                <div class="admin-label-row">
+                  <span class="admin-label">이미지</span>
+                  <button type="button" class="admin-btn admin-btn--sm" id="notice-upload-btn">이미지 추가</button>
+                </div>
+                <p class="admin-form-hint">본문 또는 이미지 중 최소 1개는 필요합니다. 여러 장 업로드 가능합니다.</p>
+                <input type="file" id="notice-image-input" accept="image/jpeg,image/png,image/gif,image/webp" hidden />
+                <div class="admin-image-list" id="notice-image-list"></div>
+              </div>
+              <div class="admin-form-actions">
+                <button type="submit" class="admin-btn" id="notice-submit-btn">등록</button>
+                <a class="admin-btn admin-btn--ghost" id="notice-cancel-btn" href="/admin/notices.html">목록</a>
+              </div>
+            </form>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script src="/admin/js/admin-shell.js"></script>
+    <script src="/admin/js/admin-api.js"></script>
+    <script src="/admin/js/notice-form.js"></script>
+  </body>
+</html>

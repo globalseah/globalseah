@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>공지사항 관리 — 글로벌세아종합관리</title>
     <link rel="icon" href="/assets/images/logo.png" type="image/png" />
-    <link rel="stylesheet" href="/admin/admin.css?v=2" />
+    <link rel="stylesheet" href="/admin/admin.css?v=3" />
   </head>
   <body data-admin-page="notices">
     <div class="admin-root">
@@ -24,16 +24,33 @@
         <div class="admin-main">
           <header class="admin-topbar">
             <h1 id="admin-page-title">공지사항</h1>
-            <p class="admin-topbar-meta">Phase 3에서 CRUD 연결 예정</p>
+            <p class="admin-topbar-meta" id="notice-list-meta">등록일 최신순</p>
           </header>
           <main class="admin-content">
-            <div class="admin-placeholder">
-              공지사항 목록 · 작성 · 수정 화면은 Phase 3에서 구현됩니다.
+            <div class="admin-toolbar">
+              <p class="admin-status" id="notice-list-status"></p>
+              <a class="admin-btn" id="notice-write-btn" href="/admin/notice-edit.html">+ 새 공지</a>
+            </div>
+            <div class="admin-card admin-card--flush">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="admin-table-num">번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col" class="admin-table-type">형식</th>
+                    <th scope="col" class="admin-table-date">등록일</th>
+                    <th scope="col" class="admin-table-actions">관리</th>
+                  </tr>
+                </thead>
+                <tbody id="notice-list"></tbody>
+              </table>
             </div>
           </main>
         </div>
       </div>
     </div>
     <script src="/admin/js/admin-shell.js"></script>
+    <script src="/admin/js/admin-api.js"></script>
+    <script src="/admin/js/notices-list.js"></script>
   </body>
 </html>
