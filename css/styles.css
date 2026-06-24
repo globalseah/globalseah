@@ -2290,6 +2290,15 @@ html.desktop-only .portfolio-meta-row {
   gap: 20px;
 }
 
+.notice-view-text {
+  margin: 0;
+  padding: 24px 0 8px;
+  border-top: 1px solid var(--border);
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--text);
+}
+
 .notice-figure {
   margin: 0;
 }
@@ -2412,6 +2421,36 @@ html.desktop-only .portfolio-meta-row {
   border-top: 1px solid var(--border);
   font-size: 0.95rem;
   line-height: 1.85;
+  color: var(--text);
+  white-space: pre-line;
+}
+
+.recruit-view-body--structured {
+  margin: 0;
+  padding: 24px 0 8px;
+  border-top: 1px solid var(--border);
+}
+
+.recruit-field-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.recruit-field-row:first-child {
+  padding-top: 0;
+}
+
+.recruit-field-label {
+  font-weight: 700;
+  color: var(--green-900);
+}
+
+.recruit-field-value {
   color: var(--text);
   white-space: pre-line;
 }

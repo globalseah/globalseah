@@ -1,29 +1,51 @@
 (function () {
-  const portfolio = window.SEAH_PORTFOLIO;
-  const homeGrid = document.getElementById("home-portfolio-grid");
+  const client = window.SEAH_POSTS_CLIENT;
+  if (!client) return;
 
-  if (portfolio && homeGrid) {
-    const HOME_LIMIT = 15;
-    const recentItems = portfolio.displayItems().slice(0, HOME_LIMIT);
+  const HOME_INFO_LIMIT = 5;
+  const HOME_PORTFOLIO_LIMIT = 15;
+
+  Promise.all([
+    client.loadPortfolio(),
+    client.loadNotice(),
+    client.loadRecruit(),
+  ])
+    .then(function (results) {
+      const portfolio = results[0];
+      const notice = results[1];
+      const recruit = results[2];
+      renderPortfolio(portfolio);
+      renderNotice(notice);
+      renderRecruit(recruit);
+    })
+    .catch(function () {
+      /* 개별 섹션은 비워 둠 */
+    });
+
+  function renderPortfolio(portfolio) {
+    const homeGrid = document.getElementById("home-portfolio-grid");
+    if (!portfolio || !homeGrid) return;
+
+    const recentItems = portfolio.displayItems().slice(0, HOME_PORTFOLIO_LIMIT);
     const cards = recentItems
-      .map((item) => portfolio.cardHtml(item, "", "portfolio/index.html"))
+      .map(function (item) {
+        return portfolio.cardHtml(item, "", "portfolio/index.html");
+      })
       .join("");
-    // 무한 루프를 위해 동일한 세트를 한 번 복제한다 (translateX(-50%)로 이음매 없이 순환)
     homeGrid.innerHTML = cards + cards;
   }
 
-  const HOME_INFO_LIMIT = 5;
+  function renderNotice(notice) {
+    const homeNoticeList = document.getElementById("home-notice-list");
+    if (!notice || !homeNoticeList) return;
 
-  const notice = window.SEAH_NOTICE;
-  const homeNoticeList = document.getElementById("home-notice-list");
-  if (notice && homeNoticeList) {
     homeNoticeList.innerHTML = notice
       .displayItems()
       .slice(0, HOME_INFO_LIMIT)
       .map(function (item) {
         return (
           '<li><a href="notice/view.html?id=' +
-          item.id +
+          encodeURIComponent(item.id) +
           '">' +
           item.title +
           "</a></li>"
@@ -32,16 +54,17 @@
       .join("");
   }
 
-  const recruit = window.SEAH_RECRUIT;
-  const homeRecruitList = document.getElementById("home-recruit-list");
-  if (recruit && homeRecruitList) {
+  function renderRecruit(recruit) {
+    const homeRecruitList = document.getElementById("home-recruit-list");
+    if (!recruit || !homeRecruitList) return;
+
     homeRecruitList.innerHTML = recruit
       .displayItems()
       .slice(0, HOME_INFO_LIMIT)
       .map(function (item) {
         return (
           '<li><a href="notice/recruit/view.html?id=' +
-          item.id +
+          encodeURIComponent(item.id) +
           '">' +
           recruit.listTitle(item) +
           "</a></li>"
@@ -64,7 +87,8 @@
   const kakaoBtn = document.getElementById("kakao-inquiry");
   if (!kakaoBtn) return;
 
-  const url = (window.SEAH_SITE && window.SEAH_SITE.kakaoUrl) || kakaoBtn.dataset.kakaoUrl || "";
+  const url =
+    (window.SEAH_SITE && window.SEAH_SITE.kakaoUrl) || kakaoBtn.dataset.kakaoUrl || "";
 
   if (url) {
     kakaoBtn.href = url;

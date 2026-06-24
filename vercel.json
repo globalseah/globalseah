@@ -8,6 +8,9 @@
     },
     "api/admin/upload.js": {
       "maxDuration": 10
+    },
+    "api/posts.js": {
+      "maxDuration": 10
     }
   },
   "redirects": [

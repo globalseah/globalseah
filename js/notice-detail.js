@@ -1,10 +1,9 @@
 (function () {
-  const notice = window.SEAH_NOTICE;
-  if (!notice) return;
+  const client = window.SEAH_POSTS_CLIENT;
+  if (!client) return;
 
   const params = new URLSearchParams(window.location.search);
-  const id = Number(params.get("id"));
-  const item = notice.getById(id);
+  const id = params.get("id");
 
   const titleEl = document.getElementById("notice-title");
   const dateEl = document.getElementById("notice-date");
@@ -12,46 +11,69 @@
   const navEl = document.getElementById("notice-nav");
   const crumbEl = document.getElementById("notice-breadcrumb-current");
 
-  if (!item || !titleEl || !dateEl || !bodyEl) {
-    if (titleEl) titleEl.textContent = "공지를 찾을 수 없습니다";
-    document.title = "공지사항 — 글로벌세아";
-    return;
-  }
+  client
+    .loadNotice()
+    .then(function (notice) {
+      const item = notice.getById(id);
 
-  document.title = item.title + " — 공지사항 — 글로벌세아";
-  titleEl.textContent = item.title;
-  dateEl.textContent = item.date;
-  if (crumbEl) crumbEl.textContent = item.title;
+      if (!item || !titleEl || !dateEl || !bodyEl) {
+        if (titleEl) titleEl.textContent = "공지를 찾을 수 없습니다";
+        document.title = "공지사항 — 글로벌세아종합관리";
+        return;
+      }
 
-  bodyEl.innerHTML = item.images
-    .map(function (filename, index) {
-      const src = notice.imageSrc(filename, "../");
-      const alt =
-        item.images.length > 1
-          ? item.title + " (" + (index + 1) + "/" + item.images.length + ")"
-          : item.title;
-      return (
-        '<figure class="notice-figure">' +
-        '<img src="' +
-        src +
-        '" alt="' +
-        alt +
-        '" loading="lazy" />' +
-        "</figure>"
-      );
+      document.title = item.title + " — 공지사항 — 글로벌세아종합관리";
+      titleEl.textContent = item.title;
+      dateEl.textContent = item.date;
+      if (crumbEl) crumbEl.textContent = item.title;
+
+      var html = "";
+
+      if (item.body && String(item.body).trim()) {
+        html +=
+          '<div class="notice-view-text">' +
+          escapeHtml(item.body).replace(/\n/g, "<br>") +
+          "</div>";
+      }
+
+      if (item.images && item.images.length) {
+        html += item.images
+          .map(function (filename, index) {
+            const src = notice.imageSrc(filename, "../");
+            const alt =
+              item.images.length > 1
+                ? item.title + " (" + (index + 1) + "/" + item.images.length + ")"
+                : item.title;
+            return (
+              '<figure class="notice-figure">' +
+              '<img src="' +
+              src +
+              '" alt="' +
+              escapeAttr(alt) +
+              '" loading="lazy" />' +
+              "</figure>"
+            );
+          })
+          .join("");
+      }
+
+      bodyEl.innerHTML = html;
+
+      if (navEl) {
+        const adjacent = notice.getAdjacent(id);
+        navEl.innerHTML =
+          navRow("다음글", adjacent.newer, notice) +
+          navRow("이전글", adjacent.older, notice);
+      }
     })
-    .join("");
+    .catch(function () {
+      if (titleEl) titleEl.textContent = "공지를 불러오지 못했습니다";
+    });
 
-  if (navEl) {
-    const adjacent = notice.getAdjacent(id);
-    navEl.innerHTML =
-      navRow("다음글", adjacent.newer) + navRow("이전글", adjacent.older);
-  }
-
-  function navRow(label, post) {
+  function navRow(label, post, notice) {
     const content = post
       ? '<a href="view.html?id=' +
-        post.id +
+        encodeURIComponent(post.id) +
         '">' +
         post.title +
         "</a>"
@@ -66,5 +88,17 @@
       "</span>" +
       "</div>"
     );
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function escapeAttr(value) {
+    return escapeHtml(value);
   }
 })();
