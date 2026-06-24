@@ -74,8 +74,8 @@
           "<td>" +
           escapeHtml(field(item, "location")) +
           "</td>" +
-          '<td class="admin-table-date">' +
-          escapeHtml(api.formatDate(item.published_at)) +
+          "<td>" +
+          escapeHtml(field(item, "service")) +
           "</td>" +
           '<td class="admin-table-actions">' +
           '<a class="admin-btn admin-btn--sm admin-btn--ghost" href="/admin/portfolio-edit.html?id=' +

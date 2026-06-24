@@ -37,8 +37,9 @@
     return title;
   }
 
-  function formatLabel(item) {
-    return item.content_type === "legacy" ? "텍스트형" : "구조화";
+  function contactRole(item) {
+    if (!item.contact || !item.contact.role) return "—";
+    return item.contact.role;
   }
 
   function renderList(items) {
@@ -64,7 +65,7 @@
           escapeHtml(listTitle(item)) +
           "</a></td>" +
           '<td class="admin-table-type">' +
-          escapeHtml(formatLabel(item)) +
+          escapeHtml(contactRole(item)) +
           "</td>" +
           '<td class="admin-table-date">' +
           escapeHtml(api.formatDate(item.published_at)) +

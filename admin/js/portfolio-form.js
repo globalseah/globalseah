@@ -11,7 +11,6 @@
   var usageEl = document.getElementById("portfolio-usage");
   var locationEl = document.getElementById("portfolio-location");
   var serviceEl = document.getElementById("portfolio-service");
-  var dateEl = document.getElementById("portfolio-date");
   var previewEl = document.getElementById("portfolio-image-preview");
   var previewEmptyEl = document.getElementById("portfolio-image-empty");
   var fileInput = document.getElementById("portfolio-image-input");
@@ -39,10 +38,6 @@
   document.title =
     (isEdit ? "실적 수정" : "실적 등록") + " — 글로벌세아종합관리";
 
-  if (!isEdit && dateEl) {
-    dateEl.value = api.toDateInputValue(new Date().toISOString());
-  }
-
   if (isEdit) {
     setStatus("불러오는 중…");
     api
@@ -57,7 +52,6 @@
         if (usageEl) usageEl.value = fields.usage || "";
         if (locationEl) locationEl.value = fields.location || "";
         if (serviceEl) serviceEl.value = fields.service || "";
-        if (dateEl) dateEl.value = api.toDateInputValue(item.published_at);
         imageUrl = item.image_url || "";
         renderPreview();
         setStatus("");
@@ -123,7 +117,6 @@
     var usage = usageEl ? usageEl.value.trim() : "";
     var location = locationEl ? locationEl.value.trim() : "";
     var service = serviceEl ? serviceEl.value.trim() : "";
-    var publishedAt = dateEl ? dateEl.value : "";
 
     if (!facility) {
       setStatus("시설명을 입력해 주세요.", true);
@@ -145,10 +138,6 @@
       setStatus("이미지를 업로드해 주세요.", true);
       return;
     }
-    if (!publishedAt) {
-      setStatus("등록일을 선택해 주세요.", true);
-      return;
-    }
 
     var payload = {
       category: "portfolio",
@@ -160,7 +149,6 @@
         location: location,
         service: service,
       },
-      published_at: publishedAt,
     };
 
     if (submitBtn) submitBtn.disabled = true;
