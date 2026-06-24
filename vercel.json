@@ -10,8 +10,10 @@
       "maxDuration": 10
     }
   },
+  "redirects": [
+    { "source": "/admin", "destination": "/admin/", "permanent": false }
+  ],
   "rewrites": [
-    { "source": "/admin", "destination": "/admin/index.html" },
     { "source": "/admin/notices", "destination": "/admin/notices.html" },
     { "source": "/admin/portfolio", "destination": "/admin/portfolio.html" },
     { "source": "/admin/recruit", "destination": "/admin/recruit.html" },
