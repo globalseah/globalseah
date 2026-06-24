@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>실적 등록 — 글로벌세아종합관리</title>
+    <link rel="icon" href="/assets/images/logo.png" type="image/png" />
+    <link rel="stylesheet" href="/admin/admin.css?v=3" />
+  </head>
+  <body data-admin-page="portfolio">
+    <div class="admin-root">
+      <div class="admin-frame">
+        <aside class="admin-sidebar">
+          <div class="admin-brand">
+            <strong>글로벌세아 관리자</strong>
+            <span>콘텐츠 · 통계 관리</span>
+          </div>
+          <nav class="admin-nav" id="admin-nav" aria-label="관리자 메뉴"></nav>
+          <div class="admin-sidebar-foot">
+            <a href="/" target="_blank" rel="noopener">공개 사이트 보기</a>
+          </div>
+        </aside>
+        <div class="admin-main">
+          <header class="admin-topbar">
+            <h1 id="admin-page-title">실적 등록</h1>
+            <p class="admin-topbar-meta" id="admin-page-meta">새 실적 카드를 등록합니다</p>
+          </header>
+          <main class="admin-content">
+            <p class="admin-status" id="portfolio-form-status"></p>
+            <form id="portfolio-form" class="admin-form admin-card">
+              <div class="admin-form-row">
+                <div class="admin-label-row">
+                  <span class="admin-label">이미지 <span class="admin-required">*</span></span>
+                  <div class="admin-inline-actions">
+                    <button type="button" class="admin-btn admin-btn--sm" id="portfolio-upload-btn">
+                      이미지 업로드
+                    </button>
+                    <button
+                      type="button"
+                      class="admin-btn admin-btn--sm admin-btn--danger"
+                      id="portfolio-remove-image"
+                      disabled
+                    >
+                      이미지 제거
+                    </button>
+                  </div>
+                </div>
+                <input
+                  type="file"
+                  id="portfolio-image-input"
+                  accept="image/jpeg,image/png,image/gif,image/webp"
+                  hidden
+                />
+                <div class="admin-portfolio-preview">
+                  <img id="portfolio-image-preview" class="admin-portfolio-preview-img" alt="" hidden />
+                  <p class="admin-form-hint" id="portfolio-image-empty">이미지를 업로드해 주세요.</p>
+                </div>
+              </div>
+              <div class="admin-form-row">
+                <label class="admin-label" for="portfolio-facility">시설명 <span class="admin-required">*</span></label>
+                <input
+                  class="admin-input"
+                  type="text"
+                  id="portfolio-facility"
+                  name="facility"
+                  required
+                  placeholder="예: 논현로얄팰리스"
+                />
+              </div>
+              <div class="admin-form-row">
+                <label class="admin-label" for="portfolio-usage">용도 <span class="admin-required">*</span></label>
+                <input
+                  class="admin-input"
+                  type="text"
+                  id="portfolio-usage"
+                  name="usage"
+                  required
+                  placeholder="예: 호텔, 아파트, 오피스"
+                />
+              </div>
+              <div class="admin-form-row">
+                <label class="admin-label" for="portfolio-location">위치 <span class="admin-required">*</span></label>
+                <input
+                  class="admin-input"
+                  type="text"
+                  id="portfolio-location"
+                  name="location"
+                  required
+                  placeholder="예: 서울시 강남구"
+                />
+              </div>
+              <div class="admin-form-row">
+                <label class="admin-label" for="portfolio-service">사업내용 <span class="admin-required">*</span></label>
+                <input
+                  class="admin-input"
+                  type="text"
+                  id="portfolio-service"
+                  name="service"
+                  required
+                  placeholder="예: 미화, 경비, 시설"
+                />
+              </div>
+              <div class="admin-form-row">
+                <label class="admin-label" for="portfolio-date">등록일 <span class="admin-required">*</span></label>
+                <input
+                  class="admin-input admin-input--date"
+                  type="date"
+                  id="portfolio-date"
+                  name="published_at"
+                  required
+                />
+              </div>
+              <div class="admin-form-actions">
+                <button type="submit" class="admin-btn" id="portfolio-submit-btn">등록</button>
+                <a class="admin-btn admin-btn--ghost" id="portfolio-cancel-btn" href="/admin/portfolio.html">목록</a>
+              </div>
+            </form>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script src="/admin/js/admin-shell.js"></script>
+    <script src="/admin/js/admin-api.js"></script>
+    <script src="/admin/js/portfolio-form.js"></script>
+  </body>
+</html>
