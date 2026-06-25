@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>관리자 — 글로벌세아종합관리</title>
     <link rel="icon" href="/assets/images/logo.png" type="image/png" />
-    <link rel="stylesheet" href="/admin/admin.css?v=9" />
+    <link rel="stylesheet" href="/admin/admin.css?v=10" />
   </head>
   <body data-admin-page="dashboard">
     <div class="admin-root">
@@ -14,7 +14,6 @@
         <aside class="admin-sidebar">
           <div class="admin-brand">
             <strong>글로벌세아 관리자</strong>
-            <span>콘텐츠 · 통계 관리</span>
           </div>
           <nav class="admin-nav" id="admin-nav" aria-label="관리자 메뉴"></nav>
           <div class="admin-sidebar-foot">
@@ -24,18 +23,8 @@
         <div class="admin-main">
           <header class="admin-topbar">
             <h1 id="admin-page-title">대시보드</h1>
-            <p class="admin-topbar-meta">콘텐츠 관리 · 방문 통계 요약</p>
           </header>
           <main class="admin-content">
-            <section class="admin-card">
-              <span class="admin-badge">콘텐츠 관리</span>
-              <h2>글로벌세아 관리자</h2>
-              <p>
-                공지사항·실적현황·채용현황을 등록·수정·삭제할 수 있습니다. 변경 내용은 공개
-                사이트에 바로 반영됩니다.
-              </p>
-            </section>
-
             <section class="admin-card admin-stat-panel">
               <div class="admin-stat-panel-head">
                 <h2 class="admin-stat-title">방문 통계 요약</h2>
@@ -70,9 +59,6 @@
               <p class="admin-status" id="dashboard-stats-status">통계를 불러오는 중…</p>
               <div id="dashboard-stats-summary"></div>
               <h3 class="admin-stat-subtitle">유입경로 TOP 5</h3>
-              <p class="admin-stat-section-desc admin-stat-section-desc--tight">
-                선택한 기간에 많이 유입된 경로입니다.
-              </p>
               <div id="dashboard-stats-channels"></div>
             </section>
 
@@ -80,21 +66,17 @@
               <article class="admin-tile">
                 <h3>공지사항</h3>
                 <p class="admin-tile-count" id="dashboard-notice-count">—</p>
-                <p class="admin-tile-desc">텍스트 + 이미지 혼합형 게시판</p>
               </article>
               <article class="admin-tile">
                 <h3>실적현황</h3>
                 <p class="admin-tile-count" id="dashboard-portfolio-count">—</p>
-                <p class="admin-tile-desc">이미지 + 시설·용도·위치·사업내용</p>
               </article>
               <article class="admin-tile">
                 <h3>채용현황</h3>
                 <p class="admin-tile-count" id="dashboard-recruit-count">—</p>
-                <p class="admin-tile-desc">구조화 8항목 채용 공고</p>
               </article>
               <article class="admin-tile">
                 <h3>방문 통계</h3>
-                <p>GA4 방문자 · 유입 · 페이지</p>
               </article>
             </section>
           </main>

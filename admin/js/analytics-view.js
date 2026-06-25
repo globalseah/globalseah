@@ -17,9 +17,9 @@
     extra = extra || {};
     var isDashboard = extra.dashboard === true;
 
-    var periodHint =
-      "집계 기간: " +
-      (extra.confirmedLabel || rangeLabel || "");
+    var periodHint = isDashboard
+      ? ""
+      : "집계 기간: " + (extra.confirmedLabel || rangeLabel || "");
 
     var mainCards =
       statCard({
@@ -40,10 +40,6 @@
         hint: periodHint,
         desc: "페이지를 연 횟수 합계입니다. 메뉴를 이동할 때마다 늘어납니다.",
       });
-
-    var mainCardsHtml = isDashboard
-      ? ""
-      : '<div class="admin-stat-cards admin-stat-cards--main">' + mainCards + "</div>";
 
     var baselineText = isDashboard
       ? "기준: 어제까지 집계 완료된 데이터입니다"
@@ -86,7 +82,9 @@
       '<p class="admin-stat-baseline">' +
       baselineText +
       "</p>" +
-      mainCardsHtml +
+      '<div class="admin-stat-cards admin-stat-cards--main">' +
+      mainCards +
+      "</div>" +
       "</div>" +
       auxBlock +
       notice;
