@@ -16,65 +16,51 @@
     if (!container || !summary) return;
     extra = extra || {};
 
-    var periodHint = "집계 기간: " + (rangeLabel || "");
-    var isTodayOnly =
-      extra.includesToday &&
-      rangeLabel &&
-      rangeLabel.indexOf("~") === -1;
-    var waitingToday =
-      extra.includesToday &&
-      !summary.activeUsers &&
-      !summary.sessions &&
-      !summary.pageViews;
+    var periodHint =
+      "집계 기간: " +
+      (extra.confirmedLabel || rangeLabel || "");
 
-    var cards = "";
-
-    if (extra.realtime) {
-      cards += statCard({
-        label: "최근 30분 활성",
-        badge: "빠른 확인",
-        value: formatNumber(extra.realtime.activeUsers),
-        hint: "GA4 실시간 보고서 기준",
-        desc:
-          "최근 약 30분 안에 공개 홈페이지를 연 사용자 수입니다. " +
-          "동시접속자(CCU)가 아니며, 당일 집계가 나오기 전 참고용 지표입니다.",
-        variant: "live",
-      });
-    }
-
-    cards +=
+    var mainCards =
       statCard({
         label: "방문자 수",
         value: formatNumber(summary.activeUsers),
         hint: periodHint,
         desc: "선택한 기간 동안 사이트에 들어온 사람 수입니다. 같은 사람은 한 번만 셉니다.",
-        pending: waitingToday,
       }) +
       statCard({
         label: "방문 횟수 (세션)",
         value: formatNumber(summary.sessions),
         hint: periodHint,
         desc: "사이트를 연 횟수입니다. 한 사람이 여러 번 방문하면 여러 번 집계됩니다.",
-        pending: waitingToday,
       }) +
       statCard({
         label: "페이지 조회수",
         value: formatNumber(summary.pageViews),
         hint: periodHint,
         desc: "페이지를 연 횟수 합계입니다. 메뉴를 이동할 때마다 늘어납니다.",
-        pending: waitingToday,
       });
+
+    var auxBlock = "";
+    if (extra.realtime) {
+      auxBlock =
+        '<div class="admin-stat-aux-block">' +
+        '<div class="admin-stat-cards admin-stat-cards--aux">' +
+        statCard({
+          label: "최근 30분 활성",
+          value: formatNumber(extra.realtime.activeUsers),
+          variant: "aux",
+          footer:
+            "최근 30분간 방문한 누적 방문자 수입니다. 지금 보고 있는 인원수가 아닙니다.",
+        }) +
+        "</div></div>";
+    }
 
     var notice = "";
     if (extra.includesToday) {
       notice =
         '<div class="admin-stat-notice">' +
-        "<strong>오늘 날짜를 조회하셨나요?</strong>" +
-        "<p>방문자·세션·페이지 조회수는 Google Analytics가 <strong>하루가 지난 뒤</strong> 또는 <strong>몇 시간 후</strong>에 모아 주기 때문에, " +
-        (isTodayOnly ? "오늘만" : "기간에 오늘이 포함되면") +
-        " 당일 수치가 <strong>0</strong>으로 보일 수 있습니다.</p>" +
-        "<p>오늘 방문이 집계되는지 빠르게 보려면 <strong>「최근 30분 활성」</strong>을 참고하세요. " +
-        "정확한 일별 숫자는 어제 이전 날짜를 조회하거나, 다음 날 다시 확인하세요.</p>" +
+        "<p>오늘 데이터는 아직 집계 중입니다. Google 정책상 정확한 수치는 1~2일 후 반영됩니다.</p>" +
+        "<p>지금 상황이 궁금하시면 위 '최근 30분 활성'을 참고해주세요.</p>" +
         "</div>";
     }
 
@@ -83,37 +69,35 @@
       "아래 통계는 <strong>공개 홈페이지</strong> 방문 기준입니다. " +
       "관리자 페이지(/admin) 방문은 포함되지 않습니다." +
       "</p>" +
-      '<div class="admin-stat-cards">' +
-      cards +
+      '<div class="admin-stat-summary-block">' +
+      '<p class="admin-stat-baseline">기준: 어제까지 집계 완료된 데이터입니다 (오늘 데이터는 1~2일 내 반영됩니다)</p>' +
+      '<div class="admin-stat-cards admin-stat-cards--main">' +
+      mainCards +
       "</div>" +
+      "</div>" +
+      auxBlock +
       notice;
   }
 
   function statCard(options) {
-    var badgeHtml = options.badge
-      ? '<span class="admin-stat-badge">' + options.badge + "</span>"
-      : "";
-    var pendingHtml = options.pending
-      ? '<span class="admin-stat-badge admin-stat-badge--pending">집계 대기</span>'
-      : "";
-
     return (
       '<article class="admin-stat-card' +
-      (options.variant === "live" ? " admin-stat-card--live" : "") +
+      (options.variant === "aux" ? " admin-stat-card--aux" : "") +
       '">' +
       '<p class="admin-stat-card-label">' +
       options.label +
-      badgeHtml +
-      pendingHtml +
       "</p>" +
       '<p class="admin-stat-card-value">' +
       options.value +
       "</p>" +
-      '<p class="admin-stat-card-hint">' +
-      options.hint +
-      "</p>" +
+      (options.hint
+        ? '<p class="admin-stat-card-hint">' + options.hint + "</p>"
+        : "") +
       (options.desc
         ? '<p class="admin-stat-card-desc">' + options.desc + "</p>"
+        : "") +
+      (options.footer
+        ? '<p class="admin-stat-card-footer">' + options.footer + "</p>"
         : "") +
       "</article>"
     );

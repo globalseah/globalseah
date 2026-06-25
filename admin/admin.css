@@ -257,8 +257,9 @@ a {
   color: var(--muted);
 }
 
-.admin-status.is-hidden {
-  display: none;
+.admin-status.is-hidden,
+.is-hidden {
+  display: none !important;
 }
 
 .admin-status--error {
@@ -574,6 +575,53 @@ a {
   margin-bottom: 4px;
 }
 
+.admin-stat-cards--main {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.admin-stat-summary-block {
+  margin-bottom: 16px;
+}
+
+.admin-stat-baseline {
+  margin: 0 0 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #f4f7f5;
+  border: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.admin-stat-aux-block {
+  margin-bottom: 4px;
+}
+
+.admin-stat-cards--aux {
+  grid-template-columns: minmax(160px, 240px);
+  margin-bottom: 0;
+}
+
+.admin-stat-card--aux {
+  padding: 14px 16px;
+  background: #fafbfa;
+  border-color: #d8e5dc;
+}
+
+.admin-stat-card--aux .admin-stat-card-value {
+  font-size: 28px;
+}
+
+.admin-stat-card-footer {
+  margin: 10px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid #e4ebe6;
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
 .admin-stat-intro {
   margin: 0 0 14px;
   font-size: 13px;
@@ -629,13 +677,6 @@ a {
   font-size: 12px;
   line-height: 1.65;
   color: #6b4f1d;
-}
-
-.admin-stat-notice strong {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 13px;
-  color: #5c4518;
 }
 
 .admin-stat-notice p {

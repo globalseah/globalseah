@@ -82,9 +82,14 @@
     return fetch("/api/admin/analytics-health").then(parseResponse);
   }
 
+  function todayDate() {
+    return formatDateFromLocal(new Date());
+  }
+
   function defaultDateRange(days) {
     var count = Math.max(1, Number(days) || 7);
     var end = new Date();
+    end.setDate(end.getDate() - 1);
     var start = new Date(end);
     start.setDate(end.getDate() - (count - 1));
     return {
@@ -140,6 +145,7 @@
     toDateInputValue: toDateInputValue,
     analytics: analytics,
     analyticsHealth: analyticsHealth,
+    todayDate: todayDate,
     defaultDateRange: defaultDateRange,
     initialDateRange: initialDateRange,
     storeDateRange: storeDateRange,

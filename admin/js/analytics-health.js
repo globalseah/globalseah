@@ -8,6 +8,19 @@
   var gtagEl = document.getElementById("stats-health-gtag");
   var runBtn = document.getElementById("stats-health-run");
 
+  function isDebugMode() {
+    try {
+      return new URLSearchParams(window.location.search).get("debug") === "1";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  if (!isDebugMode()) {
+    if (panelEl) panelEl.classList.add("is-hidden");
+    return;
+  }
+
   if (runBtn) {
     runBtn.addEventListener("click", runDiagnostics);
   }

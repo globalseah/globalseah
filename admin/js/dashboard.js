@@ -14,9 +14,9 @@
   if (startEl) startEl.value = defaults.start;
   if (endEl) {
     endEl.value = defaults.end;
-    endEl.max = api.defaultDateRange(1).end;
+    endEl.max = api.todayDate();
   }
-  if (startEl) startEl.max = api.defaultDateRange(1).end;
+  if (startEl) startEl.max = api.todayDate();
 
   if (applyBtn) {
     applyBtn.addEventListener("click", load);
@@ -49,6 +49,7 @@
         view.renderSummaryCards(summaryEl, data.summary, label, {
           realtime: data.realtime,
           includesToday: data.includesToday,
+          confirmedLabel: data.confirmedRange && data.confirmedRange.label,
         });
         renderTopChannels(data.channels || []);
         api.storeDateRange(start, end);
@@ -65,7 +66,8 @@
     if (!channelsEl) return;
     var top = channels.slice(0, 5);
     if (!top.length) {
-      channelsEl.innerHTML = '<p class="admin-stat-empty">유입경로 데이터가 없습니다.</p>';
+      channelsEl.innerHTML =
+        '<p class="admin-stat-empty">유입경로 데이터가 없습니다. 방문자가 쌓이면 표시됩니다.</p>';
       return;
     }
 

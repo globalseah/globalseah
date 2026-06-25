@@ -18,9 +18,9 @@
   if (startEl) startEl.value = defaults.start;
   if (endEl) {
     endEl.value = defaults.end;
-    endEl.max = api.defaultDateRange(1).end;
+    endEl.max = api.todayDate();
   }
-  if (startEl) startEl.max = api.defaultDateRange(1).end;
+  if (startEl) startEl.max = api.todayDate();
 
   if (applyBtn) {
     applyBtn.addEventListener("click", load);
@@ -62,6 +62,7 @@
     view.renderSummaryCards(summaryEl, data.summary, data.range && data.range.label, {
       realtime: data.realtime,
       includesToday: data.includesToday,
+      confirmedLabel: data.confirmedRange && data.confirmedRange.label,
     });
     view.renderDailyChart(dailyEl, data.daily || []);
 
@@ -77,7 +78,7 @@
         },
       ],
       data.channels || [],
-      "유입경로 데이터가 없습니다."
+      "유입경로 데이터가 없습니다. 방문자가 쌓이면 표시됩니다."
     );
 
     view.renderTable(
@@ -92,7 +93,7 @@
         },
       ],
       data.pages || [],
-      "페이지 데이터가 없습니다."
+      "페이지 데이터가 없습니다. 방문자가 쌓이면 표시됩니다."
     );
 
     view.renderTable(
@@ -107,13 +108,13 @@
         },
       ],
       data.devices || [],
-      "기기 데이터가 없습니다."
+      "기기 데이터가 없습니다. 방문자가 쌓이면 표시됩니다."
     );
 
     view.renderTable(
       regionsEl,
       [
-        { label: "국가/지역", key: "label" },
+        { label: "시/도", key: "label" },
         {
           label: "방문자",
           render: function (row) {
@@ -122,7 +123,7 @@
         },
       ],
       data.regions || [],
-      "지역 데이터가 없습니다."
+      "지역 데이터가 없습니다. 방문자가 쌓이면 표시됩니다."
     );
   }
 
