@@ -12,14 +12,31 @@
     return max || 1;
   }
 
-  function renderSummaryCards(container, summary, rangeLabel) {
+  function renderSummaryCards(container, summary, rangeLabel, extra) {
     if (!container || !summary) return;
-    container.innerHTML =
-      '<div class="admin-stat-cards">' +
+    extra = extra || {};
+
+    var cards =
       statCard("방문자", formatNumber(summary.activeUsers), rangeLabel) +
       statCard("세션", formatNumber(summary.sessions), rangeLabel) +
-      statCard("페이지뷰", formatNumber(summary.pageViews), rangeLabel) +
-      "</div>";
+      statCard("페이지뷰", formatNumber(summary.pageViews), rangeLabel);
+
+    if (extra.realtime) {
+      cards += statCard(
+        "실시간 활성",
+        formatNumber(extra.realtime.activeUsers),
+        "최근 30분"
+      );
+    }
+
+    var notice = "";
+    if (extra.includesToday) {
+      notice =
+        '<p class="admin-stat-notice">당일 집계 수치(방문자·세션 등)는 GA4 반영에 수 시간이 걸려 0으로 보일 수 있습니다. 방금 방문 확인은 <strong>실시간 활성</strong> 또는 GA4 콘솔 → 실시간을 보세요.</p>';
+    }
+
+    container.innerHTML =
+      '<div class="admin-stat-cards">' + cards + "</div>" + notice;
   }
 
   function statCard(label, value, hint) {

@@ -569,9 +569,20 @@ a {
 
 .admin-stat-cards {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 16px;
   margin-bottom: 4px;
+}
+
+.admin-stat-notice {
+  margin: 12px 0 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #fff8e6;
+  border: 1px solid #f5d9a8;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #6b4f1d;
 }
 
 .admin-stat-card {

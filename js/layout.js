@@ -597,10 +597,11 @@
       }
       window.gtag = gtag;
       gtag("js", new Date());
-      gtag("config", id);
+      gtag("config", id, { send_page_view: true });
       var script = document.createElement("script");
       script.async = true;
-      script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
+      script.src =
+        "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
       document.head.appendChild(script);
     }
 
@@ -611,12 +612,15 @@
 
     fetch("/api/ga4-id")
       .then(function (res) {
+        if (!res.ok) throw new Error("ga4-id");
         return res.json();
       })
       .then(function (data) {
         if (data && data.measurementId) injectGtag(data.measurementId);
       })
-      .catch(function () {});
+      .catch(function () {
+        /* Vercel env 또는 site-config.ga4MeasurementId 필요 */
+      });
   })();
 
   const revealScript = document.createElement("script");

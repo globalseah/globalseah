@@ -46,7 +46,10 @@
       .then(function (payload) {
         var data = payload.data || {};
         var label = (data.range && data.range.label) || start + " ~ " + end;
-        view.renderSummaryCards(summaryEl, data.summary, label);
+        view.renderSummaryCards(summaryEl, data.summary, label, {
+          realtime: data.realtime,
+          includesToday: data.includesToday,
+        });
         renderTopChannels(data.channels || []);
         api.storeDateRange(start, end);
         setStatus("");

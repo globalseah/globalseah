@@ -17,8 +17,8 @@ window.SEAH_SITE = {
   kakaoHours: "24시간 문의 가능",
   kakaoUrl: "", // 카카오톡 채널 URL 확정 후 입력
 
-  /** GA4 측정 ID — 비우면 /api/ga4-id (Vercel GA4_MEASUREMENT_ID) 사용 */
-  ga4MeasurementId: "",
+  /** GA4 측정 ID (공개값) — gtag 수집용. Vercel GA4_MEASUREMENT_ID 와 동일하게 유지 */
+  ga4MeasurementId: "G-NB845MCYG7",
 
   /** false: 항상 PC 1280 고정 | true: 디바이스 분기
    *  - 터치 + 너비 < mobileBreakpoint → 모바일(햄버거 GNB)

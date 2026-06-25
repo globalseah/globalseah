@@ -59,7 +59,10 @@
   }
 
   function render(data) {
-    view.renderSummaryCards(summaryEl, data.summary, data.range && data.range.label);
+    view.renderSummaryCards(summaryEl, data.summary, data.range && data.range.label, {
+      realtime: data.realtime,
+      includesToday: data.includesToday,
+    });
     view.renderDailyChart(dailyEl, data.daily || []);
 
     view.renderTable(
