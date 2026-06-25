@@ -41,9 +41,12 @@
         desc: "페이지를 연 횟수 합계입니다. 메뉴를 이동할 때마다 늘어납니다.",
       });
 
-    var baselineText = isDashboard
-      ? "기준: 어제까지 집계 완료된 데이터입니다"
-      : "기준: 어제까지 집계 완료된 데이터입니다 (오늘 데이터는 1~2일 내 반영됩니다)";
+    var baselineText =
+      "기준: 어제까지 집계 완료된 데이터입니다 (오늘 데이터는 1~2일 내 반영됩니다)";
+
+    var baselineHtml = isDashboard
+      ? ""
+      : '<p class="admin-stat-baseline">' + baselineText + "</p>";
 
     var introHtml = isDashboard
       ? ""
@@ -79,9 +82,7 @@
     container.innerHTML =
       introHtml +
       '<div class="admin-stat-summary-block">' +
-      '<p class="admin-stat-baseline">' +
-      baselineText +
-      "</p>" +
+      baselineHtml +
       '<div class="admin-stat-cards admin-stat-cards--main">' +
       mainCards +
       "</div>" +
