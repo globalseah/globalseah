@@ -30,6 +30,30 @@
   });
 
   load();
+  loadContentCounts();
+
+  function loadContentCounts() {
+    var tiles = [
+      { category: "notice", el: document.getElementById("dashboard-notice-count") },
+      { category: "portfolio", el: document.getElementById("dashboard-portfolio-count") },
+      { category: "recruit", el: document.getElementById("dashboard-recruit-count") },
+    ];
+
+    tiles.forEach(function (tile) {
+      if (!tile.el) return;
+      tile.el.textContent = "불러오는 중…";
+      api
+        .list(tile.category)
+        .then(function (data) {
+          var count = (data.items || []).length;
+          tile.el.textContent = count.toLocaleString("ko-KR") + "건";
+        })
+        .catch(function () {
+          tile.el.textContent = "조회 실패";
+          tile.el.classList.add("admin-tile-count--error");
+        });
+    });
+  }
 
   function load() {
     var start = startEl ? startEl.value : "";

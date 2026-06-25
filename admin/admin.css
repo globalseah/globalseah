@@ -191,6 +191,26 @@ a {
   color: var(--green-900);
 }
 
+.admin-tile-count {
+  margin: 0 0 6px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--green-700);
+}
+
+.admin-tile-count--error {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--red, #b42318);
+}
+
+.admin-tile-desc {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .admin-tile p {
   margin: 0 0 14px;
   color: var(--muted);
