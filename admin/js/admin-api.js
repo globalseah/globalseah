@@ -69,10 +69,31 @@
     return formatDate(iso);
   }
 
-  function analytics(range) {
-    return fetch(
-      "/api/admin/analytics?range=" + encodeURIComponent(range || "7d")
-    ).then(parseResponse);
+  function analytics(start, end) {
+    var url =
+      "/api/admin/analytics?start=" +
+      encodeURIComponent(start) +
+      "&end=" +
+      encodeURIComponent(end);
+    return fetch(url).then(parseResponse);
+  }
+
+  function defaultDateRange(days) {
+    var count = Math.max(1, Number(days) || 7);
+    var end = new Date();
+    var start = new Date(end);
+    start.setDate(end.getDate() - (count - 1));
+    return {
+      start: formatDateFromLocal(start),
+      end: formatDateFromLocal(end),
+    };
+  }
+
+  function formatDateFromLocal(date) {
+    var y = date.getFullYear();
+    var m = String(date.getMonth() + 1).padStart(2, "0");
+    var day = String(date.getDate()).padStart(2, "0");
+    return y + "-" + m + "-" + day;
   }
 
   window.SEAH_ADMIN_API = {
@@ -85,5 +106,6 @@
     formatDate: formatDate,
     toDateInputValue: toDateInputValue,
     analytics: analytics,
+    defaultDateRange: defaultDateRange,
   };
 })();

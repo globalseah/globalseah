@@ -625,6 +625,30 @@ a {
   gap: 8px;
 }
 
+.admin-date-range {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.admin-date-range-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-date-range-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.admin-date-range-sep {
+  padding-bottom: 10px;
+  color: var(--muted);
+}
+
 .admin-range-tab {
   padding: 7px 12px;
   border-radius: 8px;

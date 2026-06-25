@@ -7,11 +7,14 @@
   var channelsEl = document.getElementById("dashboard-stats-channels");
   var statusEl = document.getElementById("dashboard-stats-status");
 
+  var defaults = api.defaultDateRange(7);
+
   api
-    .analytics("7d")
+    .analytics(defaults.start, defaults.end)
     .then(function (payload) {
       var data = payload.data || {};
-      view.renderSummaryCards(summaryEl, data.summary, "최근 7일");
+      var label = (data.range && data.range.label) || defaults.start + " ~ " + defaults.end;
+      view.renderSummaryCards(summaryEl, data.summary, label);
       renderTopChannels(data.channels || []);
       if (statusEl) statusEl.textContent = "";
     })

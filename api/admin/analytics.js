@@ -1,6 +1,8 @@
 const {
   fetchAnalytics,
   isGa4ConfigError,
+  getDefaultDateRange,
+  resolveCustomDateRange,
 } = require("../../lib/ga4-analytics");
 
 function sendJson(res, status, body) {
@@ -13,12 +15,33 @@ module.exports = async function handler(req, res) {
     return sendJson(res, 405, { ok: false, error: "Method not allowed" });
   }
 
-  const range = String(req.query.range || "7d").trim();
+  const start = String(req.query.start || "").trim();
+  const end = String(req.query.end || "").trim();
+
+  if (start || end) {
+    if (!start || !end) {
+      return sendJson(res, 400, {
+        ok: false,
+        error: "시작일과 종료일을 모두 입력해 주세요.",
+      });
+    }
+
+    const validation = resolveCustomDateRange(start, end);
+    if (validation.error) {
+      return sendJson(res, 400, { ok: false, error: validation.error });
+    }
+  }
 
   try {
-    const data = await fetchAnalytics(range);
+    const data = await fetchAnalytics(
+      start && end ? { startDate: start, endDate: end } : null
+    );
     return sendJson(res, 200, { ok: true, data: data });
   } catch (err) {
+    if (err.code === "INVALID_DATE_RANGE") {
+      return sendJson(res, 400, { ok: false, error: err.message });
+    }
+
     if (isGa4ConfigError(err)) {
       return sendJson(res, 503, {
         ok: false,

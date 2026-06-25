@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>방문 통계 — 글로벌세아종합관리</title>
     <link rel="icon" href="/assets/images/logo.png" type="image/png" />
-    <link rel="stylesheet" href="/admin/admin.css?v=5" />
+    <link rel="stylesheet" href="/admin/admin.css?v=6" />
   </head>
   <body data-admin-page="stats">
     <div class="admin-root">
@@ -29,12 +29,29 @@
           <main class="admin-content">
             <div class="admin-toolbar">
               <p class="admin-status" id="stats-status"></p>
-              <div class="admin-range-tabs" role="tablist" aria-label="조회 기간">
-                <button type="button" class="admin-range-tab is-active" data-stats-range="7d">
-                  7일
+              <div class="admin-date-range">
+                <label class="admin-date-range-field">
+                  <span class="admin-date-range-label">시작일</span>
+                  <input
+                    type="date"
+                    id="stats-start"
+                    class="admin-input admin-input--date"
+                    aria-label="시작일"
+                  />
+                </label>
+                <span class="admin-date-range-sep" aria-hidden="true">~</span>
+                <label class="admin-date-range-field">
+                  <span class="admin-date-range-label">종료일</span>
+                  <input
+                    type="date"
+                    id="stats-end"
+                    class="admin-input admin-input--date"
+                    aria-label="종료일"
+                  />
+                </label>
+                <button type="button" class="admin-btn admin-btn--sm" id="stats-apply">
+                  조회
                 </button>
-                <button type="button" class="admin-range-tab" data-stats-range="28d">28일</button>
-                <button type="button" class="admin-range-tab" data-stats-range="90d">90일</button>
               </div>
             </div>
 

@@ -3,7 +3,6 @@
   var view = window.SEAH_ANALYTICS_VIEW;
   if (!api || !view) return;
 
-  var range = "7d";
   var statusEl = document.getElementById("stats-status");
   var summaryEl = document.getElementById("stats-summary");
   var dailyEl = document.getElementById("stats-daily");
@@ -11,26 +10,43 @@
   var pagesEl = document.getElementById("stats-pages");
   var devicesEl = document.getElementById("stats-devices");
   var regionsEl = document.getElementById("stats-regions");
-  var rangeButtons = document.querySelectorAll("[data-stats-range]");
+  var startEl = document.getElementById("stats-start");
+  var endEl = document.getElementById("stats-end");
+  var applyBtn = document.getElementById("stats-apply");
 
-  rangeButtons.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var nextRange = btn.getAttribute("data-stats-range");
-      if (!nextRange || nextRange === range) return;
-      range = nextRange;
-      rangeButtons.forEach(function (item) {
-        item.classList.toggle("is-active", item === btn);
-      });
-      load();
+  var defaults = api.defaultDateRange(7);
+  if (startEl) startEl.value = defaults.start;
+  if (endEl) {
+    endEl.value = defaults.end;
+    endEl.max = defaults.end;
+  }
+  if (startEl) startEl.max = defaults.end;
+
+  if (applyBtn) {
+    applyBtn.addEventListener("click", load);
+  }
+
+  [startEl, endEl].forEach(function (el) {
+    if (!el) return;
+    el.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") load();
     });
   });
 
   load();
 
   function load() {
+    var start = startEl ? startEl.value : "";
+    var end = endEl ? endEl.value : "";
+
+    if (!start || !end) {
+      setStatus("시작일과 종료일을 선택해 주세요.", true);
+      return;
+    }
+
     setStatus("통계를 불러오는 중…");
     api
-      .analytics(range)
+      .analytics(start, end)
       .then(function (payload) {
         render(payload.data || {});
         setStatus("");
