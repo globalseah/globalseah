@@ -14,13 +14,13 @@
   var endEl = document.getElementById("stats-end");
   var applyBtn = document.getElementById("stats-apply");
 
-  var defaults = api.defaultDateRange(7);
+  var defaults = api.initialDateRange();
   if (startEl) startEl.value = defaults.start;
   if (endEl) {
     endEl.value = defaults.end;
-    endEl.max = defaults.end;
+    endEl.max = api.defaultDateRange(1).end;
   }
-  if (startEl) startEl.max = defaults.end;
+  if (startEl) startEl.max = api.defaultDateRange(1).end;
 
   if (applyBtn) {
     applyBtn.addEventListener("click", load);
@@ -49,6 +49,7 @@
       .analytics(start, end)
       .then(function (payload) {
         render(payload.data || {});
+        api.storeDateRange(start, end);
         setStatus("");
       })
       .catch(function (err) {

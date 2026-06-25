@@ -649,6 +649,10 @@ a {
   color: var(--muted);
 }
 
+.admin-date-range--panel {
+  margin-bottom: 16px;
+}
+
 .admin-range-tab {
   padding: 7px 12px;
   border-radius: 8px;

@@ -89,6 +89,35 @@
     };
   }
 
+  var ANALYTICS_RANGE_KEY = "seah-admin-analytics-range";
+
+  function getStoredDateRange() {
+    try {
+      var raw = sessionStorage.getItem(ANALYTICS_RANGE_KEY);
+      if (!raw) return null;
+      var data = JSON.parse(raw);
+      if (data && data.start && data.end) return data;
+    } catch (e) {
+      /* ignore */
+    }
+    return null;
+  }
+
+  function storeDateRange(start, end) {
+    try {
+      sessionStorage.setItem(
+        ANALYTICS_RANGE_KEY,
+        JSON.stringify({ start: start, end: end })
+      );
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  function initialDateRange() {
+    return getStoredDateRange() || defaultDateRange(1);
+  }
+
   function formatDateFromLocal(date) {
     var y = date.getFullYear();
     var m = String(date.getMonth() + 1).padStart(2, "0");
@@ -107,5 +136,7 @@
     toDateInputValue: toDateInputValue,
     analytics: analytics,
     defaultDateRange: defaultDateRange,
+    initialDateRange: initialDateRange,
+    storeDateRange: storeDateRange,
   };
 })();

@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>관리자 — 글로벌세아종합관리</title>
     <link rel="icon" href="/assets/images/logo.png" type="image/png" />
-    <link rel="stylesheet" href="/admin/admin.css?v=5" />
+    <link rel="stylesheet" href="/admin/admin.css?v=6" />
   </head>
   <body data-admin-page="dashboard">
     <div class="admin-root">
@@ -42,6 +42,30 @@
                 <a class="admin-btn admin-btn--ghost admin-btn--sm" href="/admin/stats.html"
                   >자세히 보기</a
                 >
+              </div>
+              <div class="admin-date-range admin-date-range--panel">
+                <label class="admin-date-range-field">
+                  <span class="admin-date-range-label">시작일</span>
+                  <input
+                    type="date"
+                    id="dashboard-stats-start"
+                    class="admin-input admin-input--date"
+                    aria-label="시작일"
+                  />
+                </label>
+                <span class="admin-date-range-sep" aria-hidden="true">~</span>
+                <label class="admin-date-range-field">
+                  <span class="admin-date-range-label">종료일</span>
+                  <input
+                    type="date"
+                    id="dashboard-stats-end"
+                    class="admin-input admin-input--date"
+                    aria-label="종료일"
+                  />
+                </label>
+                <button type="button" class="admin-btn admin-btn--sm" id="dashboard-stats-apply">
+                  조회
+                </button>
               </div>
               <p class="admin-status" id="dashboard-stats-status">통계를 불러오는 중…</p>
               <div id="dashboard-stats-summary"></div>
