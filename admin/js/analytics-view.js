@@ -15,6 +15,7 @@
   function renderSummaryCards(container, summary, rangeLabel, extra) {
     if (!container || !summary) return;
     extra = extra || {};
+    var isDashboard = extra.dashboard === true;
 
     var periodHint =
       "집계 기간: " +
@@ -39,6 +40,21 @@
         hint: periodHint,
         desc: "페이지를 연 횟수 합계입니다. 메뉴를 이동할 때마다 늘어납니다.",
       });
+
+    var mainCardsHtml = isDashboard
+      ? ""
+      : '<div class="admin-stat-cards admin-stat-cards--main">' + mainCards + "</div>";
+
+    var baselineText = isDashboard
+      ? "기준: 어제까지 집계 완료된 데이터입니다"
+      : "기준: 어제까지 집계 완료된 데이터입니다 (오늘 데이터는 1~2일 내 반영됩니다)";
+
+    var introHtml = isDashboard
+      ? ""
+      : '<p class="admin-stat-intro">' +
+        "아래 통계는 <strong>공개 홈페이지</strong> 방문 기준입니다. " +
+        "관리자 페이지(/admin) 방문은 포함되지 않습니다." +
+        "</p>";
 
     var auxBlock = "";
     if (extra.realtime) {
@@ -65,15 +81,12 @@
     }
 
     container.innerHTML =
-      '<p class="admin-stat-intro">' +
-      "아래 통계는 <strong>공개 홈페이지</strong> 방문 기준입니다. " +
-      "관리자 페이지(/admin) 방문은 포함되지 않습니다." +
-      "</p>" +
+      introHtml +
       '<div class="admin-stat-summary-block">' +
-      '<p class="admin-stat-baseline">기준: 어제까지 집계 완료된 데이터입니다 (오늘 데이터는 1~2일 내 반영됩니다)</p>' +
-      '<div class="admin-stat-cards admin-stat-cards--main">' +
-      mainCards +
-      "</div>" +
+      '<p class="admin-stat-baseline">' +
+      baselineText +
+      "</p>" +
+      mainCardsHtml +
       "</div>" +
       auxBlock +
       notice;

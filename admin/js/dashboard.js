@@ -74,6 +74,7 @@
           realtime: data.realtime,
           includesToday: data.includesToday,
           confirmedLabel: data.confirmedRange && data.confirmedRange.label,
+          dashboard: true,
         });
         renderTopChannels(data.channels || []);
         api.storeDateRange(start, end);
