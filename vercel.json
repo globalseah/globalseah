@@ -17,6 +17,9 @@
     },
     "api/admin/analytics.js": {
       "maxDuration": 15
+    },
+    "api/admin/analytics-health.js": {
+      "maxDuration": 15
     }
   },
   "redirects": [

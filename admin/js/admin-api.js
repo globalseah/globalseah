@@ -78,6 +78,10 @@
     return fetch(url).then(parseResponse);
   }
 
+  function analyticsHealth() {
+    return fetch("/api/admin/analytics-health").then(parseResponse);
+  }
+
   function defaultDateRange(days) {
     var count = Math.max(1, Number(days) || 7);
     var end = new Date();
@@ -135,6 +139,7 @@
     formatDate: formatDate,
     toDateInputValue: toDateInputValue,
     analytics: analytics,
+    analyticsHealth: analyticsHealth,
     defaultDateRange: defaultDateRange,
     initialDateRange: initialDateRange,
     storeDateRange: storeDateRange,

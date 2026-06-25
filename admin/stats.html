@@ -55,6 +55,23 @@
               </div>
             </div>
 
+            <section class="admin-card admin-health-panel" id="stats-health-panel">
+              <div class="admin-stat-panel-head">
+                <h2 class="admin-stat-title">GA4 연결 진단</h2>
+                <button type="button" class="admin-btn admin-btn--sm admin-btn--ghost" id="stats-health-run">
+                  다시 진단
+                </button>
+              </div>
+              <p class="admin-health-message" id="stats-health-message">연결 진단 중…</p>
+              <p class="admin-health-gtag" id="stats-health-gtag"></p>
+              <ul class="admin-health-list" id="stats-health-list"></ul>
+              <p class="admin-health-hint">
+                gtag 수집 확인: 새 탭에서
+                <a href="/" target="_blank" rel="noopener">공개 메인</a>
+                을 연 뒤 GA4 실시간 보고서를 보세요. /admin 방문만으로는 집계되지 않습니다.
+              </p>
+            </section>
+
             <div id="stats-summary"></div>
 
             <section class="admin-card admin-stat-panel">
@@ -88,5 +105,6 @@
     <script src="/admin/js/admin-api.js"></script>
     <script src="/admin/js/analytics-view.js"></script>
     <script src="/admin/js/stats.js"></script>
+    <script src="/admin/js/analytics-health.js"></script>
   </body>
 </html>

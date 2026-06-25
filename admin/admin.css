@@ -739,4 +739,98 @@ a {
   font-size: 14px;
 }
 
+/* —— GA4 연결 진단 —— */
+.admin-health-panel {
+  margin-bottom: 20px;
+  border-color: var(--border);
+}
+
+.admin-health-panel.is-ok {
+  border-color: #9fd4b0;
+  background: #f8fdf9;
+}
+
+.admin-health-panel.is-error {
+  border-color: #f0b4b4;
+  background: #fffafa;
+}
+
+.admin-health-message {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-health-message.is-ok {
+  color: var(--green-700);
+}
+
+.admin-health-message.is-error {
+  color: #b42318;
+}
+
+.admin-health-gtag {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.admin-health-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-health-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.admin-health-item:first-child {
+  border-top: 0;
+}
+
+.admin-health-icon {
+  flex: 0 0 20px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.admin-health-item.is-ok .admin-health-icon {
+  color: var(--green-700);
+}
+
+.admin-health-item.is-error .admin-health-icon {
+  color: #b42318;
+}
+
+.admin-health-body strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.admin-health-body p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.admin-health-hint {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.admin-health-hint a {
+  color: var(--green-700);
+  text-decoration: underline;
+}
+
 
