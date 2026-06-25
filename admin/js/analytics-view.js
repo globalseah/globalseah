@@ -16,41 +16,105 @@
     if (!container || !summary) return;
     extra = extra || {};
 
-    var cards =
-      statCard("방문자", formatNumber(summary.activeUsers), rangeLabel) +
-      statCard("세션", formatNumber(summary.sessions), rangeLabel) +
-      statCard("페이지뷰", formatNumber(summary.pageViews), rangeLabel);
+    var periodHint = "집계 기간: " + (rangeLabel || "");
+    var isTodayOnly =
+      extra.includesToday &&
+      rangeLabel &&
+      rangeLabel.indexOf("~") === -1;
+    var waitingToday =
+      extra.includesToday &&
+      !summary.activeUsers &&
+      !summary.sessions &&
+      !summary.pageViews;
+
+    var cards = "";
 
     if (extra.realtime) {
-      cards += statCard(
-        "실시간 활성",
-        formatNumber(extra.realtime.activeUsers),
-        "최근 30분"
-      );
+      cards += statCard({
+        label: "최근 30분 활성",
+        badge: "빠른 확인",
+        value: formatNumber(extra.realtime.activeUsers),
+        hint: "GA4 실시간 보고서 기준",
+        desc:
+          "최근 약 30분 안에 공개 홈페이지를 연 사용자 수입니다. " +
+          "동시접속자(CCU)가 아니며, 당일 집계가 나오기 전 참고용 지표입니다.",
+        variant: "live",
+      });
     }
+
+    cards +=
+      statCard({
+        label: "방문자 수",
+        value: formatNumber(summary.activeUsers),
+        hint: periodHint,
+        desc: "선택한 기간 동안 사이트에 들어온 사람 수입니다. 같은 사람은 한 번만 셉니다.",
+        pending: waitingToday,
+      }) +
+      statCard({
+        label: "방문 횟수 (세션)",
+        value: formatNumber(summary.sessions),
+        hint: periodHint,
+        desc: "사이트를 연 횟수입니다. 한 사람이 여러 번 방문하면 여러 번 집계됩니다.",
+        pending: waitingToday,
+      }) +
+      statCard({
+        label: "페이지 조회수",
+        value: formatNumber(summary.pageViews),
+        hint: periodHint,
+        desc: "페이지를 연 횟수 합계입니다. 메뉴를 이동할 때마다 늘어납니다.",
+        pending: waitingToday,
+      });
 
     var notice = "";
     if (extra.includesToday) {
       notice =
-        '<p class="admin-stat-notice">당일 집계 수치(방문자·세션 등)는 GA4 반영에 수 시간이 걸려 0으로 보일 수 있습니다. 방금 방문 확인은 <strong>실시간 활성</strong> 또는 GA4 콘솔 → 실시간을 보세요.</p>';
+        '<div class="admin-stat-notice">' +
+        "<strong>오늘 날짜를 조회하셨나요?</strong>" +
+        "<p>방문자·세션·페이지 조회수는 Google Analytics가 <strong>하루가 지난 뒤</strong> 또는 <strong>몇 시간 후</strong>에 모아 주기 때문에, " +
+        (isTodayOnly ? "오늘만" : "기간에 오늘이 포함되면") +
+        " 당일 수치가 <strong>0</strong>으로 보일 수 있습니다.</p>" +
+        "<p>오늘 방문이 집계되는지 빠르게 보려면 <strong>「최근 30분 활성」</strong>을 참고하세요. " +
+        "정확한 일별 숫자는 어제 이전 날짜를 조회하거나, 다음 날 다시 확인하세요.</p>" +
+        "</div>";
     }
 
     container.innerHTML =
-      '<div class="admin-stat-cards">' + cards + "</div>" + notice;
+      '<p class="admin-stat-intro">' +
+      "아래 통계는 <strong>공개 홈페이지</strong> 방문 기준입니다. " +
+      "관리자 페이지(/admin) 방문은 포함되지 않습니다." +
+      "</p>" +
+      '<div class="admin-stat-cards">' +
+      cards +
+      "</div>" +
+      notice;
   }
 
-  function statCard(label, value, hint) {
+  function statCard(options) {
+    var badgeHtml = options.badge
+      ? '<span class="admin-stat-badge">' + options.badge + "</span>"
+      : "";
+    var pendingHtml = options.pending
+      ? '<span class="admin-stat-badge admin-stat-badge--pending">집계 대기</span>'
+      : "";
+
     return (
-      '<article class="admin-stat-card">' +
+      '<article class="admin-stat-card' +
+      (options.variant === "live" ? " admin-stat-card--live" : "") +
+      '">' +
       '<p class="admin-stat-card-label">' +
-      label +
+      options.label +
+      badgeHtml +
+      pendingHtml +
       "</p>" +
       '<p class="admin-stat-card-value">' +
-      value +
+      options.value +
       "</p>" +
       '<p class="admin-stat-card-hint">' +
-      hint +
+      options.hint +
       "</p>" +
+      (options.desc
+        ? '<p class="admin-stat-card-desc">' + options.desc + "</p>"
+        : "") +
       "</article>"
     );
   }
@@ -58,7 +122,8 @@
   function renderDailyChart(container, daily) {
     if (!container) return;
     if (!daily || !daily.length) {
-      container.innerHTML = '<p class="admin-stat-empty">일별 방문 데이터가 없습니다.</p>';
+      container.innerHTML =
+        '<p class="admin-stat-empty">선택한 기간에 일별 방문 데이터가 없습니다. 오늘 날짜만 조회한 경우 내일 다시 확인해 보세요.</p>';
       return;
     }
 
@@ -84,6 +149,7 @@
       .join("");
 
     container.innerHTML =
+      '<p class="admin-stat-chart-caption">날짜별 방문자 수 — 막대가 높을수록 그날 방문이 많았습니다.</p>' +
       '<div class="admin-stat-chart" role="img" aria-label="일별 방문자 수">' +
       bars +
       "</div>";
