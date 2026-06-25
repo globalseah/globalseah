@@ -63,6 +63,7 @@
       realtime: data.realtime,
       includesToday: data.includesToday,
       confirmedLabel: data.confirmedRange && data.confirmedRange.label,
+      compact: true,
     });
     view.renderDailyChart(dailyEl, data.daily || []);
 

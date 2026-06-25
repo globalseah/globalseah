@@ -15,9 +15,9 @@
   function renderSummaryCards(container, summary, rangeLabel, extra) {
     if (!container || !summary) return;
     extra = extra || {};
-    var isDashboard = extra.dashboard === true;
+    var isCompact = extra.dashboard === true || extra.compact === true;
 
-    var periodHint = isDashboard
+    var periodHint = isCompact
       ? ""
       : "집계 기간: " + (extra.confirmedLabel || rangeLabel || "");
 
@@ -44,11 +44,11 @@
     var baselineText =
       "기준: 어제까지 집계 완료된 데이터입니다 (오늘 데이터는 1~2일 내 반영됩니다)";
 
-    var baselineHtml = isDashboard
+    var baselineHtml = isCompact
       ? ""
       : '<p class="admin-stat-baseline">' + baselineText + "</p>";
 
-    var introHtml = isDashboard
+    var introHtml = isCompact
       ? ""
       : '<p class="admin-stat-intro">' +
         "아래 통계는 <strong>공개 홈페이지</strong> 방문 기준입니다. " +
