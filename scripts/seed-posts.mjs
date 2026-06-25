@@ -3,9 +3,8 @@
  *
  * 사용:
  *   SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... node scripts/seed-posts.mjs
- *   node scripts/seed-posts.mjs --fresh   # 기존 posts 전체 삭제 후 재시드
- *
- * Preview(dev) DB에 1회 실행 권장. 로컬은 .env.local 값 사용 가능.
+ *   node scripts/seed-posts.mjs --fresh
+ *   node scripts/seed-posts.mjs --prod --fresh   # .env.prod (운영 DB)
  */
 import fs from "fs";
 import path from "path";
@@ -17,6 +16,38 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 
 const fresh = process.argv.includes("--fresh");
+const isProd = process.argv.includes("--prod");
+
+function loadEnvFile(filename) {
+  const filePath = path.join(root, filename);
+  if (!fs.existsSync(filePath)) {
+    console.error("환경 파일이 없습니다:", filePath);
+    console.error("Vercel Production의 SUPABASE_URL·SERVICE_ROLE_KEY를 복사해 .env.prod 를 만드세요.");
+    console.error("예시: .env.prod.example 참고");
+    process.exit(1);
+  }
+
+  const lines = fs.readFileSync(filePath, "utf8").split(/\r?\n/);
+  lines.forEach(function (line) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) return;
+    const eq = trimmed.indexOf("=");
+    if (eq === -1) return;
+    const key = trimmed.slice(0, eq).trim();
+    let value = trimmed.slice(eq + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    if (!process.env[key]) process.env[key] = value;
+  });
+}
+
+if (isProd) {
+  loadEnvFile(".env.prod");
+}
 
 function loadLegacyWindow(relativePath) {
   const filePath = path.join(root, relativePath);
@@ -35,18 +66,44 @@ function requireEnv(name) {
   return value;
 }
 
-function portfolioPublishedAt(index, total) {
+function supabaseHost(url) {
+  try {
+    return new URL(url).host;
+  } catch (e) {
+    return url;
+  }
+}
+
+function portfolioPublishedAt(index) {
   const base = new Date("2024-01-01T00:00:00.000Z");
   base.setDate(base.getDate() + index);
   return base.toISOString();
 }
 
 async function main() {
-  const supabase = createClient(
-    requireEnv("SUPABASE_URL"),
-    requireEnv("SUPABASE_SERVICE_ROLE_KEY"),
-    { auth: { persistSession: false, autoRefreshToken: false } }
+  const supabaseUrl = requireEnv("SUPABASE_URL");
+  const serviceRoleKey = requireEnv("SUPABASE_SERVICE_ROLE_KEY");
+
+  console.log(
+    isProd ? "[prod 시드] 대상 Supabase:" : "[시드] 대상 Supabase:",
+    supabaseHost(supabaseUrl)
   );
+
+  const supabase = createClient(supabaseUrl, serviceRoleKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+
+  const { count: probeCount, error: probeError } = await supabase
+    .from("posts")
+    .select("*", { count: "exact", head: true });
+
+  if (probeError) {
+    console.error("posts 테이블 접근 실패:", probeError.message);
+    if (probeError.message.includes("does not exist")) {
+      console.error("→ Supabase SQL Editor에서 supabase/schema.sql 을 먼저 실행하세요.");
+    }
+    process.exit(1);
+  }
 
   const noticeItems = loadLegacyWindow("js/notice-data.js").SEAH_NOTICE.items;
   const recruitItems = loadLegacyWindow("js/recruit-data.js").SEAH_RECRUIT.items;
@@ -62,22 +119,13 @@ async function main() {
       process.exit(1);
     }
     console.log("기존 posts 삭제 완료 (--fresh)");
-  } else {
-    const { count, error } = await supabase
-      .from("posts")
-      .select("*", { count: "exact", head: true });
-    if (error) {
-      console.error("데이터 확인 실패:", error.message);
-      process.exit(1);
-    }
-    if (count > 0) {
-      console.log(
-        "이미 posts가",
-        count,
-        "건 있습니다. 재시드하려면 --fresh 옵션을 사용하세요."
-      );
-      process.exit(0);
-    }
+  } else if (probeCount > 0) {
+    console.log(
+      "이미 posts가",
+      probeCount,
+      "건 있습니다. 재시드하려면 --fresh 옵션을 사용하세요."
+    );
+    process.exit(0);
   }
 
   const rows = [];
@@ -128,7 +176,7 @@ async function main() {
       contact: null,
       content_type: null,
       status: "open",
-      published_at: portfolioPublishedAt(index, portfolioItems.length),
+      published_at: portfolioPublishedAt(index),
     });
   });
 
@@ -143,13 +191,25 @@ async function main() {
     console.log("inserted", Math.min(i + chunkSize, rows.length), "/", rows.length);
   }
 
+  const { count: finalCount, error: countError } = await supabase
+    .from("posts")
+    .select("*", { count: "exact", head: true });
+
+  if (countError) {
+    console.error("시드 후 확인 실패:", countError.message);
+    process.exit(1);
+  }
+
   console.log(
     "시드 완료 — 공지",
     noticeItems.length,
     "/ 채용",
     recruitItems.length,
     "/ 실적",
-    portfolioItems.length
+    portfolioItems.length,
+    "| posts 총",
+    finalCount,
+    "건"
   );
 }
 

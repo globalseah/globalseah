@@ -3,7 +3,7 @@
 **작성:** JD  
 **버전:** v3 (최종 — 개발 착수용)  
 **갱신:** 2026-06-24  
-**상태:** 기획·의사결정 완료 → Phase 0 구현 대기
+**상태:** Phase 0~7 완료 → **Phase 8 운영 반영** 진행 중
 
 **선행 완료:** PC 공개 사이트 MVP · 모바일 반응형(2026-06-23 클라이언트 컨펌)
 
@@ -264,8 +264,8 @@ Vercel Environment Variables — `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_
 | **4** | 관리자 CRUD — 실적 | 이미지+4필드 폼 | |
 | **5** | 관리자 CRUD — 채용 | 신규 구조화 + 레거시 수정 폼 | 마감 토글 없음 |
 | **6** | 공개 사이트 연동 | `notice`·`portfolio`·`recruit`·`home` fetch 전환, 시드 스크립트, `*-data.js` 정리 | 최신순 정렬 |
-| **7** | GA4 | gtag 삽입, Data API, `admin/stats.html` | GA4 속성·서비스 계정 후 |
-| **8** | 테스트 · 운영 반영 | Preview 검증 → prod 시드 → main 배포 → 계정 전달 | 아래 **Phase 8 상세** 참고 |
+| **7** | GA4 | gtag 삽입, Data API, `admin/stats.html` | GA4 속성·서비스 계정 후 | ✅ 완료 (2026-06-24) |
+| **8** | 테스트 · 운영 반영 | Preview 검증 → prod 시드 → main 배포 → 계정 전달 | 아래 **Phase 8 상세** 참고 | 🔄 진행 중 |
 
 ### Phase 8 상세 (운영 반영 체크리스트)
 
@@ -275,16 +275,41 @@ Vercel Environment Variables — `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_
 |---|------|------|------|------|------|
 | **8-1** | Preview 최종 검증 | 공지·실적·채용 CRUD → 공개 페이지 반영, 문의 API 정상 | JD | Phase 6 | ✅ 완료 |
 | **8-2** | 브랜치·배포 동기화 | `feature/admin-page` 변경분 push, Preview 최신 배포 확인 | JD | 8-1 | 🔄 진행 중 |
-| **8-3** | prod DB 스키마 | Supabase **prod** → SQL Editor에 `supabase/schema.sql` 1회 실행(미실행 시) | JD | Phase 0 | ⏳ 확인 필요 |
-| **8-4** | prod 초기 시드 | prod `SUPABASE_SERVICE_ROLE_KEY`로 `npm run seed:posts -- --fresh` (67건) | JD | 8-3 | ⏳ 대기 |
-| **8-5** | Vercel Production env | `SUPABASE_*` 3개 = **prod** 값, `RESEND_*`·`CONTACT_*` 운영값, `ADMIN_USER`/`ADMIN_PASS` **최종** | JD | — | ⏳ 배포 전 확정 |
-| **8-6** | Basic Auth 운영 계정 | Preview용 비밀번호 → 대표자용 **최종 ID/PW**로 변경(Production env) | JD | 8-5 | ⏳ 배포 직전 |
+| **8-3** | prod DB 스키마 | Supabase **prod** → SQL Editor에 `supabase/schema.sql` 1회 실행(미실행 시) | JD | Phase 0 | ✅ 완료 |
+| **8-4** | prod 초기 시드 | prod `SUPABASE_SERVICE_ROLE_KEY`로 `npm run seed:posts -- --fresh` (67건) | JD | 8-3 | ✅ 완료 (2026-06-25) |
+| **8-5** | Vercel Production env | `SUPABASE_*` 3개 = **prod** 값, `RESEND_*`·`CONTACT_*` 운영값, GA4·Basic Auth | JD | — | ✅ 완료 (2026-06-25) |
+| **8-6** | Basic Auth 운영 계정 | Preview와 **동일 ID/PW 유지** (2026-06-25 확정) | JD | 8-5 | ✅ 확정 |
 | **8-7** | main 머지 · Production 배포 | `feature/admin-page` → `main` merge, globalseah.com 자동 배포 | JD | 8-4, 8-5, 8-6 | ⏳ 대기 |
 | **8-8** | 운영 사이트 검증 | globalseah.com — 메인·게시판·문의·`/admin` 로그인·CRUD→공개 반영 | JD | 8-7 | ⏳ 대기 |
 | **8-9** | 대표자 인수인계 | `/admin` URL, Basic Auth 계정, 공지·실적·채용 사용법(간단 안내) | JD → 클라이언트 | 8-8 | ⏳ 대기 |
 | **8-10** | dev DB 정리 (선택) | Preview 테스트 글 삭제·재시드 — **운영에 영향 없음** | JD | 8-7 | ⏳ 선택 |
-| **8-11** | GA4 연동 (Phase 7) | gtag + `admin/stats.html` — 구글 기기 확인 후 | JD | GA4 속성 | ⏳ 보류 |
+| **8-11** | GA4 연동 (Phase 7) | gtag + Data API + `admin/stats.html` + 대시보드 요약 | JD | GA4 속성 | ✅ 완료 (2026-06-24) |
 | **8-12** | 대시보드 UI 정리 (선택) | 요약 카드·이미지·문구 일괄 — 기능 안정 후 | JD | 8-8 또는 8-11 | ⏳ 나중 |
+
+### Phase 7 완료 스냅샷 (2026-06-24)
+
+| 항목 | 내용 |
+|------|------|
+| 수집 | `site-config.js` `ga4MeasurementId` + `layout.js` gtag (공개 페이지만, `/admin` 제외) |
+| 조회 | `lib/ga4-analytics.js` → `api/admin/analytics.js` (Basic Auth) |
+| 화면 | `admin/stats.html` 상세 통계, `admin/index.html` 대시보드 요약 |
+| 환경 | Vercel GA4 env 4종 Preview·Production 설정 완료 |
+| 인증 | Google Cloud 서비스 계정 + GA4 속성 뷰어 권한 |
+| 진단 | `?debug=1` 시에만 연결 진단 패널 (`analytics-health.js`) |
+
+**2026-06-23 (어제)** — GA4 연동·검증
+- 속성 생성·env·서비스 계정 연결, Preview에서 수집·조회 동작 확인
+- 당일 Data API 0 표시 → GA4 집계 지연(24~48h)으로 원인 파악
+- 「지금 방문 중」 오해 방지 → **「최근 30분 활성」** 명칭 변경
+
+**2026-06-24 (오늘)** — 클라이언트 친화 UI·마무리
+- 기본 조회 종료일 **어제**, 메인 3카드는 어제까지 확정 데이터 + 고정 안내 문구
+- 「최근 30분 활성」 보조 카드 분리 + CCU 오해 방지 문구
+- 오늘 포함 조회 시 안내 박스, 빈 데이터 문구 보강
+- 지역 카드: `country` → **`region`** (시/도) + 한국어 라벨 매핑
+- 대시보드: 공지·실적·채용 **n건** 표시
+
+> **통계 기능은 이 수준으로 완료.** 이후는 디자인 다듬기(8-12)만 선택 사항.
 
 #### 8-4 prod 시드 — 실행 예시
 
@@ -311,10 +336,10 @@ npm run seed:posts -- --fresh
 | 지금 가능 | 나중(본인 기기·사무실) |
 |-----------|------------------------|
 | 8-2 push·Preview 재확인 | 8-3~4 prod 스키마·시드 |
-| 대시보드 임시 문구 정리 | 8-6 Basic Auth 최종 비밀번호 |
+| 인수인계 문서 초안 (`admin/인수인계-초안.md`) | 8-6 Basic Auth 최종 비밀번호 |
 | 8-5 env 목록 점검(값 메모) | 8-7 main 머지 |
-| 인수인계 문서 초안 작성 | 8-11 GA4 |
-| | 8-12 대시보드 디자인 |
+| | 8-8~9 운영 검증·대표자 전달 |
+| | 8-12 대시보드 디자인 (선택) |
 
 ### Phase 의존 관계
 
@@ -350,7 +375,7 @@ Phase 0 → 7 (GA4 계정 준비 후, 2 완료 후 통계 UI) → 8
 - [x] DB: **Supabase dev + prod**, Vercel 1개
 - [x] 관리자 UI: **1280px 고정**, 모바일 미구현
 - [x] 모바일 공개 사이트: **완료·컨펌** (관리자 작업과 병행 종료)
-- [ ] GA4 속성 생성 — **2026-06-25** 예정
+- [x] GA4 속성 생성·연동 — **2026-06-23~24 완료** (측정 ID `G-NB845MCYG7`, 속성 `543143382`)
 - [ ] Supabase 2프로젝트 한도 — 구현 시 확인
 
 ---
