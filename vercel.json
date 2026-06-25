@@ -11,6 +11,12 @@
     },
     "api/posts.js": {
       "maxDuration": 10
+    },
+    "api/ga4-id.js": {
+      "maxDuration": 10
+    },
+    "api/admin/analytics.js": {
+      "maxDuration": 15
     }
   },
   "redirects": [

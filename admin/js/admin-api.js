@@ -69,6 +69,12 @@
     return formatDate(iso);
   }
 
+  function analytics(range) {
+    return fetch(
+      "/api/admin/analytics?range=" + encodeURIComponent(range || "7d")
+    ).then(parseResponse);
+  }
+
   window.SEAH_ADMIN_API = {
     list: list,
     get: get,
@@ -78,5 +84,6 @@
     uploadImage: uploadImage,
     formatDate: formatDate,
     toDateInputValue: toDateInputValue,
+    analytics: analytics,
   };
 })();

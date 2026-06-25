@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>방문 통계 — 글로벌세아종합관리</title>
     <link rel="icon" href="/assets/images/logo.png" type="image/png" />
-    <link rel="stylesheet" href="/admin/admin.css?v=2" />
+    <link rel="stylesheet" href="/admin/admin.css?v=5" />
   </head>
   <body data-admin-page="stats">
     <div class="admin-root">
@@ -24,16 +24,52 @@
         <div class="admin-main">
           <header class="admin-topbar">
             <h1 id="admin-page-title">방문 통계</h1>
-            <p class="admin-topbar-meta">Phase 7 GA4 연동 예정</p>
+            <p class="admin-topbar-meta">GA4 기반 방문자 · 유입 · 페이지 · 기기 · 지역</p>
           </header>
           <main class="admin-content">
-            <div class="admin-placeholder">
-              GA4 방문자 · 유입경로 통계 화면은 Phase 7에서 구현됩니다.
+            <div class="admin-toolbar">
+              <p class="admin-status" id="stats-status"></p>
+              <div class="admin-range-tabs" role="tablist" aria-label="조회 기간">
+                <button type="button" class="admin-range-tab is-active" data-stats-range="7d">
+                  7일
+                </button>
+                <button type="button" class="admin-range-tab" data-stats-range="28d">28일</button>
+                <button type="button" class="admin-range-tab" data-stats-range="90d">90일</button>
+              </div>
+            </div>
+
+            <div id="stats-summary"></div>
+
+            <section class="admin-card admin-stat-panel">
+              <h2 class="admin-stat-title">일별 방문자</h2>
+              <div id="stats-daily"></div>
+            </section>
+
+            <div class="admin-stat-grid">
+              <section class="admin-card admin-stat-panel">
+                <h2 class="admin-stat-title">유입경로</h2>
+                <div id="stats-channels"></div>
+              </section>
+              <section class="admin-card admin-stat-panel">
+                <h2 class="admin-stat-title">인기 페이지</h2>
+                <div id="stats-pages"></div>
+              </section>
+              <section class="admin-card admin-stat-panel">
+                <h2 class="admin-stat-title">기기</h2>
+                <div id="stats-devices"></div>
+              </section>
+              <section class="admin-card admin-stat-panel">
+                <h2 class="admin-stat-title">지역</h2>
+                <div id="stats-regions"></div>
+              </section>
             </div>
           </main>
         </div>
       </div>
     </div>
     <script src="/admin/js/admin-shell.js"></script>
+    <script src="/admin/js/admin-api.js"></script>
+    <script src="/admin/js/analytics-view.js"></script>
+    <script src="/admin/js/stats.js"></script>
   </body>
 </html>

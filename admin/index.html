@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>관리자 — 글로벌세아종합관리</title>
     <link rel="icon" href="/assets/images/logo.png" type="image/png" />
-    <link rel="stylesheet" href="/admin/admin.css?v=2" />
+    <link rel="stylesheet" href="/admin/admin.css?v=5" />
   </head>
   <body data-admin-page="dashboard">
     <div class="admin-root">
@@ -24,7 +24,7 @@
         <div class="admin-main">
           <header class="admin-topbar">
             <h1 id="admin-page-title">대시보드</h1>
-            <p class="admin-topbar-meta">1280px 관리자 화면</p>
+            <p class="admin-topbar-meta">콘텐츠 관리 · 방문 통계 요약</p>
           </header>
           <main class="admin-content">
             <section class="admin-card">
@@ -32,9 +32,23 @@
               <h2>글로벌세아 관리자</h2>
               <p>
                 공지사항·실적현황·채용현황을 등록·수정·삭제할 수 있습니다. 변경 내용은 공개
-                사이트에 바로 반영됩니다. 방문 통계는 GA4 연동 후 이용할 수 있습니다.
+                사이트에 바로 반영됩니다.
               </p>
             </section>
+
+            <section class="admin-card admin-stat-panel">
+              <div class="admin-stat-panel-head">
+                <h2 class="admin-stat-title">방문 통계 요약</h2>
+                <a class="admin-btn admin-btn--ghost admin-btn--sm" href="/admin/stats.html"
+                  >자세히 보기</a
+                >
+              </div>
+              <p class="admin-status" id="dashboard-stats-status">통계를 불러오는 중…</p>
+              <div id="dashboard-stats-summary"></div>
+              <h3 class="admin-stat-subtitle">유입경로 TOP 5</h3>
+              <div id="dashboard-stats-channels"></div>
+            </section>
+
             <section class="admin-grid">
               <article class="admin-tile">
                 <h3>공지사항</h3>
@@ -53,7 +67,7 @@
               </article>
               <article class="admin-tile">
                 <h3>방문 통계</h3>
-                <p>GA4 연동 준비 중</p>
+                <p>GA4 방문자 · 유입 · 페이지</p>
                 <a class="admin-btn admin-btn--ghost" href="/admin/stats.html">바로가기</a>
               </article>
             </section>
@@ -62,5 +76,8 @@
       </div>
     </div>
     <script src="/admin/js/admin-shell.js"></script>
+    <script src="/admin/js/admin-api.js"></script>
+    <script src="/admin/js/analytics-view.js"></script>
+    <script src="/admin/js/dashboard.js"></script>
   </body>
 </html>

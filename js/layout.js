@@ -585,6 +585,40 @@
 
   initMobileHeaderScroll();
 
+  (function initGa4() {
+    var measurementId = site.ga4MeasurementId;
+
+    function injectGtag(id) {
+      if (!id || window.__SEAH_GA4_LOADED__) return;
+      window.__SEAH_GA4_LOADED__ = id;
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      window.gtag = gtag;
+      gtag("js", new Date());
+      gtag("config", id);
+      var script = document.createElement("script");
+      script.async = true;
+      script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
+      document.head.appendChild(script);
+    }
+
+    if (measurementId) {
+      injectGtag(measurementId);
+      return;
+    }
+
+    fetch("/api/ga4-id")
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (data) {
+        if (data && data.measurementId) injectGtag(data.measurementId);
+      })
+      .catch(function () {});
+  })();
+
   const revealScript = document.createElement("script");
   revealScript.src = link("js/reveal-on-scroll.js");
   revealScript.defer = true;

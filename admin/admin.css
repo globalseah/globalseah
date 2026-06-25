@@ -535,5 +535,169 @@ a {
   margin-bottom: 12px;
 }
 
+/* —— GA4 통계 (Phase 7) —— */
+.admin-stat-panel + .admin-stat-panel,
+.admin-stat-panel + .admin-stat-grid,
+.admin-card + .admin-stat-panel {
+  margin-top: 20px;
+}
+
+.admin-stat-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.admin-stat-title {
+  margin: 0 0 16px;
+  font-size: 16px;
+  color: var(--green-900);
+}
+
+.admin-stat-panel-head .admin-stat-title {
+  margin-bottom: 0;
+}
+
+.admin-stat-subtitle {
+  margin: 20px 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.admin-stat-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 4px;
+}
+
+.admin-stat-card {
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--green-50);
+}
+
+.admin-stat-card-label {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.admin-stat-card-value {
+  margin: 8px 0 4px;
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--green-900);
+}
+
+.admin-stat-card-hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.admin-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.admin-stat-empty {
+  margin: 0;
+  padding: 20px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.admin-stat-table td:first-child {
+  word-break: break-all;
+}
+
+.admin-range-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-range-tab {
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-range-tab.is-active {
+  background: var(--green-700);
+  border-color: var(--green-700);
+  color: #fff;
+}
+
+.admin-stat-chart {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
+  gap: 8px;
+  align-items: end;
+  min-height: 180px;
+  padding-top: 8px;
+}
+
+.admin-stat-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-height: 160px;
+  justify-content: flex-end;
+}
+
+.admin-stat-bar-fill {
+  display: block;
+  width: 100%;
+  max-width: 28px;
+  border-radius: 6px 6px 2px 2px;
+  background: linear-gradient(180deg, var(--green-300), var(--green-700));
+}
+
+.admin-stat-bar-label {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.admin-stat-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-stat-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.admin-stat-list li:last-child {
+  border-bottom: 0;
+}
+
+.admin-stat-list strong {
+  color: var(--green-900);
+  font-size: 14px;
+}
 
 
