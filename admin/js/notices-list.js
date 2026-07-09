@@ -44,15 +44,14 @@
     listEl.innerHTML = items
       .map(function (item, index) {
         var hasText = item.body && String(item.body).trim();
-        var imageCount = (item.images || []).length;
-        var typeLabel =
-          hasText && imageCount
-            ? "텍스트+이미지"
-            : hasText
-              ? "텍스트"
-              : imageCount
-                ? "이미지 " + imageCount + "장"
-                : "-";
+        var resolved = resolveAttachments(item);
+        var imageCount = resolved.filter(function (a) {
+          return a.kind === "image";
+        }).length;
+        var docCount = resolved.filter(function (a) {
+          return a.kind === "document";
+        }).length;
+        var typeLabel = noticeTypeLabel(hasText, imageCount, docCount);
 
         return (
           "<tr>" +
@@ -101,6 +100,23 @@
           });
       });
     });
+  }
+
+  function resolveAttachments(item) {
+    if (item.attachments && item.attachments.length) {
+      return item.attachments;
+    }
+    return (item.images || []).map(function (url) {
+      return { url: url, kind: "image" };
+    });
+  }
+
+  function noticeTypeLabel(hasText, imageCount, docCount) {
+    var parts = [];
+    if (hasText) parts.push("텍스트");
+    if (imageCount) parts.push("이미지 " + imageCount + "장");
+    if (docCount) parts.push("문서 " + docCount + "건");
+    return parts.length ? parts.join("+") : "-";
   }
 
   function escapeHtml(value) {

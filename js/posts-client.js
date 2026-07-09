@@ -50,13 +50,50 @@
     return base + "assets/images/notice/" + filenameOrUrl;
   }
 
+  function filenameFromUrl(url) {
+    if (!url) return "첨부파일";
+    var parts = String(url).split("/");
+    return parts[parts.length - 1] || "첨부파일";
+  }
+
+  function resolveNoticeAttachments(row) {
+    if (row.attachments && row.attachments.length) {
+      return row.attachments.map(function (item) {
+        return {
+          url: item.url,
+          name: item.name || filenameFromUrl(item.url),
+          mime: item.mime || "",
+          kind: item.kind === "document" ? "document" : "image",
+          size: item.size != null ? item.size : null,
+        };
+      });
+    }
+    return (row.images || []).map(function (url) {
+      return {
+        url: url,
+        name: filenameFromUrl(url),
+        mime: "",
+        kind: "image",
+        size: null,
+      };
+    });
+  }
+
   function normalizeNotice(row) {
+    var attachments = resolveNoticeAttachments(row);
     return {
       id: row.id,
       title: row.title,
       date: formatDate(row.published_at),
       body: row.body || "",
-      images: row.images || [],
+      images: attachments
+        .filter(function (item) {
+          return item.kind === "image";
+        })
+        .map(function (item) {
+          return item.url;
+        }),
+      attachments: attachments,
     };
   }
 
@@ -108,6 +145,7 @@
         };
       },
       imageSrc: imageSrcNotice,
+      attachmentSrc: imageSrcNotice,
     };
   }
 

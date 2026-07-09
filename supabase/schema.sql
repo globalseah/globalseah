@@ -12,6 +12,7 @@ create table if not exists public.posts (
   body text,
   fields jsonb,
   images text[] default '{}',
+  attachments jsonb default '[]',
   image_url text,
   contact jsonb,
   content_type text check (content_type is null or content_type in ('legacy', 'structured')),

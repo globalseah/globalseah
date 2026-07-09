@@ -10,7 +10,7 @@
   var titleEl = document.getElementById("notice-title");
   var dateEl = document.getElementById("notice-date");
   var bodyEl = document.getElementById("notice-body");
-  var imageListEl = document.getElementById("notice-image-list");
+  var attachmentListEl = document.getElementById("notice-image-list");
   var fileInput = document.getElementById("notice-image-input");
   var uploadBtn = document.getElementById("notice-upload-btn");
   var submitBtn = document.getElementById("notice-submit-btn");
@@ -19,7 +19,7 @@
   var pageTitleEl = document.getElementById("admin-page-title");
   var pageMetaEl = document.getElementById("admin-page-meta");
 
-  var images = [];
+  var attachments = [];
 
   if (pageTitleEl) {
     pageTitleEl.textContent = isEdit ? "공지 수정" : "공지 작성";
@@ -49,8 +49,8 @@
         if (titleEl) titleEl.value = item.title || "";
         if (dateEl) dateEl.value = api.toDateInputValue(item.published_at);
         if (bodyEl) bodyEl.value = item.body || "";
-        images = (item.images || []).slice();
-        renderImages();
+        attachments = resolveAttachments(item);
+        renderAttachments();
         setStatus("");
       })
       .catch(function (err) {
@@ -70,12 +70,20 @@
       if (!file) return;
 
       uploadBtn.disabled = true;
-      setStatus("이미지 업로드 중…");
+      setStatus("파일 업로드 중…");
       api
-        .uploadImage("notice", file)
+        .uploadFile("notice", file)
         .then(function (data) {
-          if (data.url) images.push(data.url);
-          renderImages();
+          if (data.url) {
+            attachments.push({
+              url: data.url,
+              name: data.name || file.name || "첨부파일",
+              mime: data.mime || file.type || "",
+              kind: data.kind === "document" ? "document" : "image",
+              size: data.size != null ? data.size : file.size,
+            });
+          }
+          renderAttachments();
           setStatus("");
         })
         .catch(function (err) {
@@ -103,14 +111,14 @@
     var body = bodyEl ? bodyEl.value : "";
     var publishedAt = dateEl ? dateEl.value : "";
     var hasBody = body.trim().length > 0;
-    var hasImages = images.length > 0;
+    var hasAttachments = attachments.length > 0;
 
     if (!title) {
       setStatus("제목을 입력해 주세요.", true);
       return;
     }
-    if (!hasBody && !hasImages) {
-      setStatus("본문 또는 이미지 중 하나 이상 입력해 주세요.", true);
+    if (!hasBody && !hasAttachments) {
+      setStatus("본문 또는 첨부파일 중 하나 이상 입력해 주세요.", true);
       return;
     }
     if (!publishedAt) {
@@ -122,7 +130,7 @@
       category: "notice",
       title: title,
       body: hasBody ? body : null,
-      images: images.slice(),
+      attachments: attachments.slice(),
       published_at: publishedAt,
     };
 
@@ -143,23 +151,58 @@
       });
   }
 
-  function renderImages() {
-    if (!imageListEl) return;
+  function resolveAttachments(item) {
+    if (item.attachments && item.attachments.length) {
+      return item.attachments.map(normalizeAttachment).filter(Boolean);
+    }
+    return (item.images || []).map(function (url) {
+      return {
+        url: url,
+        name: filenameFromUrl(url),
+        mime: "",
+        kind: "image",
+        size: null,
+      };
+    });
+  }
 
-    if (!images.length) {
-      imageListEl.innerHTML =
-        '<p class="admin-form-hint">등록된 이미지가 없습니다.</p>';
+  function normalizeAttachment(item) {
+    if (!item || !item.url) return null;
+    return {
+      url: item.url,
+      name: item.name || filenameFromUrl(item.url),
+      mime: item.mime || "",
+      kind: item.kind === "document" ? "document" : "image",
+      size: item.size != null ? item.size : null,
+    };
+  }
+
+  function filenameFromUrl(url) {
+    var value = String(url || "");
+    var parts = value.split("/");
+    return parts[parts.length - 1] || "첨부파일";
+  }
+
+  function formatFileSize(bytes) {
+    if (bytes == null || !Number.isFinite(bytes)) return "";
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+  }
+
+  function renderAttachments() {
+    if (!attachmentListEl) return;
+
+    if (!attachments.length) {
+      attachmentListEl.innerHTML =
+        '<p class="admin-form-hint">등록된 첨부파일이 없습니다.</p>';
       return;
     }
 
-    imageListEl.innerHTML = images
-      .map(function (url, index) {
-        return (
-          '<div class="admin-image-item">' +
-          '<img src="' +
-          escapeAttr(url) +
-          '" alt="" />' +
-          '<div class="admin-image-item-actions">' +
+    attachmentListEl.innerHTML = attachments
+      .map(function (item, index) {
+        var actions =
+          '<div class="admin-attachment-item-actions">' +
           '<button type="button" class="admin-btn admin-btn--sm admin-btn--ghost" data-move-up="' +
           index +
           '"' +
@@ -168,44 +211,71 @@
           '<button type="button" class="admin-btn admin-btn--sm admin-btn--ghost" data-move-down="' +
           index +
           '"' +
-          (index === images.length - 1 ? " disabled" : "") +
+          (index === attachments.length - 1 ? " disabled" : "") +
           ">아래로</button> " +
           '<button type="button" class="admin-btn admin-btn--sm admin-btn--danger" data-remove="' +
           index +
           '">삭제</button>' +
+          "</div>";
+
+        if (item.kind === "image") {
+          return (
+            '<div class="admin-attachment-item admin-attachment-item--image">' +
+            '<img src="' +
+            escapeAttr(item.url) +
+            '" alt="" />' +
+            actions +
+            "</div>"
+          );
+        }
+
+        var sizeLabel = formatFileSize(item.size);
+        return (
+          '<div class="admin-attachment-item admin-attachment-item--document">' +
+          '<div class="admin-attachment-doc">' +
+          '<span class="admin-attachment-doc-icon" aria-hidden="true">📎</span>' +
+          '<div class="admin-attachment-doc-meta">' +
+          '<span class="admin-attachment-doc-name">' +
+          escapeHtml(item.name) +
+          "</span>" +
+          (sizeLabel
+            ? '<span class="admin-attachment-doc-size">' + escapeHtml(sizeLabel) + "</span>"
+            : "") +
           "</div>" +
+          "</div>" +
+          actions +
           "</div>"
         );
       })
       .join("");
 
-    imageListEl.querySelectorAll("[data-remove]").forEach(function (btn) {
+    attachmentListEl.querySelectorAll("[data-remove]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var idx = Number(btn.getAttribute("data-remove"));
-        images.splice(idx, 1);
-        renderImages();
+        attachments.splice(idx, 1);
+        renderAttachments();
       });
     });
 
-    imageListEl.querySelectorAll("[data-move-up]").forEach(function (btn) {
+    attachmentListEl.querySelectorAll("[data-move-up]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var idx = Number(btn.getAttribute("data-move-up"));
         if (idx <= 0) return;
-        var temp = images[idx - 1];
-        images[idx - 1] = images[idx];
-        images[idx] = temp;
-        renderImages();
+        var temp = attachments[idx - 1];
+        attachments[idx - 1] = attachments[idx];
+        attachments[idx] = temp;
+        renderAttachments();
       });
     });
 
-    imageListEl.querySelectorAll("[data-move-down]").forEach(function (btn) {
+    attachmentListEl.querySelectorAll("[data-move-down]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var idx = Number(btn.getAttribute("data-move-down"));
-        if (idx >= images.length - 1) return;
-        var temp = images[idx + 1];
-        images[idx + 1] = images[idx];
-        images[idx] = temp;
-        renderImages();
+        if (idx >= attachments.length - 1) return;
+        var temp = attachments[idx + 1];
+        attachments[idx + 1] = attachments[idx];
+        attachments[idx] = temp;
+        renderAttachments();
       });
     });
   }
@@ -224,5 +294,9 @@
       .replace(/</g, "&lt;");
   }
 
-  renderImages();
+  function escapeHtml(value) {
+    return escapeAttr(value);
+  }
+
+  renderAttachments();
 })();

@@ -45,7 +45,7 @@
     }).then(parseResponse);
   }
 
-  function uploadImage(category, file) {
+  function uploadFile(category, file) {
     var form = new FormData();
     form.append("category", category);
     form.append("file", file);
@@ -53,6 +53,10 @@
       method: "POST",
       body: form,
     }).then(parseResponse);
+  }
+
+  function uploadImage(category, file) {
+    return uploadFile(category, file);
   }
 
   function formatDate(iso) {
@@ -141,6 +145,7 @@
     update: update,
     remove: remove,
     uploadImage: uploadImage,
+    uploadFile: uploadFile,
     formatDate: formatDate,
     toDateInputValue: toDateInputValue,
     analytics: analytics,

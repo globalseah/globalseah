@@ -56,12 +56,12 @@
               </div>
               <div class="admin-form-row">
                 <div class="admin-label-row">
-                  <span class="admin-label">이미지</span>
-                  <button type="button" class="admin-btn admin-btn--sm" id="notice-upload-btn">이미지 추가</button>
+                  <span class="admin-label">첨부파일</span>
+                  <button type="button" class="admin-btn admin-btn--sm" id="notice-upload-btn">파일 추가</button>
                 </div>
-                <p class="admin-form-hint">본문 또는 이미지 중 최소 1개는 필요합니다. 여러 장 업로드 가능합니다.</p>
-                <input type="file" id="notice-image-input" accept="image/jpeg,image/png,image/gif,image/webp" hidden />
-                <div class="admin-image-list" id="notice-image-list"></div>
+                <p class="admin-form-hint">본문 또는 첨부파일 중 최소 1개는 필요합니다. 이미지·PDF·Office·ZIP·TXT (이미지 5MB, 문서 20MB 이하)</p>
+                <input type="file" id="notice-image-input" accept="image/jpeg,image/png,image/gif,image/webp,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/plain,application/zip,application/x-zip-compressed,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip" hidden />
+                <div class="admin-attachment-list" id="notice-image-list"></div>
               </div>
               <div class="admin-form-actions">
                 <button type="submit" class="admin-btn" id="notice-submit-btn">등록</button>

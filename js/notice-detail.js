@@ -28,6 +28,13 @@
       if (crumbEl) crumbEl.textContent = item.title;
 
       var html = "";
+      var attachments = item.attachments || [];
+      var documents = attachments.filter(function (att) {
+        return att.kind === "document";
+      });
+      var images = attachments.filter(function (att) {
+        return att.kind === "image";
+      });
 
       if (item.body && String(item.body).trim()) {
         html +=
@@ -36,13 +43,41 @@
           "</div>";
       }
 
-      if (item.images && item.images.length) {
-        html += item.images
-          .map(function (filename, index) {
-            const src = notice.imageSrc(filename, "../");
+      if (documents.length) {
+        html += '<section class="notice-attachments">';
+        html +=
+          '<h2 class="notice-attachments-title">첨부파일 <span class="notice-attachments-count">(' +
+          documents.length +
+          ")</span></h2>";
+        html += '<ul class="notice-attachments-list">';
+        documents.forEach(function (att) {
+          var href = notice.attachmentSrc(att.url, "../");
+          var sizeLabel = formatFileSize(att.size);
+          html += '<li class="notice-attachments-item">';
+          html +=
+            '<a class="notice-attachments-link" href="' +
+            escapeAttr(href) +
+            '" download="' +
+            escapeAttr(att.name) +
+            '" target="_blank" rel="noopener noreferrer">';
+          html += '<span class="notice-attachments-icon" aria-hidden="true">📎</span>';
+          html += '<span class="notice-attachments-name">' + escapeHtml(att.name) + "</span>";
+          if (sizeLabel) {
+            html +=
+              '<span class="notice-attachments-size">' + escapeHtml(sizeLabel) + "</span>";
+          }
+          html += "</a></li>";
+        });
+        html += "</ul></section>";
+      }
+
+      if (images.length) {
+        html += images
+          .map(function (att, index) {
+            const src = notice.imageSrc(att.url, "../");
             const alt =
-              item.images.length > 1
-                ? item.title + " (" + (index + 1) + "/" + item.images.length + ")"
+              images.length > 1
+                ? item.title + " (" + (index + 1) + "/" + images.length + ")"
                 : item.title;
             return (
               '<figure class="notice-figure">' +
@@ -88,6 +123,13 @@
       "</span>" +
       "</div>"
     );
+  }
+
+  function formatFileSize(bytes) {
+    if (bytes == null || !Number.isFinite(bytes)) return "";
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
   }
 
   function escapeHtml(value) {

@@ -2311,6 +2311,78 @@ html.desktop-only .portfolio-meta-row {
   border: 1px solid var(--border);
 }
 
+.notice-attachments {
+  margin: 0;
+  padding: 20px 0 8px;
+  border-top: 1px solid var(--border);
+}
+
+.notice-attachments-title {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--green-900);
+}
+
+.notice-attachments-count {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.notice-attachments-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.notice-attachments-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.notice-attachments-item:last-child {
+  border-bottom: none;
+}
+
+.notice-attachments-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  color: var(--text);
+  text-decoration: none;
+  background: #fff;
+  transition: background 0.15s ease;
+}
+
+.notice-attachments-link:hover {
+  background: var(--green-50);
+  color: var(--green-900);
+}
+
+.notice-attachments-icon {
+  flex: 0 0 auto;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.notice-attachments-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+.notice-attachments-size {
+  flex: 0 0 auto;
+  font-size: 0.82rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
 .notice-view-back {
   margin: 36px 0 0;
   text-align: center;
