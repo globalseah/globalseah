@@ -18,11 +18,11 @@
 
       if (!item || !titleEl || !dateEl || !bodyEl) {
         if (titleEl) titleEl.textContent = "공지를 찾을 수 없습니다";
-        document.title = "공지사항 — 글로벌세아종합관리";
+        document.title = "공지사항 | 글로벌세아";
         return;
       }
 
-      document.title = item.title + " — 공지사항 — 글로벌세아종합관리";
+      document.title = item.title + " — 공지사항 | 글로벌세아";
       titleEl.textContent = item.title;
       dateEl.textContent = item.date;
       if (crumbEl) crumbEl.textContent = item.title;

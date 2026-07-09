@@ -51,7 +51,7 @@
     submitBtn.textContent = isEdit ? "수정 저장" : "등록";
   }
   document.title =
-    (isEdit ? "채용 수정" : "채용 등록") + " — 글로벌세아종합관리";
+    (isEdit ? "채용 수정" : "채용 등록") + " | 글로벌세아";
 
   if (!isEdit && dateEl) {
     dateEl.value = api.toDateInputValue(new Date().toISOString());

@@ -36,7 +36,7 @@
     submitBtn.textContent = isEdit ? "수정 저장" : "등록";
   }
   document.title =
-    (isEdit ? "실적 수정" : "실적 등록") + " — 글로벌세아종합관리";
+    (isEdit ? "실적 수정" : "실적 등록") + " | 글로벌세아";
 
   if (isEdit) {
     setStatus("불러오는 중…");

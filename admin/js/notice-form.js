@@ -31,7 +31,7 @@
     submitBtn.textContent = isEdit ? "수정 저장" : "등록";
   }
   document.title =
-    (isEdit ? "공지 수정" : "공지 작성") + " — 글로벌세아종합관리";
+    (isEdit ? "공지 수정" : "공지 작성") + " | 글로벌세아";
 
   if (!isEdit && dateEl) {
     dateEl.value = api.toDateInputValue(new Date().toISOString());
