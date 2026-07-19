@@ -85,7 +85,7 @@
     view.renderTable(
       pagesEl,
       [
-        { label: "페이지", key: "path" },
+        { label: "페이지", key: "label" },
         {
           label: "조회수",
           render: function (row) {
