@@ -87,18 +87,32 @@
       });
   }
 
+  var DASHBOARD_SOURCES = ["google", "naver", "(direct)"];
+
   function renderTopChannels(channels) {
     if (!channelsEl) return;
-    var top = channels.slice(0, 5);
-    if (!top.length) {
+    if (!channels.length) {
       channelsEl.innerHTML =
         '<p class="admin-stat-empty">유입경로 데이터가 없습니다. 방문자가 쌓이면 표시됩니다.</p>';
       return;
     }
 
+    var rows = [];
+    var etcSessions = 0;
+    channels.forEach(function (row) {
+      if (DASHBOARD_SOURCES.indexOf(row.name) !== -1) {
+        rows.push(row);
+      } else {
+        etcSessions += row.sessions;
+      }
+    });
+    if (etcSessions > 0) {
+      rows.push({ label: "기타", sessions: etcSessions });
+    }
+
     channelsEl.innerHTML =
       '<ul class="admin-stat-list">' +
-      top
+      rows
         .map(function (row) {
           return (
             "<li><span>" +
