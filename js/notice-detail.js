@@ -37,6 +37,11 @@
         description: description,
         canonical: canonical,
       });
+      injectBreadcrumbLD([
+        { name: "홈", url: "https://globalseah.com/" },
+        { name: "공지사항", url: "https://globalseah.com/notice/index.html" },
+        { name: item.title },
+      ]);
       titleEl.textContent = item.title;
       dateEl.textContent = item.date;
       if (crumbEl) crumbEl.textContent = item.title;
@@ -167,6 +172,26 @@
     if (!text) return fallback;
     if (text.length <= 120) return text;
     return text.slice(0, 120).trim() + "…";
+  }
+
+  function injectBreadcrumbLD(items) {
+    var ld = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": items.map(function (item, i) {
+        var entry = {
+          "@type": "ListItem",
+          "position": i + 1,
+          "name": item.name
+        };
+        if (item.url) entry.item = item.url;
+        return entry;
+      })
+    };
+    var script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.textContent = JSON.stringify(ld);
+    document.head.appendChild(script);
   }
 
   function escapeHtml(value) {

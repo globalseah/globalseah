@@ -42,6 +42,14 @@
         description: description,
         canonical: canonical,
       });
+      injectBreadcrumbLD([
+        { name: "홈", url: "https://globalseah.com/" },
+        { name: "채용현황", url: "https://globalseah.com/notice/recruit.html" },
+        { name: item.title },
+      ]);
+      if (item.status !== "closed") {
+        injectJobPostingLD(item, description, canonical);
+      }
       titleEl.textContent = item.title;
       dateEl.textContent = item.date;
       if (crumbEl) crumbEl.textContent = item.title;
@@ -164,6 +172,58 @@
     if (!text) return fallback;
     if (text.length <= 120) return text;
     return text.slice(0, 120).trim() + "…";
+  }
+
+  function injectJobPostingLD(item, description, url) {
+    var ld = {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": item.title,
+      "description": description,
+      "datePosted": item.date,
+      "employmentType": "FULL_TIME",
+      "url": url,
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "글로벌세아",
+        "sameAs": "https://globalseah.com/",
+        "logo": "https://globalseah.com/assets/images/logo.png"
+      },
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "부천시",
+          "addressRegion": "경기도",
+          "addressCountry": "KR"
+        }
+      }
+    };
+    injectLD(ld);
+  }
+
+  function injectBreadcrumbLD(items) {
+    var ld = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": items.map(function (item, i) {
+        var entry = {
+          "@type": "ListItem",
+          "position": i + 1,
+          "name": item.name
+        };
+        if (item.url) entry.item = item.url;
+        return entry;
+      })
+    };
+    injectLD(ld);
+  }
+
+  function injectLD(obj) {
+    var script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.textContent = JSON.stringify(obj);
+    document.head.appendChild(script);
   }
 
   function escapeHtml(value) {
