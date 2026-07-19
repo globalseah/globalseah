@@ -2,6 +2,10 @@
   const client = window.SEAH_POSTS_CLIENT;
   if (!client) return;
 
+  const FALLBACK_DESCRIPTION =
+    "글로벌세아 공지사항 — 안전·인사 관련 주요 공지를 안내합니다.";
+  const CANONICAL_BASE = "https://globalseah.com/notice/view.html";
+
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
@@ -22,7 +26,17 @@
         return;
       }
 
-      document.title = item.title + " — 공지사항 | 글로벌세아";
+      var pageTitle = item.title + " — 공지사항 | 글로벌세아";
+      var description = excerptText(item.body, FALLBACK_DESCRIPTION);
+      var canonical =
+        CANONICAL_BASE + "?id=" + encodeURIComponent(item.id);
+
+      document.title = pageTitle;
+      updateSeoMeta({
+        title: pageTitle,
+        description: description,
+        canonical: canonical,
+      });
       titleEl.textContent = item.title;
       dateEl.textContent = item.date;
       if (crumbEl) crumbEl.textContent = item.title;
@@ -130,6 +144,29 @@
     if (bytes < 1024) return bytes + " B";
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
     return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+  }
+
+  function updateSeoMeta(opts) {
+    setMetaContent('meta[name="description"]', opts.description);
+    setMetaContent('meta[property="og:title"]', opts.title);
+    setMetaContent('meta[property="og:description"]', opts.description);
+    setMetaContent('meta[property="og:url"]', opts.canonical);
+    var link = document.querySelector('link[rel="canonical"]');
+    if (link) link.setAttribute("href", opts.canonical);
+  }
+
+  function setMetaContent(selector, value) {
+    var el = document.querySelector(selector);
+    if (el) el.setAttribute("content", value);
+  }
+
+  function excerptText(value, fallback) {
+    var text = String(value || "")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!text) return fallback;
+    if (text.length <= 120) return text;
+    return text.slice(0, 120).trim() + "…";
   }
 
   function escapeHtml(value) {
