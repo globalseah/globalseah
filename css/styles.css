@@ -1900,6 +1900,14 @@ html:not(.desktop-only) .cert-intro--mobile {
   word-break: keep-all;
 }
 
+.cert-label-sub {
+  display: inline-block;
+  margin-top: 2px;
+  font-size: 0.8em;
+  font-weight: 500;
+  color: var(--muted, #666);
+}
+
 @media (max-width: 1023px) {
   html:not(.desktop-only) .cert-grid {
     grid-template-columns: repeat(2, 1fr);
