@@ -10,9 +10,9 @@ const path = require("path");
 var SITE = "https://globalseah.com";
 
 var TEMPLATES = {
-  notice: "notice/view.html",
-  recruit: "notice/recruit/view.html",
-  portfolio: "portfolio/view.html",
+  notice: "_templates/notice/view.html",
+  recruit: "_templates/notice/recruit/view.html",
+  portfolio: "_templates/portfolio/view.html",
 };
 
 var CANONICAL_MAP = {

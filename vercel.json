@@ -26,7 +26,7 @@
     },
     "api/render.js": {
       "maxDuration": 10,
-      "includeFiles": "{notice/view.html,notice/recruit/view.html,portfolio/view.html}"
+      "includeFiles": "{_templates/notice/view.html,_templates/notice/recruit/view.html,_templates/portfolio/view.html}"
     }
   },
   "redirects": [
