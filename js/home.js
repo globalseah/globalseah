@@ -29,7 +29,7 @@
     const recentItems = portfolio.displayItems().slice(0, HOME_PORTFOLIO_LIMIT);
     const cards = recentItems
       .map(function (item) {
-        return portfolio.cardHtml(item, "", "portfolio/index.html");
+        return portfolio.cardHtml(item, "", "portfolio/view.html?id=" + encodeURIComponent(item.id));
       })
       .join("");
     homeGrid.innerHTML = cards + cards;

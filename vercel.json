@@ -23,6 +23,10 @@
     },
     "api/sitemap.js": {
       "maxDuration": 10
+    },
+    "api/render.js": {
+      "maxDuration": 10,
+      "includeFiles": ["notice/view.html", "notice/recruit/view.html", "portfolio/view.html"]
     }
   },
   "redirects": [
@@ -37,6 +41,9 @@
     }
   ],
   "rewrites": [
+    { "source": "/notice/view.html", "destination": "/api/render?type=notice" },
+    { "source": "/notice/recruit/view.html", "destination": "/api/render?type=recruit" },
+    { "source": "/portfolio/view.html", "destination": "/api/render?type=portfolio" },
     { "source": "/sitemap.xml", "destination": "/api/sitemap" },
     { "source": "/admin/notices", "destination": "/admin/notices.html" },
     { "source": "/admin/portfolio", "destination": "/admin/portfolio.html" },

@@ -23,6 +23,7 @@ const STATIC_URLS = [
 const PATH_MAP = {
   notice: "/notice/view.html",
   recruit: "/notice/recruit/view.html",
+  portfolio: "/portfolio/view.html",
 };
 
 function toDateStr(ts) {
@@ -69,7 +70,7 @@ module.exports = async function handler(req, res) {
       const { data, error } = await supabase
         .from("posts")
         .select("id, category, updated_at")
-        .in("category", ["notice", "recruit"])
+        .in("category", ["notice", "recruit", "portfolio"])
         .order("published_at", { ascending: false });
 
       if (!error && data) {

@@ -9,20 +9,26 @@
     <title>실적현황 | 글로벌세아</title>
     <meta name="description" content="글로벌세아 실적현황 — 제조·주거·호텔 등 다양한 건물관리 수행 실적을 소개합니다." />
     <meta name="keywords" content="글로벌세아, (주)글로벌세아, 종합건물관리, 시설관리, 미화방역, 보안주차관리, 호텔관리, 인재파견, 부천 건물관리" />
-    <link rel="canonical" href="https://globalseah.com/portfolio/index.html" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="article" />
     <meta property="og:site_name" content="글로벌세아" />
     <meta property="og:title" content="실적현황 | 글로벌세아" />
     <meta property="og:description" content="글로벌세아 실적현황 — 다양한 건물관리 수행 실적을 소개합니다." />
-    <meta property="og:url" content="https://globalseah.com/portfolio/index.html" />
+    <meta property="og:url" content="https://globalseah.com/portfolio/view.html" />
     <meta property="og:image" content="https://globalseah.com/assets/images/logo.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="실적현황 | 글로벌세아" />
     <meta name="twitter:description" content="글로벌세아 실적현황 — 다양한 건물관리 수행 실적을 소개합니다." />
     <meta name="twitter:image" content="https://globalseah.com/assets/images/logo.png" />
+    <link rel="canonical" href="https://globalseah.com/portfolio/view.html" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/assets/images/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../css/styles.css" />
   </head>
   <body data-depth="1">
@@ -50,15 +56,24 @@
         <div class="container">
           <ul class="breadcrumb">
             <li><a href="../index.html">홈</a></li>
-            <li>실적현황</li>
+            <li><a href="index.html">실적현황</a></li>
+            <li id="portfolio-breadcrumb-current">상세</li>
           </ul>
           <h1>실적현황</h1>
         </div>
       </section>
-      <section class="page-content page-content--portfolio">
-        <div class="container">
-          <div id="portfolio-grid" class="portfolio-grid" aria-live="polite"></div>
-          <div id="portfolio-pagination"></div>
+      <section class="page-content">
+        <div class="container page-layout">
+          <div class="page-main">
+            <article class="content-card portfolio-view">
+              <div id="portfolio-detail" class="portfolio-view-body">
+                <p class="portfolio-loading">로딩 중…</p>
+              </div>
+              <div class="notice-view-actions">
+                <a href="index.html" class="btn btn-outline">목록으로</a>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
     </main>
@@ -91,6 +106,6 @@
 
     <script src="../js/layout.js"></script>
     <script src="../js/posts-client.js"></script>
-    <script src="../js/portfolio.js"></script>
+    <script src="../js/portfolio-detail.js"></script>
   </body>
 </html>

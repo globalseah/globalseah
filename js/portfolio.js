@@ -19,7 +19,7 @@
         gridEl.innerHTML = items
           .slice(start, start + PAGE_SIZE)
           .map(function (item) {
-            return portfolio.cardHtml(item, "../", "#");
+            return portfolio.cardHtml(item, "../", "view.html?id=" + encodeURIComponent(item.id));
           })
           .join("");
       }

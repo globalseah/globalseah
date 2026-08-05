@@ -125,6 +125,11 @@
       </div>
     </footer>`;
 
+  var oldHeader = document.querySelector('.site-header[data-static]');
+  if (oldHeader) oldHeader.remove();
+  var oldFooter = document.querySelector('.site-footer[data-static]');
+  if (oldFooter) oldFooter.remove();
+
   document.body.insertAdjacentHTML("afterbegin", headerHtml);
   document.body.insertAdjacentHTML("beforeend", footerHtml);
 
